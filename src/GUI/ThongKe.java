@@ -122,7 +122,7 @@ public final class ThongKe extends javax.swing.JPanel {
             tblModelsp.setRowCount(0);
             for (SanPhamDTO i : sp) {
                 tblModelsp.addRow(new Object[]{
-                    i.getMasp(), i.getTensp(), i.getSoluongton(), i.getGia()
+                    i.getMasp(), i.getTensp(), i.getSoluongton(), i.getGianhap()
                 });
             }
         } catch (Exception e) {

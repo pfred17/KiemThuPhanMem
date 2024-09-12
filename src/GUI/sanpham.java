@@ -39,8 +39,9 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public final class sanpham extends javax.swing.JPanel {
+
     private NhanVienDTO nhanVienDTO;
-    
+
     private DefaultTableModel tblModel;
     ArrayList<SanPhamDTO> list = new ArrayList<SanPhamDTO>();
     SanPhamBUS spBUS = new SanPhamBUS();
@@ -60,7 +61,7 @@ public final class sanpham extends javax.swing.JPanel {
 
     public final void initTable() {
         tblModel = new DefaultTableModel();
-        String[] headerTbl = new String[]{"Mã sản phẩm", "Tên Sản Phẩm", "Loại sản phẩm", "Xuất xứ ", "Thương Hiệu", "Giá", "Số lượng Tồn"};
+        String[] headerTbl = new String[]{"Mã sản phẩm", "Tên Sản Phẩm", "Loại sản phẩm", "Xuất xứ ", "Thương Hiệu", "Giá nhập", "Giá bán", "Số lượng Tồn"};
         tblModel.setColumnIdentifiers(headerTbl);
         tablesp.setModel(tblModel);
         tablesp.getColumnModel().getColumn(0).setPreferredWidth(5);
@@ -68,8 +69,9 @@ public final class sanpham extends javax.swing.JPanel {
         tablesp.getColumnModel().getColumn(2).setPreferredWidth(10);
         tablesp.getColumnModel().getColumn(3).setPreferredWidth(5);
         tablesp.getColumnModel().getColumn(4).setPreferredWidth(5);
-        tablesp.getColumnModel().getColumn(5).setPreferredWidth(10);
-        tablesp.getColumnModel().getColumn(6).setPreferredWidth(5);
+        tablesp.getColumnModel().getColumn(5).setPreferredWidth(5);
+        tablesp.getColumnModel().getColumn(6).setPreferredWidth(10);
+        tablesp.getColumnModel().getColumn(7).setPreferredWidth(5);
     }
 
     public void loadDataToTable(ArrayList<SanPhamDTO> sp) {
@@ -81,7 +83,7 @@ public final class sanpham extends javax.swing.JPanel {
                         i.getMasp(), i.getTensp(), i.getLoaisp().getTenloai(),
                         i.getXuatxu().getTenxuatxu(),
                         i.getThuonghieu().getTenthuonghieu(),
-                        i.getGia(), i.getSoluongton()
+                        i.getGianhap(), i.getGiaban(), i.getSoluongton()
                     });
 
                 }
@@ -438,7 +440,7 @@ public final class sanpham extends javax.swing.JPanel {
             for (SanPhamDTO i : result) {
                 if (i.getTrangthai() == 1) {
                     tblModel.addRow(new Object[]{
-                        i.getMasp(), i.getLoaisp().getTenloai(), i.getTensp(), i.getXuatxu().getTenxuatxu(), i.getNSX(), i.getHSD(), i.getThuonghieu().getTenthuonghieu(), i.getGia(), i.getSoluongton()});
+                        i.getMasp(), i.getLoaisp().getTenloai(), i.getTensp(), i.getXuatxu().getTenxuatxu(), i.getNSX(), i.getHSD(), i.getThuonghieu().getTenthuonghieu(), i.getGianhap(),i.getGiaban(), i.getSoluongton()});
                 }
             }
         } catch (Exception e) {
@@ -474,18 +476,19 @@ public final class sanpham extends javax.swing.JPanel {
                     String tensp = (excelRow.getCell(1)).getStringCellValue();
                     int maxuatxu = (int) excelRow.getCell(2).getNumericCellValue();
                     int mathuonghieu = (int) excelRow.getCell(3).getNumericCellValue();
-                    int gia = (int) excelRow.getCell(4).getNumericCellValue();
+                    int gianhap = (int) excelRow.getCell(4).getNumericCellValue();
+                    int giaban = (int) excelRow.getCell(5).getNumericCellValue();
 
                     // Lấy ngày sản xuất và hạn sử dụng
                     // Lấy giá trị từ ô ở cột 5 (NSX) dưới dạng chuỗi
-                    Date nsxDate = excelRow.getCell(5).getDateCellValue();
-                    Date hsdDate = excelRow.getCell(6).getDateCellValue();
+                    Date nsxDate = excelRow.getCell(6).getDateCellValue();
+                    Date hsdDate = excelRow.getCell(7).getDateCellValue();
 
                     java.sql.Date sqlNSX = new java.sql.Date(nsxDate.getTime());
                     java.sql.Date sqlHSD = new java.sql.Date(nsxDate.getTime());
-                    String img = excelRow.getCell(7).getStringCellValue();
+                    String img = excelRow.getCell(8).getStringCellValue();
 
-                    SanPhamDTO sp = new SanPhamDTO(masp, maloai, tensp, img, sqlNSX, sqlHSD, maxuatxu, mathuonghieu, 0, gia, 1);
+                    SanPhamDTO sp = new SanPhamDTO(masp, maloai, tensp, img, sqlNSX, sqlHSD, maxuatxu, mathuonghieu, 0, gianhap, giaban, 1);
 
                     listAccExcel.add(sp);
                     DefaultTableModel table_acc = (DefaultTableModel) tablesp.getModel();
@@ -504,7 +507,7 @@ public final class sanpham extends javax.swing.JPanel {
             SanPhamDTO sp = listAccExcel.get(i);
             SanPhamDTO newsp;
             newsp = new SanPhamDTO(
-                    sp.getMasp(), sp.getMaloai(), sp.getTensp(), sp.getHinhanh(), sp.getNSX(), sp.getHSD(), sp.getMaxuatxu(), sp.getMathuonghieu(), sp.getSoluongton(), sp.getGia(), sp.getTrangthai());
+                    sp.getMasp(), sp.getMaloai(), sp.getTensp(), sp.getHinhanh(), sp.getNSX(), sp.getHSD(), sp.getMaxuatxu(), sp.getMathuonghieu(), sp.getSoluongton(), sp.getGianhap(),sp.getGiaban(),sp.getTrangthai());
             spBUS.spDAO.insert(newsp);
 
         }

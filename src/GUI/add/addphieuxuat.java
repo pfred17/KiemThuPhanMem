@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  * @author NeON
  */
 public class addphieuxuat extends javax.swing.JPanel {
-    
+
     ArrayList<SanPhamDTO> list = new ArrayList<SanPhamDTO>();
     private NhanVienDTO nhanVienDTO;
     SanPhamBUS spBUS = new SanPhamBUS();
@@ -30,7 +30,7 @@ public class addphieuxuat extends javax.swing.JPanel {
     KhachHangBUS khBUS = new KhachHangBUS();
     NhanVienBUS nvBUS = new NhanVienBUS();
     int current = 0;
-    
+
     public addphieuxuat(NhanVienDTO nv) {
         initComponents();
         this.nhanVienDTO = nv;
@@ -44,29 +44,32 @@ public class addphieuxuat extends javax.swing.JPanel {
         tblphieuxuatin.setDefaultEditor(Object.class, null);
         tblphieuxuatout.setDefaultEditor(Object.class, null);
     }
-    
+
     private void displaytoTable1(ArrayList<SanPhamDTO> list) {
         try {
             DefaultTableModel dt = (DefaultTableModel) tblphieuxuatin.getModel();
             dt.setRowCount(0);
+             Date currentDate = new Date();
             for (SanPhamDTO i : list) {
+                if(i.getHSD().getTime()>currentDate.getTime()){
                 dt.addRow(new Object[]{
-                    i.getMasp(), i.getTensp(), i.getSoluongton(), i.getGia()
+                    i.getMasp(), i.getTensp(), i.getSoluongton(), i.getGiaban(),i.getHSD()
                 });
+            }
             }
         } catch (Exception e) {
             System.out.println(e);
         }
     }
-    
+
     private void comboctgiamgiaDisplay() {
-        
+
         ArrayList<GiamGiaDTO> listgg = ggBUS.ggDAO.selectAll();
         for (GiamGiaDTO gg : listgg) {
             comboctgiamgia.addItem(gg.getTenctgiamgia());
         }
     }
-    
+
     private void combohotenDisplay() {
         ArrayList<KhachHangDTO> listkh = khBUS.khDAO.selectAll();
         for (KhachHangDTO kh : listkh) {
@@ -91,7 +94,7 @@ public class addphieuxuat extends javax.swing.JPanel {
         // Cập nhật giá trị tổng cộng vào trường văn bản
         lableTongTien.setText(String.valueOf(totalPrice));
     }
-    
+
     /**
      * fo This method is called from within the constructor to initialize the
      * form. WARNING: Do NOT modify this code. The content of this method is
@@ -133,13 +136,13 @@ public class addphieuxuat extends javax.swing.JPanel {
 
         tblphieuxuatin.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Mã SP", "Tên SP", "Số lượng", "Giá bán"
+                "Mã SP", "Tên SP", "Số lượng", "Giá bán", "HSD"
             }
         ));
         jScrollPane2.setViewportView(tblphieuxuatin);
@@ -395,10 +398,10 @@ public class addphieuxuat extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm từ bảng 1.", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         // Lấy dữ liệu sản phẩm từ dòng được chọn
-        Object[] rowData = new Object[4];
-        for (int i = 0; i < 4; i++) {
+        Object[] rowData = new Object[5];
+        for (int i = 0; i < 5; i++) {
             rowData[i] = tblphieuxuatin.getValueAt(selectedRow, i);
         }
 
@@ -407,7 +410,8 @@ public class addphieuxuat extends javax.swing.JPanel {
         try {
             soluong = Integer.parseInt(txtSoLuongXuat.getText().trim());
             int soLuongTon = (int) rowData[2];
-            if (soluong > soLuongTon){
+            Date hsd = (Date) rowData[4];
+            if (soluong > soLuongTon) {
                 JOptionPane.showMessageDialog(this, "Số lượng xuất không được lớn hơn số lượng tồn!.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -431,7 +435,7 @@ public class addphieuxuat extends javax.swing.JPanel {
         ArrayList<NhanVienDTO> listnv = nvBUS.getAll();
         ArrayList<KhachHangDTO> listkh = khBUS.getAll();
         int rowCount = model.getRowCount();
-        
+
         int mapx = pxBUS.phieuXuatDAO.getAutoIncrement();
         Date thoigian = new Date(System.currentTimeMillis());
         java.sql.Date sqlDate = new java.sql.Date(thoigian.getTime());
@@ -457,10 +461,10 @@ public class addphieuxuat extends javax.swing.JPanel {
                 break;
             }
         }
-        
+
         PhieuXuatDTO pxAll = new PhieuXuatDTO(mapx, sqlDate, tongtien, sumsoluong, manv, makh, magg);
         pxBUS.phieuXuatDAO.insert(pxAll);
-        
+
         // Lặp qua các dòng trong bảng tblphieuxuatout
         for (int i = 0; i < rowCount; i++) {
             // Lấy mã sản phẩm và số lượng từ bảng 2
@@ -468,15 +472,15 @@ public class addphieuxuat extends javax.swing.JPanel {
             int soluong = (int) model.getValueAt(i, 2);
             int dongia = (int) model.getValueAt(i, 3);
             tongtien += soluong * dongia;
-            
+
             SanPhamDTO sp = spBUS.getByMaSP(masp);
             sp.setSoluongton(sp.getSoluongton() - soluong);
             spBUS.updateSoLuongTon(sp);
-            
+
             ChiTietPhieuXuatDTO ctpx = new ChiTietPhieuXuatDTO(mapx, masp, soluong, dongia);
             pxBUS.phieuXuatDAO.insertCtpx(ctpx);
         }
-        
+
         if (gg != null) {
             if (gg.getMocgiamgia() < tongtien) {
                 tongtien -= 0;
@@ -484,9 +488,9 @@ public class addphieuxuat extends javax.swing.JPanel {
                 tongtien = tongtien - gg.getSotienduocgiam();
             }
         }
-        
+
         pxBUS.updateTongTien(pxAll);
-        
+
         // Reset bảng 2 (tblphieuxuatout)
         model.setRowCount(0);
         displaytoTable1(list);

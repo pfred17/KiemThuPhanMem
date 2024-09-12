@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 06, 2024 lúc 03:58 AM
+-- Thời gian đã tạo: Th9 12, 2024 lúc 07:35 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
--- Phiên bản PHP: 8.2.12
+-- Phiên bản PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -43,7 +43,9 @@ INSERT INTO `ctphieunhap` (`maphieunhap`, `masp`, `soluong`, `gianhap`) VALUES
 (2, 2, 2, 15000000),
 (3, 3, 7, 5000000),
 (4, 4, 5, 15000000),
-(5, 5, 12, 7000000);
+(5, 5, 12, 7000000),
+(9, 14, 123, 123),
+(10, 1, 10, 10000);
 
 -- --------------------------------------------------------
 
@@ -68,7 +70,8 @@ INSERT INTO `ctphieuxuat` (`maphieuxuat`, `masp`, `soluong`, `dongia`) VALUES
 (3, 3, 5, 78000),
 (5, 4, 4, 78000),
 (6, 5, 4, 55000),
-(7, 6, 1, 78000);
+(7, 6, 1, 78000),
+(8, 14, 10, 456);
 
 -- --------------------------------------------------------
 
@@ -299,7 +302,9 @@ INSERT INTO `phieunhap` (`maphieunhap`, `mancc`, `makhuvuc`, `manv`, `thoigian`,
 (5, 5, 5, 1, '2023-04-06 08:18:01', 10000000, 1),
 (6, 6, 3, 1, '2023-04-07 20:33:58', 75000000, 1),
 (7, 7, 2, 1, '2023-04-07 01:09:27', 108500000, 1),
-(8, 6, 1, 1, '2023-04-07 08:42:52', 7000000, 1);
+(8, 6, 1, 1, '2023-04-07 08:42:52', 7000000, 1),
+(9, 2, 1, 1, '2024-09-13 00:00:00', 15129, 1),
+(10, 1, 1, 1, '2024-09-13 00:00:00', 100000, 1);
 
 -- --------------------------------------------------------
 
@@ -329,7 +334,8 @@ INSERT INTO `phieuxuat` (`maphieuxuat`, `thoigian`, `tongtien`, `soluong`, `manv
 (4, '2023-04-06 18:30:26', 31200000, 1, 1, 1, 1, 1),
 (5, '2023-04-06 01:01:48', 22000000, 1, 1, 2, 1, 1),
 (6, '2023-04-06 12:39:44', 7800000, 1, 1, 3, 1, 1),
-(7, '2023-04-08 12:40:04', 23400000, 1, 1, 4, 1, 1);
+(7, '2023-04-08 12:40:04', 23400000, 1, 1, 4, 1, 1),
+(8, '2024-09-13 00:00:00', 0, 0, 1, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -346,24 +352,26 @@ CREATE TABLE `sanpham` (
   `NSX` date NOT NULL,
   `HSD` date NOT NULL,
   `thuonghieu` int(11) DEFAULT NULL,
-  `gia` int(11) DEFAULT NULL,
+  `gianhap` int(11) DEFAULT NULL,
   `soluongton` int(11) DEFAULT 0,
-  `trangthai` tinyint(1) DEFAULT 1
+  `trangthai` tinyint(1) DEFAULT 1,
+  `giaban` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `sanpham`
 --
 
-INSERT INTO `sanpham` (`masp`, `maloai`, `tensp`, `hinhanh`, `xuatxu`, `NSX`, `HSD`, `thuonghieu`, `gia`, `soluongton`, `trangthai`) VALUES
-(1, 2, 'pepsi', '', 1, '2023-04-11', '2023-11-11', 1, 10000, 156, 1),
-(2, 1, 'bánh kem', '', 1, '2023-04-11', '2023-11-11', 1, 400000, 156, 1),
-(3, 1, 'bánh quy', '', 1, '2023-04-11', '2023-11-11', 1, 50000, 156, 1),
-(4, 3, 'cà rốt', '', 1, '2023-04-11', '2023-11-11', 1, 6000, 156, 1),
-(5, 3, 'khoai tây', '', 1, '2023-04-11', '2023-11-11', 1, 10000, 156, 1),
-(6, 3, 'rau muống', '', 1, '2023-04-11', '2023-11-11', 1, 7000, 156, 1),
-(7, 2, 'coca', '', 1, '2023-04-11', '2023-11-11', 1, 10000, 156, 1),
-(8, 5, 'bút xóa', '', 1, '2023-04-11', '2023-11-11', 1, 15000, 156, 1);
+INSERT INTO `sanpham` (`masp`, `maloai`, `tensp`, `hinhanh`, `xuatxu`, `NSX`, `HSD`, `thuonghieu`, `gianhap`, `soluongton`, `trangthai`, `giaban`) VALUES
+(1, 2, 'pepsi', '', 1, '2023-04-11', '2023-11-11', 1, 10000, 166, 1, 12000),
+(2, 1, 'bánh kem', '', 1, '2023-04-11', '2023-11-11', 1, 400000, 156, 1, 450000),
+(3, 1, 'bánh quy', '', 1, '2023-04-11', '2023-11-11', 1, 50000, 156, 1, 55000),
+(4, 3, 'cà rốt', '', 1, '2023-04-11', '2023-11-11', 1, 6000, 156, 1, 7500),
+(5, 3, 'khoai tây', '', 1, '2023-04-11', '2023-11-11', 1, 10000, 156, 1, 13000),
+(6, 1, 'rau muống', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2023-11-11', 1, 7000, 156, 1, 8500),
+(7, 1, 'coca', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2023-11-11', 1, 10000, 156, 1, 15000),
+(8, 1, 'bút xóa', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2023-11-11', 1, 15000, 156, 1, 18000),
+(14, 1, 'abc', 'src/GUI/imageSanPham/banhmi.jpg', 1, '2024-09-11', '2024-09-14', 1, 123, 113, 0, 456);
 
 -- --------------------------------------------------------
 
@@ -608,19 +616,19 @@ ALTER TABLE `nhomquyen`
 -- AUTO_INCREMENT cho bảng `phieunhap`
 --
 ALTER TABLE `phieunhap`
-  MODIFY `maphieunhap` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `maphieunhap` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT cho bảng `phieuxuat`
 --
 ALTER TABLE `phieuxuat`
-  MODIFY `maphieuxuat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `maphieuxuat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `sanpham`
 --
 ALTER TABLE `sanpham`
-  MODIFY `masp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `masp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT cho bảng `taikhoan`

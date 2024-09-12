@@ -24,7 +24,8 @@ public class SanPhamDTO {
     private Date HSD;
     private ThuongHieuDTO thuonghieu = new ThuongHieuDTO();
     private int mathuonghieu;
-    private int gia;
+    private int gianhap;
+    private int giaban;
     private int soluongton;
     private int trangthai;
 
@@ -32,7 +33,7 @@ public class SanPhamDTO {
 
     }
 
-    public SanPhamDTO(int masp, int maloai, String tensp, String hinhanh, Date NSX, Date HSD, int maxuatxu, int mathuonghieu, int soluongton, int gia, int trangthai) {
+    public SanPhamDTO(int masp, int maloai, String tensp, String hinhanh, Date NSX, Date HSD, int maxuatxu, int mathuonghieu, int soluongton, int gianhap,int giaban, int trangthai) {
         this.masp = masp;
         this.maloai = maloai;
         this.tensp = tensp;
@@ -41,7 +42,8 @@ public class SanPhamDTO {
         this.HSD = HSD;
         this.mathuonghieu = mathuonghieu;
         this.maxuatxu = maxuatxu;
-        this.gia = gia;
+        this.gianhap = gianhap;
+        this.giaban = giaban;
         this.soluongton = soluongton;
         this.trangthai = trangthai;
 
@@ -135,13 +137,23 @@ public class SanPhamDTO {
         this.mathuonghieu = mathuonghieu;
     }
 
-    public int getGia() {
-        return gia;
+    public int getGianhap() {
+        return gianhap;
     }
 
-    public void setGia(int gia) {
-        this.gia = gia;
+    public void setGianhap(int gianhap) {
+        this.gianhap = gianhap;
     }
+
+    public int getGiaban() {
+        return giaban;
+    }
+
+    public void setGiaban(int giaban) {
+        this.giaban = giaban;
+    }
+
+    
 
     public int getSoluongton() {
         return soluongton;
@@ -193,7 +205,7 @@ public class SanPhamDTO {
     @Override
     public String toString() {
         return "SanPham{" + "masp=" + masp + ", maloai=" + loaisp + ", tensp="
-                + tensp + ", hinhanh=" + hinhanh + "xuatxu=" + xuatxu + "NSX=" + NSX + "gia=" + gia + "thuonghieu=" + thuonghieu + "soluongton=" + soluongton + '}';
+                + tensp + ", hinhanh=" + hinhanh + "xuatxu=" + xuatxu + "NSX=" + NSX + "gianhap=" + gianhap + "giaban=" + giaban + "thuonghieu=" + thuonghieu + "soluongton=" + soluongton + '}';
     }
 
 }

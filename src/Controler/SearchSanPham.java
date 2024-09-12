@@ -33,7 +33,7 @@ public class SearchSanPham {
                     || ("" + sp.getThuonghieu()).toLowerCase().contains(text.toLowerCase())
                     || ("" + sp.getXuatxu()).toLowerCase().contains(text.toLowerCase())
                     || ("" + sp.getSoluongton()).toLowerCase().contains(text.toLowerCase())
-                    || ("" + sp.getGia()).toLowerCase().contains(text.toLowerCase())) {
+                    || ("" + sp.getGianhap()).toLowerCase().contains(text.toLowerCase())) {
                 result.add(sp);
             }
         }
@@ -131,7 +131,7 @@ public class SearchSanPham {
         ArrayList<SanPhamDTO> result = new ArrayList<>();
         ArrayList<SanPhamDTO> armt = SanPhamDAO.getInstance().selectAll();
         for (var sp : armt) {
-            if (("" + sp.getGia()).toLowerCase().contains(text.toLowerCase())) {
+            if (("" + sp.getGianhap()).toLowerCase().contains(text.toLowerCase())) {
                 result.add(sp);
             }
         }
