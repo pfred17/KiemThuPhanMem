@@ -394,7 +394,7 @@ public class admin extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        phieuxuat px = new phieuxuat();
+        phieuxuat px = new phieuxuat(getNhanVien(), taikhoan.getManhomquyen());
         jpload.jPanelLoader(panel_load, px);
     }
 

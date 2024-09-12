@@ -32,7 +32,7 @@ public final class phieuxuat extends javax.swing.JPanel {
 
     int current = 0;
 
-    public phieuxuat() {
+    public phieuxuat(NhanVienDTO nhanVienDTO, int maQuyen) {
         initComponents();
         this.nhanVienDTO = nhanVienDTO;
         this.maQuyen = maQuyen;

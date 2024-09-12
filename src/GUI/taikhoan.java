@@ -359,7 +359,7 @@ public class taikhoan extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSearchKeyReleased
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        addTaiKhoan a = new addTaiKhoan((JFrame) SwingUtilities.getWindowAncestor(this), true);
+        addTaiKhoan a = new addTaiKhoan();
         a.setVisible(true);
         
        loadDataToTable(tkbus.tkDAO.selectAll());
