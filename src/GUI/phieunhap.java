@@ -1,11 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package GUI;
+
 import Controler.SearchPhieuNhap;
 import BUS.PhieuNhapBUS;
+import DTO.NhanVienDTO;
 import DTO.PhieuNhapDTO;
+import DTO.TaiKhoanDTO;
 import GUI.add.addphieunhap;
 import GUI.details.detailsphieunhap;
 import java.util.*;
@@ -20,15 +19,18 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author NeON
  */
-public class phieunhap extends javax.swing.JPanel {
-    
+public final class phieunhap extends javax.swing.JPanel {
+    private NhanVienDTO nhanVienDTO;
+    private int maQuyen;
     ArrayList<PhieuNhapDTO> list = new ArrayList<PhieuNhapDTO>();
     JpanelLoader jp = new JpanelLoader();
     PhieuNhapBUS pnBUS = new PhieuNhapBUS();
     int current = 0;
 
-    public phieunhap() {
+    public phieunhap(NhanVienDTO nhanVienDTO, int maQuyen) {
         initComponents();
+        this.nhanVienDTO = nhanVienDTO;
+        this.maQuyen = maQuyen;
         cbxAllDisplay();
         cbNccDisplay();
         cbHotenDisplay();
@@ -372,8 +374,12 @@ public class phieunhap extends javax.swing.JPanel {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
-        addphieunhap apn = new addphieunhap();
-        jp.jPanelLoader(admin.panel_load, apn);
+        addphieunhap apn = new addphieunhap(nhanVienDTO);
+        if (maQuyen == 1) {
+            jp.jPanelLoader(admin.panel_load, apn);
+        } else {
+            jp.jPanelLoader(nvnhaphang.panel_load, apn);
+        }
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void txttimkiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttimkiemKeyReleased

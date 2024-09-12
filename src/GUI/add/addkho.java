@@ -1,8 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package GUI.add;
+
 import BUS.KhoHangBUS;
 import DTO.KhoHangDTO;
 import java.awt.HeadlessException;

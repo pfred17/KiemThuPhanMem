@@ -17,8 +17,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class addphieunhap extends javax.swing.JPanel {
-
     ArrayList<SanPhamDTO> list = new ArrayList<SanPhamDTO>();
+    private NhanVienDTO nhanVienDTO;
     KhoHangBUS khBUS = new KhoHangBUS();
     SanPhamBUS spBUS = new SanPhamBUS();
     PhieuNhapBUS pnBUS = new PhieuNhapBUS();
@@ -26,14 +26,14 @@ public class addphieunhap extends javax.swing.JPanel {
     NhanVienBUS nvBUS = new NhanVienBUS();
     int current = 0;
 
-    public addphieunhap() {
+    public addphieunhap(NhanVienDTO nv) {
         initComponents();
         cbNccDisplay();
         cbkvkDisplay();
-        cbnvnhapDisplay();
+        this.nhanVienDTO = nv;
+        txtTenNhanVien.setText(nhanVienDTO.getHoten());
         txttenncc.setEditable(false);
         txttenkho.setEditable(false);
-
         list = spBUS.spDAO.selectAll();
         displaytoTable1(list);
         tblphieunhapin.setDefaultEditor(Object.class, null);
@@ -57,14 +57,6 @@ public class addphieunhap extends javax.swing.JPanel {
         int count = listncc.size();
         for (int i = 0; i < count; i++) {
             combomakhuvuc.addItem("" + listncc.get(i));
-        }
-    }
-    
-    public void cbnvnhapDisplay() {
-        String[] listnv = nvBUS.getArrTenNhanVien();
-        int count = listnv.length;
-        for (int i = 0; i < count; i++) {
-            combonvnhap.addItem("" + listnv[i]);
         }
     }
 
@@ -113,7 +105,7 @@ public class addphieunhap extends javax.swing.JPanel {
         combomakhuvuc = new javax.swing.JComboBox<>();
         txttenkho = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        combonvnhap = new javax.swing.JComboBox<>();
+        txtTenNhanVien = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -250,6 +242,11 @@ public class addphieunhap extends javax.swing.JPanel {
 
         jLabel13.setText("Tên khu vực kho");
 
+        txtTenNhanVien.setBackground(new java.awt.Color(204, 204, 204));
+        txtTenNhanVien.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtTenNhanVien.setForeground(new java.awt.Color(255, 255, 255));
+        txtTenNhanVien.setEnabled(false);
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -257,12 +254,16 @@ public class addphieunhap extends javax.swing.JPanel {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(combonvnhap, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                            .addComponent(txtTenNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(combomakhuvuc, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel13)
                             .addComponent(txttenkho, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -275,10 +276,7 @@ public class addphieunhap extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblTongcong, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel4))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel10)
-                                .addComponent(combomakhuvuc, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jLabel4)))))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -289,16 +287,15 @@ public class addphieunhap extends javax.swing.JPanel {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(jLabel13))
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(combonvnhap, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txttenkho, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtTenNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txttenkho, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(combomakhuvuc, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(combomakhuvuc, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTongcong, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -393,14 +390,8 @@ public class addphieunhap extends javax.swing.JPanel {
 
             int mapn = pnBUS.phieunhapDAO.getAutoIncrement();
             int mancc = Integer.parseInt("" + combonhacc.getSelectedItem());
-            int manv = 1;
-            String tennv = "" + combonvnhap.getSelectedItem();
-            for (NhanVienDTO i : listnv) {
-                if (tennv.equalsIgnoreCase(i.getHoten())) {
-                    manv = i.getManv();
-                    break;
-                }
-            }
+            int manv = nhanVienDTO.getManv();
+            String tennv = nhanVienDTO.getHoten();
             int makhuvuc = Integer.parseInt("" + combomakhuvuc.getSelectedItem());
             Date thoigian = new Date(System.currentTimeMillis());
             java.sql.Date sqlDate = new java.sql.Date(thoigian.getTime());
@@ -463,7 +454,6 @@ public class addphieunhap extends javax.swing.JPanel {
     private javax.swing.JButton btnthemsp;
     private javax.swing.JComboBox<String> combomakhuvuc;
     private javax.swing.JComboBox<String> combonhacc;
-    private javax.swing.JComboBox<String> combonvnhap;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -479,6 +469,7 @@ public class addphieunhap extends javax.swing.JPanel {
     private javax.swing.JLabel lblTongcong;
     private javax.swing.JTable tblphieunhapin;
     private javax.swing.JTable tblphieunhapout;
+    private javax.swing.JTextField txtTenNhanVien;
     private javax.swing.JTextField txtsoluong;
     private javax.swing.JTextField txttenkho;
     private javax.swing.JTextField txttenncc;
