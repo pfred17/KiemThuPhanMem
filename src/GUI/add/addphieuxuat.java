@@ -23,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 public class addphieuxuat extends javax.swing.JPanel {
     
     ArrayList<SanPhamDTO> list = new ArrayList<SanPhamDTO>();
+    private NhanVienDTO nhanVienDTO;
     SanPhamBUS spBUS = new SanPhamBUS();
     PhieuXuatBUS pxBUS = new PhieuXuatBUS();
     GiamGiaBUS ggBUS = new GiamGiaBUS();
@@ -30,14 +31,14 @@ public class addphieuxuat extends javax.swing.JPanel {
     NhanVienBUS nvBUS = new NhanVienBUS();
     int current = 0;
     
-    public addphieuxuat() {
+    public addphieuxuat(NhanVienDTO nv) {
         initComponents();
+        this.nhanVienDTO = nv;
         comboctgiamgiaDisplay();
         combohotenDisplay();
-        cbnvnhapDisplay();
         txtsdt.setEditable(false);
         txtdiachi.setEditable(false);
-        
+        txtTenNhanVien.setText(nhanVienDTO.getHoten());
         list = spBUS.spDAO.selectAll();
         displaytoTable1(list);
         tblphieuxuatin.setDefaultEditor(Object.class, null);
@@ -73,14 +74,6 @@ public class addphieuxuat extends javax.swing.JPanel {
         }
     }
 
-    public void cbnvnhapDisplay() {
-        String[] listnv = nvBUS.getArrTenNhanVien();
-        int count = listnv.length;
-        for (int i = 0; i < count; i++) {
-            combonvnhap.addItem("" + listnv[i]);
-        }
-    }
-    
     private void updateTotal() {
         DefaultTableModel model = (DefaultTableModel) tblphieuxuatout.getModel();
         int rowCount = model.getRowCount();
@@ -116,9 +109,9 @@ public class addphieuxuat extends javax.swing.JPanel {
         jLabel12 = new javax.swing.JLabel();
         comboctgiamgia = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
-        combonvnhap = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         txtSoLuongXuat = new javax.swing.JTextField();
+        txtTenNhanVien = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         btnxuatphieu = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
@@ -179,6 +172,11 @@ public class addphieuxuat extends javax.swing.JPanel {
             }
         });
 
+        txtTenNhanVien.setBackground(new java.awt.Color(204, 204, 204));
+        txtTenNhanVien.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtTenNhanVien.setForeground(new java.awt.Color(255, 255, 255));
+        txtTenNhanVien.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -202,7 +200,7 @@ public class addphieuxuat extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel12)
                                 .addGap(111, 111, 111))
-                            .addComponent(combonvnhap, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(txtTenNhanVien))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -213,9 +211,9 @@ public class addphieuxuat extends javax.swing.JPanel {
                     .addComponent(jLabel11)
                     .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(comboctgiamgia, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(combonvnhap))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboctgiamgia, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTenNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -439,14 +437,8 @@ public class addphieuxuat extends javax.swing.JPanel {
         java.sql.Date sqlDate = new java.sql.Date(thoigian.getTime());
         long tongtien = 0;
         int sumsoluong = 0;
-        int manv = 1;
-        String tennv = "" + combonvnhap.getSelectedItem();
-        for (NhanVienDTO i : listnv) {
-            if (tennv.equalsIgnoreCase(i.getHoten())) {
-                manv = i.getManv();
-                break;
-            }
-        }
+        int manv = nhanVienDTO.getManv();
+        String tennv = nhanVienDTO.getHoten();
         int makh = 1;
         String tenkh = "" + combohoten.getSelectedItem();
         for (KhachHangDTO i : listkh) {
@@ -517,7 +509,6 @@ public class addphieuxuat extends javax.swing.JPanel {
     private javax.swing.JButton btnxuatphieu;
     private javax.swing.JComboBox<String> comboctgiamgia;
     private javax.swing.JComboBox<String> combohoten;
-    private javax.swing.JComboBox<String> combonvnhap;
     private javax.swing.ButtonGroup groupGioiTinh;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
@@ -538,6 +529,7 @@ public class addphieuxuat extends javax.swing.JPanel {
     private javax.swing.JTable tblphieuxuatin;
     private javax.swing.JTable tblphieuxuatout;
     private javax.swing.JTextField txtSoLuongXuat;
+    private javax.swing.JTextField txtTenNhanVien;
     private javax.swing.JTextField txtdiachi;
     private javax.swing.JTextField txtsdt;
     // End of variables declaration//GEN-END:variables

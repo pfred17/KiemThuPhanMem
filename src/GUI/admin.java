@@ -1,6 +1,8 @@
 package GUI;
 
+import BUS.NhanVienBUS;
 import DAO.TaiKhoanDAO;
+import DTO.NhanVienDTO;
 import DTO.TaiKhoanDTO;
 import java.awt.Color;
 import javax.swing.JOptionPane;
@@ -14,9 +16,9 @@ import javax.swing.JOptionPane;
  * @author ASUS
  */
 public class admin extends javax.swing.JFrame {
-
     private TaiKhoanDAO currentAcc;
-
+    private TaiKhoanDTO taikhoan;
+    private NhanVienBUS nhanVienBUS;
     JpanelLoader jpload = new JpanelLoader();
 
     private admin parent;
@@ -26,7 +28,9 @@ public class admin extends javax.swing.JFrame {
      */
     public admin(TaiKhoanDTO tk) {
         initComponents();
+        this.taikhoan = tk;
         this.setExtendedState(admin.MAXIMIZED_BOTH);
+        this.nhanVienBUS = new NhanVienBUS();
     }
 
     private admin() {
@@ -35,6 +39,10 @@ public class admin extends javax.swing.JFrame {
 
     public TaiKhoanDAO getCurrentAcc() {
         return currentAcc;
+    }
+    
+    public NhanVienDTO getNhanVien() {
+        return nhanVienBUS.getNhanVienByMaNv(taikhoan.getManv());
     }
 
     @SuppressWarnings("unchecked")
@@ -344,7 +352,7 @@ public class admin extends javax.swing.JFrame {
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-        sanpham sp = new sanpham();
+        sanpham sp = new sanpham(getNhanVien());
         jpload.jPanelLoader(panel_load, sp);
     }
 
@@ -380,7 +388,7 @@ public class admin extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        phieunhap pn = new phieunhap();
+        phieunhap pn = new phieunhap(getNhanVien(), taikhoan.getManhomquyen());
         jpload.jPanelLoader(panel_load, pn);
     }
 
@@ -405,7 +413,7 @@ public class admin extends javax.swing.JFrame {
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        PhanQuyen pn = new PhanQuyen(this, null);
+        phanquyen1 pn = new phanquyen1();
         jpload.jPanelLoader(panel_load, pn);
     }
 

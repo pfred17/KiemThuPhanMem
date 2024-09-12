@@ -1,10 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUI;
 
+import BUS.NhanVienBUS;
 import DAO.TaiKhoanDAO;
+import DTO.NhanVienDTO;
 import DTO.TaiKhoanDTO;
 
 /**
@@ -12,9 +10,10 @@ import DTO.TaiKhoanDTO;
  * @author ASUS
  */
 public class nvnhaphang extends javax.swing.JFrame {
-
     private TaiKhoanDAO currentAcc;
-
+    private NhanVienBUS nhanVienBUS;
+    private TaiKhoanDTO taikhoan;
+    
     JpanelLoader jpload = new JpanelLoader();
 
     private nvnhaphang parent;
@@ -24,6 +23,8 @@ public class nvnhaphang extends javax.swing.JFrame {
      */
     public nvnhaphang(TaiKhoanDTO tk) {
         initComponents();
+        this.taikhoan = tk;
+        this.nhanVienBUS = new NhanVienBUS();
         this.setExtendedState(nvnhaphang.MAXIMIZED_BOTH);
 
     }
@@ -36,6 +37,10 @@ public class nvnhaphang extends javax.swing.JFrame {
         return currentAcc;
     }
 
+    public NhanVienDTO getNhanVien() {
+        return nhanVienBUS.getNhanVienByMaNv(taikhoan.getManv());
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -160,9 +165,9 @@ public class nvnhaphang extends javax.swing.JFrame {
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(357, 357, 357)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(35, 35, 35))
         );
 
         panel_load.setBackground(new java.awt.Color(204, 255, 204));
@@ -220,7 +225,7 @@ public class nvnhaphang extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        sanpham sp = new sanpham();
+        sanpham sp = new sanpham(getNhanVien());
         jpload.jPanelLoader(panel_load, sp);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -247,7 +252,7 @@ public class nvnhaphang extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        phieunhap pn = new phieunhap();
+        phieunhap pn = new phieunhap(getNhanVien(), taikhoan.getManhomquyen());
         jpload.jPanelLoader(panel_load, pn);
     }//GEN-LAST:event_jButton5ActionPerformed
 

@@ -3,8 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI;
+
 import Controler.SearchPhieuXuat;
 import BUS.PhieuXuatBUS;
+import DTO.NhanVienDTO;
 import DTO.PhieuXuatDTO;
 import GUI.add.addphieuxuat;
 import GUI.details.detailsphieuxuat;
@@ -21,14 +23,19 @@ import javax.swing.table.DefaultTableModel;
  * @author NeON
  */
 public final class phieuxuat extends javax.swing.JPanel {
-    
+
+    private NhanVienDTO nhanVienDTO;
+    private int maQuyen;
     ArrayList<PhieuXuatDTO> list = new ArrayList<PhieuXuatDTO>();
     JpanelLoader jp = new JpanelLoader();
     PhieuXuatBUS pxBUS = new PhieuXuatBUS();
+
     int current = 0;
 
     public phieuxuat() {
         initComponents();
+        this.nhanVienDTO = nhanVienDTO;
+        this.maQuyen = maQuyen;
         cbxAllDisplay();
         cbNhanvienDisplay();
         cbKhachhangDisplay();
@@ -37,39 +44,42 @@ public final class phieuxuat extends javax.swing.JPanel {
         displaytoTable(list);
         tblphieuxuat.setDefaultEditor(Object.class, null);
     }
-    
+
     public void cbxAllDisplay() {
         cbxAll.addItem("Tất cả");
         int count = tblphieuxuat.getColumnCount();
-        for (int i = 1; i < count; i++)
+        for (int i = 1; i < count; i++) {
             cbxAll.addItem("" + tblphieuxuat.getColumnName(i));
-   
+        }
+
     }
-    
+
     public void cbNhanvienDisplay() {
         cbnhanvien.addItem("Tất cả");
         ArrayList<String> listnv = pxBUS.phieuXuatDAO.selectAllNhanvien();
         int count = listnv.size();
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < count; i++) {
             cbnhanvien.addItem("" + listnv.get(i));
+        }
     }
-    
+
     public void cbKhachhangDisplay() {
         cbkhachhang.addItem("Tất cả");
         ArrayList<String> listkh = pxBUS.phieuXuatDAO.selectAllKhachhang();
         int count = listkh.size();
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < count; i++) {
             cbkhachhang.addItem("" + listkh.get(i));
+        }
     }
-    
+
     public void displaytoTable(ArrayList<PhieuXuatDTO> list) {
         try {
             DefaultTableModel dt = (DefaultTableModel) tblphieuxuat.getModel();
             dt.setRowCount(0);
             int index = 1;
             for (PhieuXuatDTO i : list) {
-                dt.addRow(new Object[] {
-                  index, i.getMaphieuxuat(), i.getTenkhachhang(), i.getTennvnhap(), i.getThoigian(), i.getTongtien()
+                dt.addRow(new Object[]{
+                    index, i.getMaphieuxuat(), i.getTenkhachhang(), i.getTennvnhap(), i.getThoigian(), i.getTongtien()
                 });
                 index++;
             }
@@ -77,7 +87,7 @@ public final class phieuxuat extends javax.swing.JPanel {
             System.out.println(e);
         }
     }
-    
+
     public void SearchDate() {
         ArrayList<PhieuXuatDTO> result = new ArrayList<>();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -94,7 +104,7 @@ public final class phieuxuat extends javax.swing.JPanel {
         }
         displaytoTable(result);
     }
-    
+
     public PhieuXuatDTO getPhieuXuatSelect() {
         int i_row = tblphieuxuat.getSelectedRow();
         PhieuXuatDTO px = pxBUS.phieuXuatDAO.selectAll().get(i_row);
@@ -389,8 +399,8 @@ public final class phieuxuat extends javax.swing.JPanel {
         // TODO add your handling code here:
         ArrayList<PhieuXuatDTO> result = new ArrayList<>();
         String text = txttimkiem.getText();
-        String choose = (String)cbxAll.getSelectedItem();
-        switch(choose) {
+        String choose = (String) cbxAll.getSelectedItem();
+        switch (choose) {
             case "Tất cả":
                 result = SearchPhieuXuat.getInstance().searchTatCa(text);
                 break;
@@ -414,14 +424,18 @@ public final class phieuxuat extends javax.swing.JPanel {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
-        addphieuxuat apn = new addphieuxuat();
-        jp.jPanelLoader(admin.panel_load, apn);
+        addphieuxuat apn = new addphieuxuat(nhanVienDTO);
+        if (maQuyen == 1) {
+            jp.jPanelLoader(admin.panel_load, apn);
+        } else {
+            jp.jPanelLoader(nvxuathang.panel_load, apn);
+        }
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void cbkhachhangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbkhachhangItemStateChanged
         // TODO add your handling code here:
         ArrayList<PhieuXuatDTO> result = new ArrayList<>();
-        String choose = (String)cbkhachhang.getSelectedItem();
+        String choose = (String) cbkhachhang.getSelectedItem();
         if (choose.equals("Tất cả")) {
             result = pxBUS.phieuXuatDAO.selectAll();
         } else {
@@ -433,7 +447,7 @@ public final class phieuxuat extends javax.swing.JPanel {
     private void cbnhanvienItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbnhanvienItemStateChanged
         // TODO add your handling code here:
         ArrayList<PhieuXuatDTO> result = new ArrayList<>();
-        String choose = (String)cbnhanvien.getSelectedItem();
+        String choose = (String) cbnhanvien.getSelectedItem();
         if (choose.equals("Tất cả")) {
             result = pxBUS.phieuXuatDAO.selectAll();
         } else {
@@ -465,7 +479,7 @@ public final class phieuxuat extends javax.swing.JPanel {
         if (txtfromMoney.getText().isEmpty() || txttoMoney.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Không được để trống 1 trong 2 ô nhập số tiền !");
         } else if (txtfromMoney.getText().isEmpty() && txttoMoney.getText().isEmpty()) {
-            result = pxBUS.phieuXuatDAO.selectAll(); 
+            result = pxBUS.phieuXuatDAO.selectAll();
         } else {
             result = SearchPhieuXuat.getInstance().searchTien(from, to);
         }

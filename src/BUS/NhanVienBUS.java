@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package BUS;
 
 import DAO.NhanVienDAO;
@@ -23,6 +19,16 @@ public class NhanVienBUS {
         return this.listNv;
     }
 
+    public NhanVienDTO getNhanVienByMaNv(int maNV) {
+        NhanVienDTO nv = new NhanVienDTO();
+        for (NhanVienDTO i : this.listNv) {
+            if (i.getManv() == maNV) {
+                return i;
+            }
+        }
+        return null;
+    }
+    
     public NhanVienDTO getByIndex(int index) {
         return this.listNv.get(index);
     }
@@ -51,7 +57,7 @@ public class NhanVienBUS {
 
     public String getNameById(int manv) {
         return nhanVienDAO.selectById(manv + "").getHoten();
-    }
+    } 
 
     public String[] getArrTenNhanVien() {
         int size = listNv.size();

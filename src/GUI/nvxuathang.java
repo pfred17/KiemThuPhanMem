@@ -1,10 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUI;
 
+import BUS.NhanVienBUS;
 import DAO.TaiKhoanDAO;
+import DTO.NhanVienDTO;
 import DTO.TaiKhoanDTO;
 
 /**
@@ -14,7 +12,9 @@ import DTO.TaiKhoanDTO;
 public class nvxuathang extends javax.swing.JFrame {
 
     private TaiKhoanDAO currentAcc;
-
+    private NhanVienBUS nhanVienBUS;
+    private TaiKhoanDTO taikhoan;
+    
     JpanelLoader jpload = new JpanelLoader();
 
     private nvxuathang parent;
@@ -24,6 +24,8 @@ public class nvxuathang extends javax.swing.JFrame {
      */
     public nvxuathang(TaiKhoanDTO tk) {
         initComponents();
+        this.taikhoan = tk;
+        this.nhanVienBUS = new NhanVienBUS();
         this.setExtendedState(nvxuathang.MAXIMIZED_BOTH);
 
     }
@@ -36,6 +38,10 @@ public class nvxuathang extends javax.swing.JFrame {
         return currentAcc;
     }
 
+    public NhanVienDTO getNhanVien() {
+        return nhanVienBUS.getNhanVienByMaNv(taikhoan.getManv());
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -148,7 +154,7 @@ public class nvxuathang extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(113, 113, 113)
+                .addGap(114, 114, 114)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -160,9 +166,9 @@ public class nvxuathang extends javax.swing.JFrame {
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(367, 367, 367)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
         );
 
         panel_load.setBackground(new java.awt.Color(204, 255, 204));
@@ -195,10 +201,10 @@ public class nvxuathang extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panel_load, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                .addComponent(panel_load, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -220,7 +226,7 @@ public class nvxuathang extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        sanpham sp = new sanpham();
+        sanpham sp = new sanpham(getNhanVien());
         jpload.jPanelLoader(panel_load, sp);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -249,7 +255,6 @@ public class nvxuathang extends javax.swing.JFrame {
         phieuxuat px = new phieuxuat();
         jpload.jPanelLoader(panel_load, px);
     }//GEN-LAST:event_jButton6ActionPerformed
-
 
     /**
      * @param args the command line arguments
