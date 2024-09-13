@@ -14,9 +14,9 @@ import javax.swing.JFrame;
  * @author Bao Phan
  */
 public class dtsanpham extends javax.swing.JDialog {
-
+    
     private sanpham parent;
-
+    
     public dtsanpham(sanpham parent, javax.swing.JFrame owner, boolean modal) {
         super(owner, modal);
         this.parent = (sanpham) parent;
@@ -24,7 +24,7 @@ public class dtsanpham extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         displayInfo();
     }
-
+    
     public void displayInfo() {
         SanPhamDTO a = parent.getSanPhamSelect();
         String imagePath = a.getHinhanh();
@@ -37,9 +37,9 @@ public class dtsanpham extends javax.swing.JDialog {
             imagePath = "src/GUI/imageSanPham/comingsoon.jpg";
             ImageIcon imageIcon = new ImageIcon(imagePath);
             lbimg.setIcon(imageIcon);
-
+            
         }
-
+        
         lbtensp.setText("  " + a.getTensp());
         lbloaisp.setText("  " + a.getLoaisp().getTenloai());
         lbnsx.setText("  " + a.getNSX());
@@ -47,10 +47,11 @@ public class dtsanpham extends javax.swing.JDialog {
         lbxuatxu.setText("  " + a.getXuatxu().getTenxuatxu());
         lbthuonghieu.setText("  " + a.getThuonghieu().getTenthuonghieu());
         lbloaisp.setText("  " + a.getLoaisp().getTenloai());
-        lbgia.setText("  " + a.getGia() + "  VND");
+        lbgianhap.setText("  " + a.getGianhap() + "  VND");
+        lbgiaban.setText(" " + a.getGiaban() + " VND");
         lbsoluongton.setText("  " + a.getSoluongton());
     }
-
+    
     private dtsanpham(JFrame jFrame, boolean b) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -80,11 +81,13 @@ public class dtsanpham extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         lbthuonghieu = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        lbgia = new javax.swing.JLabel();
+        lbgianhap = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lbhsd = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         lbsoluongton = new javax.swing.JLabel();
+        lbgiaban = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -143,9 +146,9 @@ public class dtsanpham extends javax.swing.JDialog {
 
         lbthuonghieu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
 
-        jLabel5.setText("Giá");
+        jLabel5.setText("Giá bán");
 
-        lbgia.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
+        lbgianhap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
 
         jLabel2.setText("Loại sản phẩm");
 
@@ -154,6 +157,10 @@ public class dtsanpham extends javax.swing.JDialog {
         jLabel6.setText("Số lượng tồn");
 
         lbsoluongton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
+
+        lbgiaban.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 3));
+
+        jLabel7.setText("Giá nhập");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -177,13 +184,21 @@ public class dtsanpham extends javax.swing.JDialog {
                 .addGap(126, 126, 126)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lbthuonghieu, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                    .addComponent(lbgia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5)
                     .addComponent(lbxuatxu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel1)
                     .addComponent(jLabel6)
-                    .addComponent(lbsoluongton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lbsoluongton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbgianhap, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbgiaban, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -213,12 +228,14 @@ public class dtsanpham extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel15))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel7))
+                        .addGap(25, 25, 25)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbnsx, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbgia, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(lbgianhap, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbgiaban, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(jLabel14))
@@ -302,10 +319,12 @@ public class dtsanpham extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JLabel lbgia;
+    private javax.swing.JLabel lbgiaban;
+    private javax.swing.JLabel lbgianhap;
     private javax.swing.JLabel lbhsd;
     private javax.swing.JLabel lbimg;
     private javax.swing.JLabel lbloaisp;

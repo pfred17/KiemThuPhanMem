@@ -31,7 +31,7 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
         int ketQua = 0;
         try {
             java.sql.Connection con = JDBC.getConnection();
-            String sql = "insert into sanpham (masp, maloai, tensp, hinhanh, xuatxu, NSX, HSD, thuonghieu, gia, soluongton, trangthai) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "insert into sanpham (masp, maloai, tensp, hinhanh, xuatxu, NSX, HSD, thuonghieu, gianhap,giaban, soluongton, trangthai) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?)";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, t.getMasp()); // Nếu 'masp' là một số nguyên
             pst.setInt(2, t.getMaloai());
@@ -41,9 +41,10 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
             pst.setString(6, "" + t.getNSX());
             pst.setString(7, "" + t.getHSD());
             pst.setInt(8, t.getMathuonghieu());
-            pst.setInt(9, t.getGia());
-            pst.setInt(10, t.getSoluongton());
-            pst.setInt(11, t.getTrangthai());
+            pst.setInt(9, t.getGianhap());
+            pst.setInt(10, t.getGiaban());
+            pst.setInt(11, t.getSoluongton());
+            pst.setInt(12, t.getTrangthai());
             ketQua = pst.executeUpdate();
             JDBC.closeConnection(con);
         } catch (Exception e) {
@@ -58,7 +59,7 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
         int ketQua = 0;
         try {
             java.sql.Connection con = JDBC.getConnection();
-            String sql = "UPDATE sanpham SET  maloai=?, tensp=?, hinhanh=?, xuatxu=?,NSX=?,HSD=?,thuonghieu=?,gia=? WHERE masp=?";
+            String sql = "UPDATE sanpham SET  maloai=?, tensp=?, hinhanh=?, xuatxu=?,NSX=?,HSD=?,thuonghieu=?,giaban=? WHERE masp=?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, t.getMaloai());
             pst.setString(2, t.getTensp());
@@ -67,7 +68,7 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
             pst.setString(5, "" + t.getNSX());
             pst.setString(6, "" + t.getHSD());
             pst.setInt(7, t.getMathuonghieu());
-            pst.setString(8, "" + t.getGia());
+            pst.setString(8, "" + t.getGiaban());
             pst.setInt(9, t.getMasp());
             ketQua = pst.executeUpdate();
             JDBC.closeConnection(con);
@@ -99,7 +100,7 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
     public ArrayList<SanPhamDTO> selectAll() {
         ArrayList<SanPhamDTO> ketQua = new ArrayList<SanPhamDTO>();
         try (Connection con = JDBC.getConnection(); Statement s = con.createStatement(); ResultSet rs = s.executeQuery("SELECT sanpham.masp, sanpham.maloai, sanpham.tensp, sanpham.hinhanh, sanpham.xuatxu,\n"
-                + "       sanpham.NSX, sanpham.HSD, sanpham.thuonghieu, sanpham.gia, sanpham.soluongton, sanpham.trangthai,\n"
+                + "       sanpham.NSX, sanpham.HSD, sanpham.thuonghieu, sanpham.gianhap,sanpham.giaban, sanpham.soluongton, sanpham.trangthai,\n"
                 + "       loaisanpham.tenloai, thuonghieu.tenthuonghieu, xuatxu.tenxuatxu, loaisanpham.trangthai, xuatxu.trangthai, thuonghieu.mathuonghieu\n"
                 + "FROM sanpham\n"
                 + "INNER JOIN loaisanpham ON sanpham.maloai = loaisanpham.maloai\n"
@@ -112,7 +113,6 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
                 LoaiSanPhamDTO lsp = new LoaiSanPhamDTO(rs.getInt("maloai"), rs.getString("tenloai"));
                 XuatXuDTO xx = new XuatXuDTO(rs.getInt("xuatxu"), rs.getString("tenxuatxu"));
                 ThuongHieuDTO th = new ThuongHieuDTO(rs.getInt("thuonghieu"), rs.getString("tenthuonghieu"));
-
                 SanPhamDTO sp = new SanPhamDTO();
                 sp.setMasp(rs.getInt("masp"));
 //                sp.setMaloai(rs.getInt("maloai"));
@@ -122,7 +122,8 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
                 sp.setNSX(rs.getDate("NSX"));
                 sp.setHSD(rs.getDate("HSD"));
 //                sp.setMathuonghieu(rs.getInt("thuonghieu"));
-                sp.setGia(rs.getInt("gia"));
+                sp.setGianhap(rs.getInt("gianhap"));
+                sp.setGiaban(rs.getInt("giaban"));
                 sp.setSoluongton(rs.getInt("soluongton"));
                 sp.setTrangthai(rs.getInt("trangthai"));
                 sp.setLoaisp(lsp);
@@ -155,10 +156,11 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
                 Date NSX = rs.getDate("NSX");
                 Date HSD = rs.getDate("HSD");
                 int mathuonghieu = rs.getInt("thuonghieu");
-                int gia = rs.getInt("gia");
+                int gianhap = rs.getInt("gianhap");
+                int giaban = rs.getInt("giaban");
                 int soluongton = rs.getInt("soluongton");
                 int trangthai = rs.getInt("trangthai");
-                ketQua = new SanPhamDTO(masp, maloai, tensp, hinhanh, NSX, HSD, maxuatxu, mathuonghieu, gia, soluongton, trangthai);
+                ketQua = new SanPhamDTO(masp, maloai, tensp, hinhanh, NSX, HSD, maxuatxu, mathuonghieu, soluongton, gianhap, giaban, trangthai);
             }
         } catch (Exception e) {
             // TODO: handle exception

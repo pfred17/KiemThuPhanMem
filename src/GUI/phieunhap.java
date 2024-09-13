@@ -118,7 +118,6 @@ public final class phieunhap extends javax.swing.JPanel {
         jToolBar3 = new javax.swing.JToolBar();
         btnThem = new javax.swing.JButton();
         btnChiTiet = new javax.swing.JButton();
-        btnHuy = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -187,19 +186,6 @@ public final class phieunhap extends javax.swing.JPanel {
             }
         });
         jToolBar3.add(btnChiTiet);
-
-        btnHuy.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnHuy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/cancel.png"))); // NOI18N
-        btnHuy.setText("HỦY PHIẾU");
-        btnHuy.setFocusable(false);
-        btnHuy.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnHuy.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnHuy.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHuyActionPerformed(evt);
-            }
-        });
-        jToolBar3.add(btnHuy);
         jToolBar3.add(jSeparator3);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -409,20 +395,6 @@ public final class phieunhap extends javax.swing.JPanel {
         displaytoTable(result);
     }//GEN-LAST:event_txttimkiemKeyReleased
 
-    private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
-        // TODO add your handling code here:
-        if (tblphieunhap.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn phiếu nhập muốn hủy");
-        } else {
-            int output = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn hủy phiếu nhập", "Xác nhận hủy phiếu nhập", JOptionPane.YES_NO_OPTION);
-            if (output == JOptionPane.YES_OPTION) {
-                pnBUS.delete(getPhieuNhapSelect(), tblphieunhap.getSelectedRow());
-                JOptionPane.showMessageDialog(this, "Xóa thành công !");
-                displaytoTable(pnBUS.phieunhapDAO.selectAll());
-            }
-        }
-    }//GEN-LAST:event_btnHuyActionPerformed
-
     private void cbnccItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbnccItemStateChanged
         // TODO add your handling code here:
         ArrayList<PhieuNhapDTO> result = new ArrayList<>();
@@ -503,7 +475,6 @@ public final class phieunhap extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser DateFrom;
     private com.toedter.calendar.JDateChooser DateTo;
     private javax.swing.JButton btnChiTiet;
-    private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnThem;
     private javax.swing.JComboBox<String> cbncc;
     private javax.swing.JComboBox<String> cbnvien;

@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class addphieunhap extends javax.swing.JPanel {
+
     ArrayList<SanPhamDTO> list = new ArrayList<SanPhamDTO>();
     private NhanVienDTO nhanVienDTO;
     KhoHangBUS khBUS = new KhoHangBUS();
@@ -38,7 +39,6 @@ public class addphieunhap extends javax.swing.JPanel {
         displaytoTable1(list);
         tblphieunhapin.setDefaultEditor(Object.class, null);
         tblphieunhapout.setDefaultEditor(Object.class, null);
-        
 
     }
 
@@ -64,10 +64,13 @@ public class addphieunhap extends javax.swing.JPanel {
         try {
             DefaultTableModel dt = (DefaultTableModel) tblphieunhapin.getModel();
             dt.setRowCount(0);
+            Date currentDate = new Date();
             for (SanPhamDTO i : list) {
-                dt.addRow(new Object[]{
-                    i.getMasp(), i.getTensp(), i.getSoluongton(), i.getGia()
-                });
+                if (i.getHSD().getTime() > currentDate.getTime()) {
+                    dt.addRow(new Object[]{
+                        i.getMasp(), i.getTensp(), i.getSoluongton(), i.getGianhap()
+                    });
+                }
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -411,7 +414,7 @@ public class addphieunhap extends javax.swing.JPanel {
                 sp.setSoluongton(sp.getSoluongton() + soluong);
                 sp.setMasp(masp);
                 spBUS.updateSoLuongTon(sp);
-                
+
                 ChiTietPhieuNhapDTO ctpn = new ChiTietPhieuNhapDTO(mapn, masp, soluong, dongia);
                 pnBUS.ctPhieuNhapDAO.insert(ctpn);
             }
