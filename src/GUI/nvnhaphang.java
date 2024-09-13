@@ -4,6 +4,7 @@ import BUS.NhanVienBUS;
 import DAO.TaiKhoanDAO;
 import DTO.NhanVienDTO;
 import DTO.TaiKhoanDTO;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -176,7 +177,7 @@ public class nvnhaphang extends javax.swing.JFrame {
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35))
+                .addGap(79, 79, 79))
         );
 
         panel_load.setBackground(new java.awt.Color(204, 255, 204));
@@ -239,8 +240,17 @@ public class nvnhaphang extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-                System.exit(0);
 
+        int relly = JOptionPane.showConfirmDialog(
+                null,
+                "Bạn muốn thoát khỏi chương trình ?",
+                "Xác nhận",
+                JOptionPane.YES_NO_OPTION);
+        if (relly == JOptionPane.YES_OPTION) {
+            this.dispose();
+            login a = new login();
+            a.setVisible(true);
+        }
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
