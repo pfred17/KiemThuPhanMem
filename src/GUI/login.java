@@ -289,9 +289,11 @@ public class login extends javax.swing.JFrame {
         
         if (tk == null) {
             JOptionPane.showMessageDialog(this, "Tài khoản của bạn không tồn tại trên hệ thống", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+            return;
         } else {
             if (tk.getTrangthai() == 0) {
                 JOptionPane.showMessageDialog(this, "Tài khoản của bạn đang bị khóa", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+                return;
             } else {
                 if (passwordCheck.equals(tk.getMatkhau())) {
                     this.dispose();
@@ -307,7 +309,7 @@ public class login extends javax.swing.JFrame {
                         ql.setVisible(true);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Mật khẩu không khớp", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Mật khẩu không chính xác", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
                 }
             }
         }

@@ -9,6 +9,7 @@ import BUS.ThuongHieuBUS;
 import BUS.XuatXuBUS;
 import BUS.LoaiSanPhamBUS;
 import Controler.SearchSanPham;
+import DTO.NhanVienDTO;
 import javax.swing.table.DefaultTableModel;
 import DTO.SanPhamDTO;
 import GUI.add.addsanpham;
@@ -38,7 +39,8 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public final class sanpham extends javax.swing.JPanel {
-
+    private NhanVienDTO nhanVienDTO;
+    
     private DefaultTableModel tblModel;
     ArrayList<SanPhamDTO> list = new ArrayList<SanPhamDTO>();
     SanPhamBUS spBUS = new SanPhamBUS();
@@ -46,8 +48,9 @@ public final class sanpham extends javax.swing.JPanel {
     XuatXuBUS xxBUS = new XuatXuBUS();
     ThuongHieuBUS thBUS = new ThuongHieuBUS();
 
-    public sanpham() {
+    public sanpham(NhanVienDTO nhanVienDTO) {
         initComponents();
+        this.nhanVienDTO = nhanVienDTO;
         list = spBUS.spDAO.selectAll();
         tablesp.setDefaultEditor(Object.class, null);
         initTable();
