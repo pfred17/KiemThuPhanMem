@@ -64,7 +64,16 @@ public class TaiKhoanBUS {
         }
         return i;
     }
-
+    
+    public Boolean checkExistAccount(String username) {
+        for (TaiKhoanDTO tk : this.listTaiKhoan) {
+            if (tk.getTendangnhap().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public Boolean add(TaiKhoanDTO tk) {
         boolean check = tkDAO.insert(tk) != 0;
         if (check) {
@@ -74,7 +83,7 @@ public class TaiKhoanBUS {
     }
 
     public Boolean delete(TaiKhoanDTO tk) {
-        boolean check = tkDAO.delete(Integer.toString(tk.getManv())) != 0;
+        boolean check = tkDAO.delete(tk.getManv()) != 0;
         if (check) {
             this.listTaiKhoan.remove(tk);
         }

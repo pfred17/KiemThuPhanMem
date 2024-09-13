@@ -18,6 +18,17 @@ public class NhanVienBUS {
     public ArrayList<DTO.NhanVienDTO> getAll() {
         return this.listNv;
     }
+    
+    // Lấy danh sách nhân viên chưa có tài khoản
+    public ArrayList<NhanVienDTO> getListNVNoAccount() {
+        ArrayList<NhanVienDTO> list = new ArrayList<>();
+        if (nvDAO.getListNVNoAccount() != null) {
+            return nvDAO.getListNVNoAccount();
+        }
+        return null;
+    }
+    
+    // Lấy
 
     public NhanVienDTO getNhanVienByMaNv(int maNV) {
         NhanVienDTO nv = new NhanVienDTO();

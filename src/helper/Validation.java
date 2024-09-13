@@ -2,7 +2,7 @@ package helper;
 
 public class Validation {
 
-    public static Boolean isEmpty(String input) {
+    public Boolean isEmpty(String input) {
         if (input == null) {
             return true;
         }

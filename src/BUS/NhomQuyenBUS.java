@@ -7,16 +7,21 @@ import DTO.NhomQuyenDTO;
 import java.util.ArrayList;
 
 public class NhomQuyenBUS {
-    public NhomQuyenDAO qDAO = new NhomQuyenDAO();
-    public ChiTietQuyenDAO ctqDAO = new ChiTietQuyenDAO();
+    private NhomQuyenDAO qDAO;
+    private ChiTietQuyenDAO ctqDAO = new ChiTietQuyenDAO();
     private ArrayList<NhomQuyenDTO> quyenList = new ArrayList<>();
     
     public NhomQuyenBUS() {
+        qDAO = new NhomQuyenDAO();
+    }
+    
+    public void loadData() {
         quyenList = qDAO.selectAll();
     }
     
-    public ArrayList<NhomQuyenDTO> getAll() {
-        return this.quyenList;
+    public ArrayList<NhomQuyenDTO> getArrNhomQuyen() {
+        loadData();
+        return quyenList;
     }
     
     public NhomQuyenDTO getByIndex(int index) {
