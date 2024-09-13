@@ -25,7 +25,6 @@ public class TaiKhoanDTO {
         this.manhomquyen = manhomquyen;
         this.tendangnhap = tendangnhap;
         this.trangthai = trangthai;
-//        this.email = email;
     }
 
     public int getManv() {

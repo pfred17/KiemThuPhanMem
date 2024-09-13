@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
 import java.sql.Connection;
@@ -19,6 +15,29 @@ import java.sql.Statement;
 public class NhanVienDAO implements DAOinterface<NhanVienDTO>{
     public static NhanVienDAO getInstance(){
         return new NhanVienDAO();
+    }
+    
+    // Hàm lấy danh sách nhân viên chưa có tài khoản
+    public ArrayList<NhanVienDTO> getListNVNoAccount() {
+        ArrayList<NhanVienDTO> list = new ArrayList<>();
+        try {
+            Statement s = (Statement) JDBC.getConnection().createStatement();
+            ResultSet rs = s.executeQuery(" SELECT * FROM nhanvien nv LEFT JOIN taikhoan tk ON nv.manv = tk.manv where tk.manv IS NULL AND nv.manv IN (SELECT manv from nhanvien where trangthai = 1)");
+            while(rs.next()){
+                NhanVienDTO nv = new NhanVienDTO();
+                nv.setManv(rs.getInt("manv"));
+                nv.setHoten(rs.getString("hoten"));
+                nv.setGioitinh(rs.getString("gioitinh"));
+                nv.setNgaysinh(rs.getDate("ngaysinh"));
+                nv.setSdt(rs.getString("sdt"));
+                nv.setEmail(rs.getString("email"));
+                nv.setTrangthai(rs.getInt("trangthai"));
+                list.add(nv);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     @Override

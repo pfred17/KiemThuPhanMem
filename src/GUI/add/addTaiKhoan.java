@@ -1,17 +1,55 @@
 package GUI.add;
 
+import BUS.NhanVienBUS;
+import BUS.NhomQuyenBUS;
+import BUS.TaiKhoanBUS;
+import DTO.NhanVienDTO;
+import DTO.NhomQuyenDTO;
+import DTO.TaiKhoanDTO;
+import helper.Validation;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author admin
  */
 public class addTaiKhoan extends javax.swing.JFrame {
 
-    /**
-     * Creates new form addTaiKhoan
-     */
+    private static Map<String, Integer> listNVNoAccount = new HashMap<>(); // Lưu mã và tên nhân viên
+    private static Map<String, Integer> listQuyen = new HashMap<>(); // Danh sách các quyền
+    
+    private NhanVienBUS nhanVienBUS;
+    private TaiKhoanBUS taiKhoanBUS;
+    private Validation validation;
+
     public addTaiKhoan() {
         initComponents();
         setLocationRelativeTo(null);
+        validation = new Validation();
+        nhanVienBUS = new NhanVienBUS();
+        taiKhoanBUS = new TaiKhoanBUS();
+        loadListQuyen();
+        displayComboBoxTenNV();
+    }
+
+    public void displayComboBoxTenNV() {
+        ArrayList<NhanVienDTO> list = nhanVienBUS.getListNVNoAccount();
+        cbbTenNhanVien.addItem("Chọn nhân viên");
+        for (NhanVienDTO i : list) {
+            listNVNoAccount.put(i.getHoten(), i.getManv());
+            cbbTenNhanVien.addItem(i.getHoten());
+        }
+        nhanVienBUS.getByIndex(1);
+    }
+
+    public void loadListQuyen() {
+        for (int i = 0; i < 2; i++) {
+            listQuyen.put("Nhân viên nhập hàng", 2);
+            listQuyen.put("Nhân viên xuất hàng", 3);
+        }
     }
 
     /**
@@ -27,15 +65,15 @@ public class addTaiKhoan extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbbTenNhanVien = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtMaNV = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtTenDangNhap = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtMatKhau = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbbVaiTro = new javax.swing.JComboBox<>();
         btnthem = new javax.swing.JButton();
         btnthem1 = new javax.swing.JButton();
 
@@ -68,13 +106,24 @@ public class addTaiKhoan extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Tên nhân viên");
 
+        cbbTenNhanVien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbTenNhanVienActionPerformed(evt);
+            }
+        });
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Mã nhân viên");
 
-        jTextField1.setBackground(new java.awt.Color(204, 204, 204));
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setEnabled(false);
+        txtMaNV.setBackground(new java.awt.Color(204, 204, 204));
+        txtMaNV.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtMaNV.setForeground(new java.awt.Color(255, 255, 255));
+        txtMaNV.setEnabled(false);
+        txtMaNV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMaNVActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Tên đăng nhập");
@@ -85,13 +134,18 @@ public class addTaiKhoan extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Vai trò");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn vai trò", "Nhân viên nhập hàng", "Nhân viên xuất hàng" }));
-        jComboBox2.setToolTipText("");
+        cbbVaiTro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn vai trò", "Nhân viên nhập hàng", "Nhân viên xuất hàng" }));
+        cbbVaiTro.setToolTipText("");
 
         btnthem.setBackground(new java.awt.Color(51, 204, 0));
         btnthem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnthem.setForeground(new java.awt.Color(255, 255, 255));
         btnthem.setText("THÊM");
+        btnthem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnthemActionPerformed(evt);
+            }
+        });
 
         btnthem1.setBackground(new java.awt.Color(255, 51, 51));
         btnthem1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -112,22 +166,22 @@ public class addTaiKhoan extends javax.swing.JFrame {
                 .addContainerGap(40, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jComboBox2, 0, 300, Short.MAX_VALUE)
+                        .addComponent(cbbVaiTro, 0, 300, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jTextField3)
+                                .addComponent(txtMatKhau)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jTextField2)
+                                        .addComponent(txtTenDangNhap)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(jTextField1)
+                                                .addComponent(txtMaNV)
                                                 .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jComboBox1, 0, 300, Short.MAX_VALUE))))))))
+                                                .addComponent(cbbTenNhanVien, 0, 300, Short.MAX_VALUE))))))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnthem, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -141,23 +195,23 @@ public class addTaiKhoan extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbbTenNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtMaNV, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTenDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbbVaiTro, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnthem, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -173,7 +227,7 @@ public class addTaiKhoan extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -182,6 +236,63 @@ public class addTaiKhoan extends javax.swing.JFrame {
     private void btnthem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthem1ActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnthem1ActionPerformed
+
+    private void txtMaNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaNVActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMaNVActionPerformed
+
+    private void cbbTenNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbTenNhanVienActionPerformed
+        String selectedItem = (String) cbbTenNhanVien.getSelectedItem();
+        if (cbbTenNhanVien.getSelectedIndex() != 0) {
+            txtMaNV.setText(String.valueOf(listNVNoAccount.get(selectedItem)));
+        } else {
+            txtMaNV.setText("");
+        }
+    }//GEN-LAST:event_cbbTenNhanVienActionPerformed
+
+    private void btnthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthemActionPerformed
+        // Validate tên nhân viên
+        if (cbbTenNhanVien.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn tên nhân viên!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validate username
+        String username = txtTenDangNhap.getText();
+        if (validation.isEmpty(username)) {
+            JOptionPane.showMessageDialog(null, "Tên đăng nhập không được để trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else if (taiKhoanBUS.checkExistAccount(username)) {
+            JOptionPane.showMessageDialog(null, "Tên đăng nhập đã tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+         // Validate password
+        String password = txtMatKhau.getText();
+        if (validation.isEmpty(password)) {
+            JOptionPane.showMessageDialog(null, "Mật khẩu không được để trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else if ( password.length() < 3) {
+            JOptionPane.showMessageDialog(null, "Mật khẩu phải từ 3 kí tự trở lên!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int manv = Integer.parseInt(txtMaNV.getText());
+         // Validate vai trò
+        if (cbbVaiTro.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn vai trò!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String selectedItemQuyen = (String) cbbVaiTro.getSelectedItem();
+        int maquyen = Integer.parseInt(String.valueOf(listQuyen.get(selectedItemQuyen)));
+        
+        TaiKhoanDTO taiKhoanMoi = new TaiKhoanDTO(manv, password, maquyen, username, 1);
+        
+        if (taiKhoanBUS.add(taiKhoanMoi)) {
+            JOptionPane.showMessageDialog(null, "Thêm tài khoản mới thành công!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Thêm tài khoản thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_btnthemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -221,8 +332,8 @@ public class addTaiKhoan extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnthem;
     private javax.swing.JButton btnthem1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> cbbTenNhanVien;
+    private javax.swing.JComboBox<String> cbbVaiTro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -231,8 +342,8 @@ public class addTaiKhoan extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField txtMaNV;
+    private javax.swing.JTextField txtMatKhau;
+    private javax.swing.JTextField txtTenDangNhap;
     // End of variables declaration//GEN-END:variables
 }

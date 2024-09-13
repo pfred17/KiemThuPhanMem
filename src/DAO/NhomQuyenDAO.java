@@ -67,7 +67,7 @@ public class NhomQuyenDAO implements DAOinterface<NhomQuyenDTO> {
 
     @Override
     public ArrayList<NhomQuyenDTO> selectAll() {
-        ArrayList<NhomQuyenDTO> result = null;
+        ArrayList<NhomQuyenDTO> result = new ArrayList<NhomQuyenDTO>();
         try {
             Connection con = (Connection) JDBC.getConnection();
             String sql = "SELECT * FROM nhomquyen WHERE trangthai = 1";
