@@ -394,10 +394,10 @@ CREATE TABLE `taikhoan` (
 
 INSERT INTO `taikhoan` (`mataikhoan`, `manv`, `matkhau`, `manhomquyen`, `tendangnhap`, `trangthai`) VALUES
 (1, 1, 'abc', 1, 'admin', 1),
-(2, 3, 'abc', 1, 'dai', 1),
-(3, 2, 'abc', 1, 'vuem', 1),
-(4, 4, 'abc', 2, 'khuong', 0),
-(5, 5, 'abc', 3, 'bao', 0);
+(2, 3, 'abc', 2, 'tancanh', 1),
+(3, 2, 'abc', 3, 'bao', 1),
+(4, 4, 'abc', 2, 'truc', 0),
+(5, 5, 'abc', 3, 'hieu', 0);
 
 -- --------------------------------------------------------
 
