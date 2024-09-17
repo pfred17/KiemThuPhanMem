@@ -7,6 +7,7 @@ import DTO.PhieuNhapDTO;
 import DTO.TaiKhoanDTO;
 import GUI.add.addphieunhap;
 import GUI.details.detailsphieunhap;
+import helper.FormatPrice;
 import java.util.*;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
@@ -21,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public final class phieunhap extends javax.swing.JPanel {
     private NhanVienDTO nhanVienDTO;
+    private FormatPrice formatPrice;
     private int maQuyen;
     ArrayList<PhieuNhapDTO> list = new ArrayList<PhieuNhapDTO>();
     JpanelLoader jp = new JpanelLoader();
@@ -29,6 +31,7 @@ public final class phieunhap extends javax.swing.JPanel {
 
     public phieunhap(NhanVienDTO nhanVienDTO, int maQuyen) {
         initComponents();
+        formatPrice = new FormatPrice();
         this.nhanVienDTO = nhanVienDTO;
         this.maQuyen = maQuyen;
         cbxAllDisplay();
@@ -70,30 +73,13 @@ public final class phieunhap extends javax.swing.JPanel {
             dt.setRowCount(0);
             for (PhieuNhapDTO i : list) {
                 dt.addRow(new Object[] {
-                    index, i.getMaphieunhap(), i.getTenncc(), i.getTennvnhap(), i.getThoigian(), i.getTongtien()
+                    index, i.getMaphieunhap(), i.getTenncc(), i.getTennvnhap(), i.getThoigian(), formatPrice.formatCurrency(i.getTongtien())
                 });
                 index++;
             }
         } catch (Exception e) {
             System.out.println(e);
         }
-    }
-    
-    public void SearchDate() {
-        ArrayList<PhieuNhapDTO> result = new ArrayList<>();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date from = formatter.parse("" + DateFrom.getDate());
-            Date to = formatter.parse("" + DateTo.getDate());
-            if (from == null && to == null) {
-                result = pnBUS.phieunhapDAO.selectAll();
-            } else {
-                result = SearchPhieuNhap.getInstance().searchDate(from, to);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        displaytoTable(result);
     }
     
     public PhieuNhapDTO getPhieuNhapSelect() {
@@ -124,14 +110,6 @@ public final class phieunhap extends javax.swing.JPanel {
         cbncc = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         cbnvien = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        txtfromMoney = new javax.swing.JTextField();
-        txttoMoney = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        DateFrom = new com.toedter.calendar.JDateChooser();
-        DateTo = new com.toedter.calendar.JDateChooser();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblphieunhap = new javax.swing.JTable();
 
@@ -236,30 +214,6 @@ public final class phieunhap extends javax.swing.JPanel {
             }
         });
 
-        jLabel3.setText("Từ ngày");
-
-        jLabel4.setText("Đến ngày");
-
-        jLabel5.setText("Từ số tiền (VND)");
-
-        txtfromMoney.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtfromMoneyKeyReleased(evt);
-            }
-        });
-
-        txttoMoney.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txttoMoneyKeyReleased(evt);
-            }
-        });
-
-        jLabel6.setText("Đến số tiền (VND)");
-
-        DateFrom.setDateFormatString("yyyy-MM-dd");
-
-        DateTo.setDateFormatString("yyyy-MM-dd");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -273,23 +227,7 @@ public final class phieunhap extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(cbnvien, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(DateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(DateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(txtfromMoney, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(txttoMoney, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(704, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -301,19 +239,9 @@ public final class phieunhap extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbncc, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cbnvien)
-                            .addComponent(txtfromMoney, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                            .addComponent(txttoMoney, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(DateFrom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(DateTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(cbnvien, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -419,37 +347,6 @@ public final class phieunhap extends javax.swing.JPanel {
         displaytoTable(result);
     }//GEN-LAST:event_cbnvienItemStateChanged
 
-    private void txttoMoneyKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttoMoneyKeyReleased
-        // TODO add your handling code here:
-        ArrayList<PhieuNhapDTO> result = new ArrayList<>();
-        long from = Long.parseLong(txtfromMoney.getText());
-        long to = Long.parseLong(txttoMoney.getText());
-        if (txtfromMoney.getText().isEmpty() || txttoMoney.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Không được để trống 1 trong 2 ô nhập số tiền !");
-        } else if (txtfromMoney.getText().isEmpty() && txttoMoney.getText().isEmpty()) {
-            result = pnBUS.phieunhapDAO.selectAll();
-        } else {
-            result = SearchPhieuNhap.getInstance().searchTien(from, to);
-        }
-        displaytoTable(result);
-    }//GEN-LAST:event_txttoMoneyKeyReleased
-
-    private void txtfromMoneyKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtfromMoneyKeyReleased
-        // TODO add your handling code here:
-        ArrayList<PhieuNhapDTO> result = new ArrayList<>();
-        long from = Long.parseLong(txtfromMoney.getText());
-        long to = Long.parseLong(txttoMoney.getText());
-        if (txtfromMoney.getText().isEmpty() || txttoMoney.getText().isEmpty()) {
-            result = pnBUS.phieunhapDAO.selectAll();
-            JOptionPane.showMessageDialog(this, "Không được để trống 1 trong 2 ô nhập số tiền !");
-        } else if (txtfromMoney.getText().isEmpty() && txttoMoney.getText().isEmpty()) {
-            result = pnBUS.phieunhapDAO.selectAll();
-        } else {
-            result = SearchPhieuNhap.getInstance().searchTien(from, to);
-        }
-        displaytoTable(result);
-    }//GEN-LAST:event_txtfromMoneyKeyReleased
-
     private void btnChiTietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChiTietActionPerformed
         // TODO add your handling code here:
         if (tblphieunhap.getSelectedRow() == -1) {
@@ -466,14 +363,10 @@ public final class phieunhap extends javax.swing.JPanel {
         txttimkiem.setText("");
         cbncc.setSelectedIndex(0);
         cbnvien.setSelectedIndex(0);
-        txtfromMoney.setText("");
-        txttoMoney.setText("");
     }//GEN-LAST:event_jButton23ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser DateFrom;
-    private com.toedter.calendar.JDateChooser DateTo;
     private javax.swing.JButton btnChiTiet;
     private javax.swing.JButton btnThem;
     private javax.swing.JComboBox<String> cbncc;
@@ -482,18 +375,12 @@ public final class phieunhap extends javax.swing.JPanel {
     private javax.swing.JButton jButton23;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar jToolBar3;
     private javax.swing.JTable tblphieunhap;
-    private javax.swing.JTextField txtfromMoney;
     private javax.swing.JTextField txttimkiem;
-    private javax.swing.JTextField txttoMoney;
     // End of variables declaration//GEN-END:variables
 }

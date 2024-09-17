@@ -49,7 +49,7 @@ public class PhieuXuatDAO implements DAOinterface<PhieuXuatDTO> {
             pst.setInt(1, t.getMaphieuxuat());
             pst.setInt(2, t.getMasp());
             pst.setInt(3, t.getSoluong());
-            pst.setInt(4, t.getDongia());
+            pst.setDouble(4, t.getDongia());
             result = pst.executeUpdate();
             JDBC.closeConnection(con);
         } catch (SQLException ex) {
@@ -152,7 +152,7 @@ public class PhieuXuatDAO implements DAOinterface<PhieuXuatDTO> {
                 int maphieu = rs.getInt("maphieuxuat");
                 int masp = rs.getInt("masp");
                 int sl = rs.getInt("soluong");
-                int dongia = rs.getInt("dongia");
+                double dongia = rs.getDouble("dongia");
                 PhieuXuatDTO phieuxuat = new PhieuXuatDTO(maphieu, masp, sl, dongia);
                 result.add(phieuxuat);
             }

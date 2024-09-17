@@ -41,8 +41,8 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
             pst.setString(6, "" + t.getNSX());
             pst.setString(7, "" + t.getHSD());
             pst.setInt(8, t.getMathuonghieu());
-            pst.setInt(9, t.getGianhap());
-            pst.setInt(10, t.getGiaban());
+            pst.setDouble(9, 0);
+            pst.setDouble(10, 0);
             pst.setInt(11, t.getSoluongton());
             pst.setInt(12, t.getTrangthai());
             ketQua = pst.executeUpdate();
@@ -206,14 +206,16 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
         return result;
     }
 
-    public int updateQuantity(SanPhamDTO t) {
+    public int updateQuantity(SanPhamDTO sp) {
         int ketQua = 0;
         try {
             java.sql.Connection con = JDBC.getConnection();
-            String sql = "UPDATE sanpham SET soluongton = ? WHERE masp = ?";
+            String sql = "UPDATE sanpham SET gianhap = ?, giaban = ?, soluongton = ? WHERE masp = ?";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setInt(1, t.getSoluongton());
-            pst.setInt(2, t.getMasp());
+            pst.setDouble(1, sp.getGianhap());
+            pst.setDouble(2, sp.getGiaban());
+            pst.setInt(3, sp.getSoluongton());
+            pst.setInt(4, sp.getMasp());
             ketQua = pst.executeUpdate();
             JDBC.closeConnection(con);
         } catch (Exception e) {

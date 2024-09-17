@@ -78,7 +78,7 @@ public class SanPhamBUS {
     }
     
     public Boolean updateSoLuongTon(SanPhamDTO sp) {
-        boolean check = spDAO.updateSoLuongTon(sp) != 0;
+        boolean check = spDAO.updateQuantity(sp) != 0;
         if (check) {
             return true;
         }

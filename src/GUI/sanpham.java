@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package GUI;
 
 import BUS.SanPhamBUS;
@@ -15,6 +11,7 @@ import DTO.SanPhamDTO;
 import GUI.add.addsanpham;
 import GUI.update.updatesanpham;
 import GUI.details.dtsanpham;
+import helper.FormatPrice;
 import java.awt.Desktop;
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -41,6 +38,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public final class sanpham extends javax.swing.JPanel {
 
     private NhanVienDTO nhanVienDTO;
+    private FormatPrice formatPrice;
 
     private DefaultTableModel tblModel;
     ArrayList<SanPhamDTO> list = new ArrayList<SanPhamDTO>();
@@ -52,6 +50,7 @@ public final class sanpham extends javax.swing.JPanel {
     public sanpham(NhanVienDTO nhanVienDTO) {
         initComponents();
         this.nhanVienDTO = nhanVienDTO;
+        formatPrice = new FormatPrice();
         list = spBUS.spDAO.selectAll();
         tablesp.setDefaultEditor(Object.class, null);
         initTable();
@@ -83,7 +82,7 @@ public final class sanpham extends javax.swing.JPanel {
                         i.getMasp(), i.getTensp(), i.getLoaisp().getTenloai(),
                         i.getXuatxu().getTenxuatxu(),
                         i.getThuonghieu().getTenthuonghieu(),
-                        i.getGianhap(), i.getGiaban(), i.getSoluongton()
+                        formatPrice.formatCurrency(i.getGianhap()), formatPrice.formatCurrency(i.getGiaban()), i.getSoluongton()
                     });
 
                 }
@@ -116,7 +115,6 @@ public final class sanpham extends javax.swing.JPanel {
         btnView = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
         exportExcel = new javax.swing.JButton();
-        importExcel = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
@@ -245,19 +243,6 @@ public final class sanpham extends javax.swing.JPanel {
             }
         });
         jToolBar2.add(exportExcel);
-
-        importExcel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        importExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/import_excel.png"))); // NOI18N
-        importExcel.setText("NHẬP EXCEL");
-        importExcel.setFocusable(false);
-        importExcel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        importExcel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        importExcel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                importExcelActionPerformed(evt);
-            }
-        });
-        jToolBar2.add(importExcel);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -448,71 +433,6 @@ public final class sanpham extends javax.swing.JPanel {
     }
 
 
-    private void importExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importExcelActionPerformed
-        File excelFile;
-        FileInputStream excelFIS = null;
-        BufferedInputStream excelBIS = null;
-        XSSFWorkbook excelJTableImport = null;
-        ArrayList<SanPhamDTO> listAccExcel = new ArrayList<SanPhamDTO>();
-        JFileChooser jf = new JFileChooser();
-        jf.setCurrentDirectory(new File(System.getProperty("user.dir"), "src/Excel"));
-        int result = jf.showOpenDialog(null);
-        jf.setDialogTitle("Open file");
-        Workbook workbook = null;
-        if (result == JFileChooser.APPROVE_OPTION) {
-            try {
-                excelFile = jf.getSelectedFile();
-                excelFIS = new FileInputStream(excelFile);
-                excelBIS = new BufferedInputStream(excelFIS);
-                excelJTableImport = new XSSFWorkbook(excelBIS);
-                XSSFSheet excelSheet = excelJTableImport.getSheetAt(0);
-                int stt = spBUS.spDAO.getAutoIncrement();
-                // Khởi tạo một DataFormatter
-
-                for (int row = 1; row <= excelSheet.getLastRowNum(); row++) {
-                    XSSFRow excelRow = excelSheet.getRow(row);
-                    int masp = stt++;
-                    int maloai = (int) excelRow.getCell(0).getNumericCellValue();
-                    String tensp = (excelRow.getCell(1)).getStringCellValue();
-                    int maxuatxu = (int) excelRow.getCell(2).getNumericCellValue();
-                    int mathuonghieu = (int) excelRow.getCell(3).getNumericCellValue();
-                    int gianhap = (int) excelRow.getCell(4).getNumericCellValue();
-                    int giaban = (int) excelRow.getCell(5).getNumericCellValue();
-
-                    // Lấy ngày sản xuất và hạn sử dụng
-                    // Lấy giá trị từ ô ở cột 5 (NSX) dưới dạng chuỗi
-                    Date nsxDate = excelRow.getCell(6).getDateCellValue();
-                    Date hsdDate = excelRow.getCell(7).getDateCellValue();
-
-                    java.sql.Date sqlNSX = new java.sql.Date(nsxDate.getTime());
-                    java.sql.Date sqlHSD = new java.sql.Date(nsxDate.getTime());
-                    String img = excelRow.getCell(8).getStringCellValue();
-
-                    SanPhamDTO sp = new SanPhamDTO(masp, maloai, tensp, img, sqlNSX, sqlHSD, maxuatxu, mathuonghieu, 0, gianhap, giaban, 1);
-
-                    listAccExcel.add(sp);
-                    DefaultTableModel table_acc = (DefaultTableModel) tablesp.getModel();
-                    table_acc.setRowCount(0);
-                    loadDataToTable(listAccExcel);
-                }
-
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(sanpham.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(sanpham.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        for (int i = 0; i < listAccExcel.size(); i++) {
-
-            SanPhamDTO sp = listAccExcel.get(i);
-            SanPhamDTO newsp;
-            newsp = new SanPhamDTO(
-                    sp.getMasp(), sp.getMaloai(), sp.getTensp(), sp.getHinhanh(), sp.getNSX(), sp.getHSD(), sp.getMaxuatxu(), sp.getMathuonghieu(), sp.getSoluongton(), sp.getGianhap(),sp.getGiaban(),sp.getTrangthai());
-            spBUS.spDAO.insert(newsp);
-
-        }
-    }//GEN-LAST:event_importExcelActionPerformed
-
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
         String luachon = (String) cbxChoose.getSelectedItem();
         String searchContent = txtSearch.getText();
@@ -567,7 +487,6 @@ public final class sanpham extends javax.swing.JPanel {
     private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cbxChoose;
     private javax.swing.JButton exportExcel;
-    private javax.swing.JButton importExcel;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;

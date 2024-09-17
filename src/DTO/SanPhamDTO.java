@@ -24,8 +24,8 @@ public class SanPhamDTO {
     private Date HSD;
     private ThuongHieuDTO thuonghieu = new ThuongHieuDTO();
     private int mathuonghieu;
-    private int gianhap;
-    private int giaban;
+    private double gianhap;
+    private double giaban;
     private int soluongton;
     private int trangthai;
 
@@ -33,7 +33,15 @@ public class SanPhamDTO {
 
     }
 
-    public SanPhamDTO(int masp, int maloai, String tensp, String hinhanh, Date NSX, Date HSD, int maxuatxu, int mathuonghieu, int soluongton, int gianhap,int giaban, int trangthai) {
+    public SanPhamDTO(int masp, double gianhap, double giaban) {
+        this.masp = masp;
+        this.gianhap = gianhap;
+        this.giaban = giaban;
+    }
+    
+    
+
+    public SanPhamDTO(int masp, int maloai, String tensp, String hinhanh, Date NSX, Date HSD, int maxuatxu, int mathuonghieu, int soluongton, double gianhap,double giaban, int trangthai) {
         this.masp = masp;
         this.maloai = maloai;
         this.tensp = tensp;
@@ -137,23 +145,21 @@ public class SanPhamDTO {
         this.mathuonghieu = mathuonghieu;
     }
 
-    public int getGianhap() {
+    public double getGianhap() {
         return gianhap;
     }
 
-    public void setGianhap(int gianhap) {
+    public void setGianhap(double gianhap) {
         this.gianhap = gianhap;
     }
 
-    public int getGiaban() {
+    public double getGiaban() {
         return giaban;
     }
 
-    public void setGiaban(int giaban) {
+    public void setGiaban(double giaban) {
         this.giaban = giaban;
     }
-
-    
 
     public int getSoluongton() {
         return soluongton;
@@ -170,6 +176,8 @@ public class SanPhamDTO {
     public void setTrangthai(int trangthai) {
         this.trangthai = trangthai;
     }
+
+   
 
     @Override
     public int hashCode() {

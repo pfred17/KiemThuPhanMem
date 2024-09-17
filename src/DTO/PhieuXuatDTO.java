@@ -13,7 +13,7 @@ public class PhieuXuatDTO {
     private String tenkhachhang;
     private String tennvnhap;
     private int masp;
-    private int dongia;
+    private double dongia;
 
     public PhieuXuatDTO() {}
 
@@ -38,7 +38,7 @@ public class PhieuXuatDTO {
     
     // Constructor ct
 
-    public PhieuXuatDTO(int maphieuxuat, int masp, int soluong, int dongia) {
+    public PhieuXuatDTO(int maphieuxuat, int masp, int soluong, double dongia) {
         this.maphieuxuat = maphieuxuat;
         this.soluong = soluong;
         this.masp = masp;
@@ -125,11 +125,11 @@ public class PhieuXuatDTO {
         this.masp = masp;
     }
 
-    public int getDongia() {
+    public double getDongia() {
         return dongia;
     }
 
-    public void setDongia(int dongia) {
+    public void setDongia(double dongia) {
         this.dongia = dongia;
     }
     

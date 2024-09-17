@@ -5,12 +5,12 @@ public class ChiTietPhieuXuatDTO {
     private int maphieuxuat;
     private int masp;
     private int soluong;
-    private int dongia;
+    private double dongia;
 
     public ChiTietPhieuXuatDTO() {
     }
 
-    public ChiTietPhieuXuatDTO(int maphieuxuat, int masp, int soluong, int dongia) {
+    public ChiTietPhieuXuatDTO(int maphieuxuat, int masp, int soluong, double dongia) {
         this.maphieuxuat = maphieuxuat;
         this.masp = masp;
         this.soluong = soluong;
@@ -41,11 +41,11 @@ public class ChiTietPhieuXuatDTO {
         this.soluong = soluong;
     }
 
-    public int getDongia() {
+    public double getDongia() {
         return dongia;
     }
 
-    public void setDongia(int dongia) {
+    public void setDongia(double dongia) {
         this.dongia = dongia;
     }
 

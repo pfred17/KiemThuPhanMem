@@ -3,15 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/D:/IT-SGU/3/HK1/KiemThuPhanMem/QuanLySieuThiMiNi/src/GUI/taikhoan.java</file>
-            <file>file:/D:/IT-SGU/3/HK1/KiemThuPhanMem/QuanLySieuThiMiNi/src/GUI/login.java</file>
-=======
-            <file>file:/D:/IT-SGU/3/HK1/KiemThuPhanMem/QuanLySieuThiMiNi/src/GUI/nvxuathang.java</file>
-            <file>file:/D:/IT-SGU/3/HK1/KiemThuPhanMem/QuanLySieuThiMiNi/src/GUI/login.java</file>
-            <file>file:/D:/IT-SGU/3/HK1/KiemThuPhanMem/QuanLySieuThiMiNi/src/GUI/nvnhaphang.java</file>
-            <file>file:/D:/IT-SGU/3/HK1/KiemThuPhanMem/QuanLySieuThiMiNi/src/GUI/admin.java</file>
->>>>>>> bao
+            <file>file:/D:/IT-SGU/3/HK1/KiemThuPhanMem/QuanLySieuThiMiNi/src/GUI/phieunhap.java</file>
+            <file>file:/D:/IT-SGU/3/HK1/KiemThuPhanMem/QuanLySieuThiMiNi/src/GUI/add/addphieunhap.java</file>
+            <file>file:/D:/IT-SGU/3/HK1/KiemThuPhanMem/QuanLySieuThiMiNi/src/GUI/phieuxuat.java</file>
+            <file>file:/D:/IT-SGU/3/HK1/KiemThuPhanMem/QuanLySieuThiMiNi/src/GUI/add/addphieuxuat.java</file>
+            <file>file:/D:/IT-SGU/3/HK1/KiemThuPhanMem/QuanLySieuThiMiNi/src/GUI/ThongKe.java</file>
         </group>
     </open-files>
 </project-private>

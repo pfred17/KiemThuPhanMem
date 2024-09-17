@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package GUI.update;
 
 import DTO.SanPhamDTO;
@@ -143,7 +139,10 @@ public class updatesanpham extends javax.swing.JDialog {
 
         jLabel10.setText("Thương Hiệu");
 
+        txttensp.setBackground(new java.awt.Color(204, 204, 204));
+        txttensp.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txttensp.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
+        txttensp.setEnabled(false);
 
         cbxthuonghieu.setBorder(null);
         cbxthuonghieu.addActionListener(new java.awt.event.ActionListener() {
@@ -357,7 +356,7 @@ public class updatesanpham extends javax.swing.JDialog {
             int maxuatxu = xxBUS.getAll().get(cbxxuatxu.getSelectedIndex()).getMaxuatxu();
             int mathuonghieu = thBUS.getAll().get(cbxthuonghieu.getSelectedIndex()).getMathuonghieu();
             int maloai = lspBUS.getAll().get(cbxloaisp.getSelectedIndex()).getMaloai();
-            int gianhap = parent.getSanPhamSelect().getGianhap();
+            double gianhap = parent.getSanPhamSelect().getGianhap();
             int giaban = Integer.parseInt(giaText);
             int masp = parent.getSanPhamSelect().getMasp();
             int soluongton = parent.getSanPhamSelect().getSoluongton();

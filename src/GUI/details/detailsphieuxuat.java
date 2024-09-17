@@ -121,7 +121,6 @@ public class detailsphieuxuat extends javax.swing.JDialog {
         txtthoigian = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblctsanpham = new javax.swing.JTable();
-        btnPdF = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(800, 450));
         setResizable(false);
@@ -204,25 +203,15 @@ public class detailsphieuxuat extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tblctsanpham);
 
-        btnPdF.setBackground(new java.awt.Color(51, 204, 0));
-        btnPdF.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnPdF.setForeground(new java.awt.Color(255, 255, 255));
-        btnPdF.setText("Xuất PDF");
-        btnPdF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPdFActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(15, 15, 15)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,12 +234,10 @@ public class detailsphieuxuat extends javax.swing.JDialog {
                             .addGap(105, 105, 105)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtthoigian, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(248, 248, 248)
-                            .addComponent(btnthoat)
-                            .addGap(104, 104, 104)
-                            .addComponent(btnPdF))))
+                                .addComponent(txtthoigian, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(333, 333, 333)
+                        .addComponent(btnthoat)))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -278,12 +265,10 @@ public class detailsphieuxuat extends javax.swing.JDialog {
                 .addGap(34, 34, 34)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnthoat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPdF, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnthoat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -332,15 +317,6 @@ public class detailsphieuxuat extends javax.swing.JDialog {
     }
 
 
-    private void btnPdFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPdFActionPerformed
-        ChiTietPhieuXuatDTO px = this.getCTPhieuXuatSelect();
-        writePDF w = new writePDF();
-        if (px != null) {
-            w.writePX(px.getMaphieuxuat());
-        }
-
-    }//GEN-LAST:event_btnPdFActionPerformed
-
     public static void main(String args[]) {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -358,7 +334,6 @@ public class detailsphieuxuat extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnPdF;
     private javax.swing.JButton btnthoat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

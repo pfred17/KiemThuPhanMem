@@ -31,7 +31,7 @@ CREATE TABLE `ctphieunhap` (
   `maphieunhap` int(11) NOT NULL,
   `masp` int(11) NOT NULL,
   `soluong` int(11) NOT NULL,
-  `gianhap` bigint(11) NOT NULL
+  `gianhap` DECIMAL(10, 2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -57,7 +57,7 @@ CREATE TABLE `ctphieuxuat` (
   `maphieuxuat` int(11) NOT NULL,
   `masp` int(11) NOT NULL DEFAULT 0,
   `soluong` int(11) NOT NULL DEFAULT 0,
-  `dongia` bigint(11) NOT NULL DEFAULT 0
+  `dongia` DECIMAL(10, 2) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -251,7 +251,7 @@ INSERT INTO `nhanvien` (`manv`, `hoten`, `gioitinh`, `ngaysinh`, `sdt`, `email`,
 (2, 'Nguyễn Bảo', 'Nam', '2004-04-22', '0355374322', 'bao@gmail.com', 1),
 (3, 'Nguyễn Tấn Cảnh', 'Nam', '2003-04-11', '0123456789', 'canh@gmail.com', 1),
 (4, 'Nguyễn Trung Trực', 'Nam', '2003-04-03', '0123456789', 'trungtruc@gmail.com', 1),
-(5, 'Vũ Trung Hiếu', 'Nam', '2023-05-06', '0123456789', 'trunghieu@gmail.com', 1);
+(5, 'Nguyễn Quang Dương', 'Nam', '2023-05-06', '0123456789', 'quangduong@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -286,7 +286,7 @@ CREATE TABLE `phieunhap` (
   `makhuvuc` int(11) NOT NULL,
   `manv` int(11) NOT NULL,
   `thoigian` datetime DEFAULT current_timestamp(),
-  `tongtien` bigint(20) NOT NULL DEFAULT 0,
+  `tongtien` DECIMAL(10, 2) NOT NULL DEFAULT 0,
   `trangthai` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -315,7 +315,7 @@ INSERT INTO `phieunhap` (`maphieunhap`, `mancc`, `makhuvuc`, `manv`, `thoigian`,
 CREATE TABLE `phieuxuat` (
   `maphieuxuat` int(11) NOT NULL,
   `thoigian` datetime NOT NULL DEFAULT current_timestamp(),
-  `tongtien` bigint(20) DEFAULT NULL,
+  `tongtien` DECIMAL(10, 2) DEFAULT NULL,
   `soluong` int(11) NOT NULL,
   `manv` int(11) NOT NULL,
   `makh` int(11) NOT NULL,
@@ -352,10 +352,10 @@ CREATE TABLE `sanpham` (
   `NSX` date NOT NULL,
   `HSD` date NOT NULL,
   `thuonghieu` int(11) DEFAULT NULL,
-  `gianhap` int(11) DEFAULT NULL,
+  `gianhap` DECIMAL(10, 2) DEFAULT NULL, 
   `soluongton` int(11) DEFAULT 0,
   `trangthai` tinyint(1) DEFAULT 1,
-  `giaban` int(10) DEFAULT NULL
+  `giaban` DECIMAL(10, 2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -363,15 +363,15 @@ CREATE TABLE `sanpham` (
 --
 
 INSERT INTO `sanpham` (`masp`, `maloai`, `tensp`, `hinhanh`, `xuatxu`, `NSX`, `HSD`, `thuonghieu`, `gianhap`, `soluongton`, `trangthai`, `giaban`) VALUES
-(1, 2, 'pepsi', '', 1, '2023-04-11', '2023-11-11', 1, 10000, 166, 1, 12000),
-(2, 1, 'bánh kem', '', 1, '2023-04-11', '2023-11-11', 1, 400000, 156, 1, 450000),
-(3, 1, 'bánh quy', '', 1, '2023-04-11', '2023-11-11', 1, 50000, 156, 1, 55000),
-(4, 3, 'cà rốt', '', 1, '2023-04-11', '2023-11-11', 1, 6000, 156, 1, 7500),
-(5, 3, 'khoai tây', '', 1, '2023-04-11', '2023-11-11', 1, 10000, 156, 1, 13000),
-(6, 1, 'rau muống', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2023-11-11', 1, 7000, 156, 1, 8500),
-(7, 1, 'coca', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2023-11-11', 1, 10000, 156, 1, 15000),
-(8, 1, 'bút xóa', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2023-11-11', 1, 15000, 156, 1, 18000),
-(14, 1, 'abc', 'src/GUI/imageSanPham/banhmi.jpg', 1, '2024-09-11', '2024-09-14', 1, 123, 113, 0, 456);
+(1, 2, 'Pepsi', '', 1, '2023-04-11', '2024-11-11', 1, 10000, 166, 1, 12000),
+(2, 1, 'Bánh kem', '', 1, '2023-04-11', '2024-11-11', 1, 400000, 156, 1, 450000),
+(3, 1, 'Bánh quy', '', 1, '2023-04-11', '2023-11-11', 1, 50000, 156, 1, 55000),
+(4, 3, 'Cà rốt', '', 1, '2023-04-11', '2024-11-11', 1, 6000, 156, 1, 7500),
+(5, 3, 'Khoai tây', '', 1, '2023-04-11', '2023-11-11', 1, 10000, 156, 1, 13000),
+(6, 1, 'Rau muống', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2023-11-11', 1, 7000, 156, 1, 8500),
+(7, 1, 'Coca cola', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2023-11-11', 1, 10000, 156, 1, 15000),
+(8, 1, 'Bút xóa', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2030-11-11', 1, 15000, 156, 1, 18000),
+(14, 1, 'Bánh mì', 'src/GUI/imageSanPham/banhmi.jpg', 1, '2024-09-11', '2024-09-30', 1, 123, 113, 0, 456);
 
 -- --------------------------------------------------------
 
@@ -397,7 +397,7 @@ INSERT INTO `taikhoan` (`mataikhoan`, `manv`, `matkhau`, `manhomquyen`, `tendang
 (2, 3, 'abc', 2, 'tancanh', 1),
 (3, 2, 'abc', 3, 'bao', 1),
 (4, 4, 'abc', 2, 'truc', 0),
-(5, 5, 'abc', 3, 'hieu', 0);
+(5, 5, 'abc', 3, 'duong', 0);
 
 -- --------------------------------------------------------
 
@@ -416,14 +416,14 @@ CREATE TABLE `thuonghieu` (
 --
 
 INSERT INTO `thuonghieu` (`mathuonghieu`, `tenthuonghieu`, `trangthai`) VALUES
-(1, 'Thương hiệu A', 1),
-(2, 'Thương hiệu B', 1),
-(3, 'Thương hiệu C', 1),
-(4, 'Thương hiệu D', 0),
-(7, 'Thương hiệu E', 0),
-(8, 'Thương hiệu F', 0),
-(9, 'Thương hiệu G', 1),
-(10, 'Thương hiệu H', 1);
+(1, 'Acecook Viet Nam', 1),
+(2, 'Thiên Long', 1),
+(3, 'Thái Dương đồ dùng học tập', 1),
+(4, 'Nerman Vietnam', 0),
+(7, 'Noctural Studio', 0),
+(8, 'Sly onstream', 0),
+(9, 'Mỹ hảo', 1),
+(10, 'Ava đồ dùng công nghệ', 1);
 
 -- --------------------------------------------------------
 

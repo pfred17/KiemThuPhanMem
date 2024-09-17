@@ -97,14 +97,10 @@ public class addsanpham extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         cbxxuatxu = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
-        txtgianhap = new javax.swing.JTextField();
         lbimg = new javax.swing.JLabel();
         btnChooseImage = new javax.swing.JButton();
         nsxchooser = new com.toedter.calendar.JDateChooser();
         hsdchooser = new com.toedter.calendar.JDateChooser();
-        jLabel5 = new javax.swing.JLabel();
-        txtgiaban = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -185,15 +181,6 @@ public class addsanpham extends javax.swing.JDialog {
 
         cbxxuatxu.setBorder(null);
 
-        jLabel1.setText("Giá Nhập");
-
-        txtgianhap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
-        txtgianhap.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtgianhapActionPerformed(evt);
-            }
-        });
-
         lbimg.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 204), 3));
 
         btnChooseImage.setText("Hình minh họa");
@@ -208,15 +195,6 @@ public class addsanpham extends javax.swing.JDialog {
 
         hsdchooser.setDateFormatString("yyyy-MM-dd");
         hsdchooser.setFocusCycleRoot(true);
-
-        jLabel5.setText("Giá Bán");
-
-        txtgiaban.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
-        txtgiaban.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtgiabanActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -272,20 +250,8 @@ public class addsanpham extends javax.swing.JDialog {
                                 .addGap(113, 113, 113)
                                 .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lbimg, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txtgianhap, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtgiaban, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(40, 40, 40))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(87, 87, 87))))
+                .addComponent(lbimg, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -324,21 +290,10 @@ public class addsanpham extends javax.swing.JDialog {
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel6)
                                         .addComponent(cbxxuatxu, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel5))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtgianhap, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtgiaban, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(40, 40, 40)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
@@ -397,28 +352,6 @@ public class addsanpham extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập tên sản phẩm");
                 return;
             }
-            if (txtgianhap.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập sản phẩm");
-                return;
-            }
-            if (txtgiaban.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập giá bán  sản phẩm");
-                return;
-            }
-            if (txttensp.getText().matches("^[^a-zA-Z]+$")) {
-                JOptionPane.showMessageDialog(this, "Tên sản phẩm chỉ được chứa chữ cái");
-                return;
-            }
-            String gianhapText = txtgianhap.getText().replaceAll("\\s", ""); // Xóa tất cả các khoảng trắng
-            if (!gianhapText.matches("^\\d+$")) {
-                JOptionPane.showMessageDialog(this, "Giá nhập sản phẩm phải là chữ số");
-                return;
-            }
-            String giabanText = txtgiaban.getText().replaceAll("\\s", ""); // Xóa tất cả các khoảng trắng
-            if (!giabanText.matches("^\\d+$")) {
-                JOptionPane.showMessageDialog(this, "Giá bán sản phẩm phải là chữ số");
-                return;
-            }
 
             String tensp = txttensp.getText();
             java.sql.Date sqlNsx = new java.sql.Date(nsx.getTime());
@@ -427,14 +360,8 @@ public class addsanpham extends javax.swing.JDialog {
             int mathuonghieu = thuonghieuBUS.getAll().get(cbxthuonghieu.getSelectedIndex()).getMathuonghieu();
             int maloai = loaispBUS.getAll().get(cbxloaisp.getSelectedIndex()).getMaloai();
             masp = spBUS.spDAO.getAutoIncrement();
-            int gianhap = Integer.parseInt(gianhapText);
-            int giaban = Integer.parseInt(giabanText);
-            if (gianhap >= giaban) {
-                JOptionPane.showMessageDialog(this, "Giá bán sản phẩm phải lớn hơn giá nhập");
-                return;
-            }
             // Thêm sản phẩm vào CSDL
-            SanPhamDTO result = new SanPhamDTO(masp, maloai, tensp, imagePath, sqlNsx, sqlHsd, maxuatxu, mathuonghieu, 0, gianhap, giaban, 1);
+            SanPhamDTO result = new SanPhamDTO(masp, maloai, tensp, imagePath, sqlNsx, sqlHsd, maxuatxu, mathuonghieu, 0, 0, 0, 1);
             spBUS.add(result);
             JOptionPane.showMessageDialog(this, "Thêm Thành Công !");
             this.dispose();
@@ -473,14 +400,6 @@ public class addsanpham extends javax.swing.JDialog {
     private void txttenspActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttenspActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txttenspActionPerformed
-
-    private void txtgiabanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtgiabanActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtgiabanActionPerformed
-
-    private void txtgianhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtgianhapActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtgianhapActionPerformed
 
     /**
      * @param args the command line arguments
@@ -533,13 +452,11 @@ public class addsanpham extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> cbxthuonghieu;
     private javax.swing.JComboBox<String> cbxxuatxu;
     private com.toedter.calendar.JDateChooser hsdchooser;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -547,8 +464,6 @@ public class addsanpham extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lbimg;
     private com.toedter.calendar.JDateChooser nsxchooser;
-    private javax.swing.JTextField txtgiaban;
-    private javax.swing.JTextField txtgianhap;
     private javax.swing.JTextField txttensp;
     // End of variables declaration//GEN-END:variables
 }

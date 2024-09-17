@@ -26,7 +26,7 @@ public class ChiTietPhieuNhapDAO implements DAOinterface<ChiTietPhieuNhapDTO> {
             pst.setInt(1, t.getMaphieunhap());
             pst.setInt(2, t.getMasp());
             pst.setInt(3, t.getSoluong());
-            pst.setInt(4, t.getDongia());
+            pst.setDouble(4, t.getDongia());
             result = pst.executeUpdate();
             JDBC.closeConnection(con);
         } catch (SQLException ex) {

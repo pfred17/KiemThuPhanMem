@@ -11,6 +11,7 @@ import BUS.KhachHangBUS;
 import DTO.KhachHangDTO;
 import BUS.NhanVienBUS;
 import DTO.NhanVienDTO;
+import helper.FormatPrice;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -24,6 +25,7 @@ public class addphieuxuat extends javax.swing.JPanel {
 
     ArrayList<SanPhamDTO> list = new ArrayList<SanPhamDTO>();
     private NhanVienDTO nhanVienDTO;
+    private FormatPrice formatPrice;
     SanPhamBUS spBUS = new SanPhamBUS();
     PhieuXuatBUS pxBUS = new PhieuXuatBUS();
     GiamGiaBUS ggBUS = new GiamGiaBUS();
@@ -34,6 +36,7 @@ public class addphieuxuat extends javax.swing.JPanel {
     public addphieuxuat(NhanVienDTO nv) {
         initComponents();
         this.nhanVienDTO = nv;
+        formatPrice = new FormatPrice();
         comboctgiamgiaDisplay();
         combohotenDisplay();
         txtsdt.setEditable(false);
@@ -82,17 +85,17 @@ public class addphieuxuat extends javax.swing.JPanel {
         int rowCount = model.getRowCount();
 
         int totalQuantity = 0;
-        int totalPrice = 0;
+        double totalPrice = 0;
 
         for (int i = 0; i < rowCount; i++) {
             int quantity = (int) model.getValueAt(i, 2);
-            int price = (int) model.getValueAt(i, 3);
+            double price = (double) model.getValueAt(i, 3);
             totalQuantity += quantity;
             totalPrice += quantity * price;
         }
 
         // Cập nhật giá trị tổng cộng vào trường văn bản
-        lableTongTien.setText(String.valueOf(totalPrice));
+        lableTongTien.setText(formatPrice.formatCurrency(totalPrice));
     }
 
     /**
@@ -129,7 +132,6 @@ public class addphieuxuat extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblphieuxuatout = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         lableTongTien = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -146,6 +148,9 @@ public class addphieuxuat extends javax.swing.JPanel {
             }
         ));
         jScrollPane2.setViewportView(tblphieuxuatin);
+        if (tblphieuxuatin.getColumnModel().getColumnCount() > 0) {
+            tblphieuxuatin.getColumnModel().getColumn(3).setHeaderValue("Giá bán");
+        }
 
         btnthemsp.setBackground(new java.awt.Color(102, 204, 0));
         btnthemsp.setForeground(new java.awt.Color(255, 255, 255));
@@ -272,10 +277,6 @@ public class addphieuxuat extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Tổng cộng:");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel4.setText("đ");
-
         lableTongTien.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lableTongTien.setForeground(new java.awt.Color(255, 0, 0));
         lableTongTien.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -314,9 +315,7 @@ public class addphieuxuat extends javax.swing.JPanel {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lableTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(31, 31, 31)
                         .addComponent(btnxuatphieu, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
@@ -351,7 +350,6 @@ public class addphieuxuat extends javax.swing.JPanel {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnxuatphieu, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
                     .addComponent(lableTongTien))
                 .addContainerGap())
         );
@@ -407,8 +405,10 @@ public class addphieuxuat extends javax.swing.JPanel {
 
         // Lấy số lượng xuất
         int soluong;
+        
         try {
             soluong = Integer.parseInt(txtSoLuongXuat.getText().trim());
+            
             int soLuongTon = (int) rowData[2];
             Date hsd = (Date) rowData[4];
             if (soluong > soLuongTon) {
@@ -470,7 +470,7 @@ public class addphieuxuat extends javax.swing.JPanel {
             // Lấy mã sản phẩm và số lượng từ bảng 2
             int masp = (int) model.getValueAt(i, 0);
             int soluong = (int) model.getValueAt(i, 2);
-            int dongia = (int) model.getValueAt(i, 3);
+            double dongia = (double) model.getValueAt(i, 3);
             tongtien += soluong * dongia;
 
             SanPhamDTO sp = spBUS.getByMaSP(masp);
@@ -488,7 +488,8 @@ public class addphieuxuat extends javax.swing.JPanel {
                 tongtien = tongtien - gg.getSotienduocgiam();
             }
         }
-
+        
+        pxAll = new PhieuXuatDTO(mapx, sqlDate, tongtien, sumsoluong, manv, makh, magg);
         pxBUS.updateTongTien(pxAll);
 
         // Reset bảng 2 (tblphieuxuatout)
@@ -522,7 +523,6 @@ public class addphieuxuat extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane2;
