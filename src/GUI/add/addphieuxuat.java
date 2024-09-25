@@ -54,7 +54,7 @@ public class addphieuxuat extends javax.swing.JPanel {
             dt.setRowCount(0);
              Date currentDate = new Date();
             for (SanPhamDTO i : list) {
-                if(i.getHSD().getTime()>currentDate.getTime()){
+                if(i.getHSD().getTime()>currentDate.getTime() && i.getSoluongton() > 0){
                 dt.addRow(new Object[]{
                     i.getMasp(), i.getTensp(), i.getSoluongton(), i.getGiaban(),i.getHSD()
                 });
@@ -66,7 +66,6 @@ public class addphieuxuat extends javax.swing.JPanel {
     }
 
     private void comboctgiamgiaDisplay() {
-
         ArrayList<GiamGiaDTO> listgg = ggBUS.ggDAO.selectAll();
         for (GiamGiaDTO gg : listgg) {
             comboctgiamgia.addItem(gg.getTenctgiamgia());
@@ -434,6 +433,8 @@ public class addphieuxuat extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tblphieuxuatout.getModel();
         ArrayList<NhanVienDTO> listnv = nvBUS.getAll();
         ArrayList<KhachHangDTO> listkh = khBUS.getAll();
+        ArrayList<GiamGiaDTO> listgg = ggBUS.getAll();
+
         int rowCount = model.getRowCount();
 
         int mapx = pxBUS.phieuXuatDAO.getAutoIncrement();
@@ -447,16 +448,15 @@ public class addphieuxuat extends javax.swing.JPanel {
         String tenkh = "" + combohoten.getSelectedItem();
         for (KhachHangDTO i : listkh) {
             if (tenkh.equalsIgnoreCase(i.getHoten())) {
-                manv = i.getMaKH();
+                makh = i.getMaKH();
                 break;
             }
         }
         int magg = 1;
-        ArrayList<GiamGiaDTO> listgg = new ArrayList<GiamGiaDTO>();
         GiamGiaDTO gg = null;
         for (GiamGiaDTO i : listgg) {
             if (i.getTenctgiamgia().equalsIgnoreCase(("" + comboctgiamgia.getSelectedItem()))) {
-                magg = (int) i.getMagiamgia();
+                magg = i.getMagiamgia();
                 gg = i;
                 break;
             }

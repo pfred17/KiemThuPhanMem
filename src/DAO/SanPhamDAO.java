@@ -26,6 +26,7 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
         return new SanPhamDAO();
     }
 
+
     @Override
     public int insert(SanPhamDTO t) {
         int ketQua = 0;
@@ -106,7 +107,6 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
                 + "INNER JOIN loaisanpham ON sanpham.maloai = loaisanpham.maloai\n"
                 + "INNER JOIN thuonghieu ON sanpham.thuonghieu = thuonghieu.mathuonghieu\n"
                 + "INNER JOIN xuatxu ON sanpham.xuatxu = xuatxu.maxuatxu\n"
-                + "WHERE sanpham.trangthai = 1\n"
                 + "ORDER BY sanpham.masp;")) {
 
             while (rs.next()) {

@@ -52,10 +52,9 @@ public class addphieunhap extends javax.swing.JPanel {
 
     public void cbNccDisplay() {
         combonhacc.addItem("Tất cả");
-        ArrayList<String> listncc = pnBUS.phieunhapDAO.selectAllMancc();
-        int count = listncc.size();
-        for (int i = 0; i < count; i++) {
-            combonhacc.addItem("" + listncc.get(i));
+        ArrayList<NhaCungCapDTO> listncc = nccBUS.getAll();
+        for (NhaCungCapDTO ncc : listncc) {
+            combonhacc.addItem("" + ncc.getMancc());
         }
     }
 
@@ -74,7 +73,7 @@ public class addphieunhap extends javax.swing.JPanel {
             dt.setRowCount(0);
             Date currentDate = new Date();
             for (SanPhamDTO i : list) {
-                if (i.getHSD().getTime() > currentDate.getTime()) {
+                if (i.getHSD().getTime() > currentDate.getTime() && i.getSoluongton() == 0) {
                     dt.addRow(new Object[]{
                         i.getMasp(), i.getTensp(), i.getSoluongton()
                     });
@@ -458,7 +457,7 @@ public class addphieunhap extends javax.swing.JPanel {
         java.sql.Date sqlDate = new java.sql.Date(thoigian.getTime());
         long tongtien = 0;
 
-        PhieuNhapDTO pnAll = new PhieuNhapDTO(mapn, mancc, makhuvuc, manv, sqlDate, tongtien);
+        PhieuNhapDTO pnAll = new PhieuNhapDTO(mapn, mancc, manv, sqlDate, tongtien);
         pnBUS.phieunhapDAO.insert(pnAll);
         // Lặp qua các dòng trong bảng 2 (tblphieunhapout)
         for (int i = 0; i < rowCount; i++) {
@@ -476,11 +475,13 @@ public class addphieunhap extends javax.swing.JPanel {
             sp.setMasp(masp);
             spBUS.updateSoLuongTon(sp);
 
-            ChiTietPhieuNhapDTO ctpn = new ChiTietPhieuNhapDTO(mapn, masp, soluong, giaNhap);
+//            ChiTietPhieuNhapDTO ctpn = new ChiTietPhieuNhapDTO(mapn, masp, soluong, giaNhap);
+            ChiTietPhieuNhapDTO ctpn = new ChiTietPhieuNhapDTO(mapn, masp, makhuvuc, tennv, soluong, giaNhap);
             pnBUS.ctPhieuNhapDAO.insert(ctpn);
         }
 
-        pnAll = new PhieuNhapDTO(mapn, mancc, makhuvuc, manv, sqlDate, tongtien);
+//        pnAll = new PhieuNhapDTO(mapn, mancc, makhuvuc, manv, sqlDate, tongtien);
+        pnAll = new PhieuNhapDTO(mapn, mancc, manv, sqlDate, tongtien);
         pnBUS.phieunhapDAO.update(pnAll);
         // Reset bảng 2 (tblphieunhapout)
         model.setRowCount(0);

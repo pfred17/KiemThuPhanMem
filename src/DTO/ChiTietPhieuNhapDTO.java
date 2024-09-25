@@ -3,6 +3,7 @@ package DTO;
 public class ChiTietPhieuNhapDTO {
     private int maphieunhap;
     private int masp;
+    private int makhuvukho;
     private String tensp;
     private int soluong;
     private double dongia;
@@ -10,6 +11,15 @@ public class ChiTietPhieuNhapDTO {
     public ChiTietPhieuNhapDTO() {
     }
 
+    public ChiTietPhieuNhapDTO(int maphieunhap, int masp, int makhuvukho, String tensp, int soluong, double dongia) {
+        this.maphieunhap = maphieunhap;
+        this.masp = masp;
+        this.makhuvukho = makhuvukho;
+        this.tensp = tensp;
+        this.soluong = soluong;
+        this.dongia = dongia;
+    }
+    
     public ChiTietPhieuNhapDTO(int maphieunhap, int masp, int soluong, double dongia) {
         this.maphieunhap = maphieunhap;
         this.masp = masp;
@@ -34,6 +44,14 @@ public class ChiTietPhieuNhapDTO {
 
     public int getMaphieunhap() {
         return maphieunhap;
+    }
+
+    public int getMakhuvukho() {
+        return makhuvukho;
+    }
+
+    public void setMakhuvukho(int makhuvukho) {
+        this.makhuvukho = makhuvukho;
     }
 
     public void setMaphieunhap(int maphieunhap) {

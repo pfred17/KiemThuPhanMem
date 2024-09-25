@@ -17,6 +17,10 @@ public class SanPhamBUS {
     public SanPhamBUS() {
         listSP = spDAO.selectAll();
     }
+    
+    private void loadData() {
+        listSP = spDAO.selectAll();
+    }
 
     public ArrayList<SanPhamDTO> getAll() {
 
@@ -26,7 +30,8 @@ public class SanPhamBUS {
     public SanPhamDTO getByIndex(int index) {
         return this.listSP.get(index);
     }
-
+    
+    
     public SanPhamDTO getByMaSP(int masp) {
         int vitri = -1;
         int i = 0;

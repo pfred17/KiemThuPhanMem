@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package GUI.details;
 
 import BUS.CTPhieuXuatBUS;
@@ -48,7 +44,7 @@ public class detailsphieuxuat extends javax.swing.JDialog {
         tblctsanpham.getColumnModel().getColumn(0).setPreferredWidth(5);
         tblctsanpham.getColumnModel().getColumn(0).setPreferredWidth(5);
     }
-//bao
+    
     public detailsphieuxuat() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -58,17 +54,17 @@ public class detailsphieuxuat extends javax.swing.JDialog {
     }
 
     private void displayInfo() {
-        PhieuXuatDTO kh = parent.getPhieuXuatSelect();
-        txtmapx.setText("" + kh.getMaphieuxuat());
-        txttenkh.setText("" + kh.getTenkhachhang());
-        txttennvnhap.setText("" + kh.getTennvnhap());
-        txtthoigian.setText("" + kh.getThoigian());
+        PhieuXuatDTO px = parent.getPhieuXuatSelect();
+        txtmapx.setText("" + px.getMaphieuxuat());
+        txttenkh.setText("" + px.getTenkhachhang());
+        txttennvnhap.setText("" + px.getTennvnhap());
+        txtthoigian.setText("" + px.getThoigian());
         ArrayList<PhieuXuatDTO> listctpx = pxBUS.phieuXuatDAO.selectAllCtpx();
-        displaytoTable(kh, listctpx);
+        displaytoTable(px, listctpx);
         tblctsanpham.setDefaultEditor(Object.class, null);
     }
 
-    public void displaytoTable(PhieuXuatDTO kh, ArrayList<PhieuXuatDTO> list) {
+    public void displaytoTable(PhieuXuatDTO px, ArrayList<PhieuXuatDTO> list) {
         try {
             DefaultTableModel dt = (DefaultTableModel) tblctsanpham.getModel();
             ArrayList<SanPhamDTO> listsp = spBUS.spDAO.selectAll();
@@ -76,7 +72,7 @@ public class detailsphieuxuat extends javax.swing.JDialog {
             dt.setRowCount(0);
             for (PhieuXuatDTO i : list) {
 
-                if (i.getMaphieuxuat() == kh.getMaphieuxuat()) {
+                if (i.getMaphieuxuat() == px.getMaphieuxuat()) {
                     String tensp = null;
 
                     for (SanPhamDTO j : listsp) {

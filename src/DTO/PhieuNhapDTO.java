@@ -1,8 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DTO;
+
 import java.sql.Date;
 
 /**
@@ -12,7 +9,7 @@ import java.sql.Date;
 public class PhieuNhapDTO {
     private int maphieunhap;
     private int mancc;
-    private int makhuvuc;
+//    private int makhuvuc;
     private int manv;
     private Date thoigian;
     private long tongtien;
@@ -27,11 +24,26 @@ public class PhieuNhapDTO {
             
     
     public PhieuNhapDTO() {}
+
+    public PhieuNhapDTO(int maphieunhap, int mancc, int manv, Date thoigian, long tongtien, String tenncc, String tennvnhap, int masp, String tensp, String tenkhuvuc, int soluong, long dongia) {
+        this.maphieunhap = maphieunhap;
+        this.mancc = mancc;
+        this.manv = manv;
+        this.thoigian = thoigian;
+        this.tongtien = tongtien;
+        this.tenncc = tenncc;
+        this.tennvnhap = tennvnhap;
+        this.masp = masp;
+        this.tensp = tensp;
+        this.tenkhuvuc = tenkhuvuc;
+        this.soluong = soluong;
+        this.dongia = dongia;
+    }
     
     public PhieuNhapDTO(int maphieunhap, int mancc, int makhuvuc, int manv, Date thoigian, long tongtien) {
         this.maphieunhap = maphieunhap;
         this.mancc = mancc;
-        this.makhuvuc = makhuvuc;
+//        this.makhuvuc = makhuvuc;
         this.manv = manv;
         this.thoigian = thoigian;
         this.tongtien = tongtien;
@@ -63,6 +75,16 @@ public class PhieuNhapDTO {
         this.tenkhuvuc = tenkhuvuc;
     }
 
+    public PhieuNhapDTO(int maphieunhap, int mancc, int manv, Date thoigian, long tongtien) {
+        this.maphieunhap = maphieunhap;
+        this.mancc = mancc;
+        this.manv = manv;
+        this.thoigian = thoigian;
+        this.tongtien = tongtien;
+    }
+    
+    
+
     public int getMaphieunhap() {
         return maphieunhap;
     }
@@ -79,13 +101,6 @@ public class PhieuNhapDTO {
         this.mancc = mancc;
     }
 
-    public int getMakhuvuc() {
-        return makhuvuc;
-    }
-
-    public void setMakhuvuc(int makhuvuc) {
-        this.makhuvuc = makhuvuc;
-    }
 
     public int getManv() {
         return manv;
@@ -175,7 +190,6 @@ public class PhieuNhapDTO {
         int result = 1;
         result = prime * result + maphieunhap;
         result = prime * result + mancc;
-        result = prime * result + makhuvuc;
         result = prime * result + manv;
         result = prime * result + ((thoigian == null) ? 0 : thoigian.hashCode());
         result = prime * result + (int) (tongtien ^ (tongtien >>> 32));
@@ -195,8 +209,6 @@ public class PhieuNhapDTO {
             return false;
         if (mancc != other.mancc)
             return false;
-        if (makhuvuc != other.makhuvuc)
-            return false;
         if (manv != other.manv)
             return false;
         if (thoigian == null) {
@@ -211,7 +223,7 @@ public class PhieuNhapDTO {
 
     @Override
     public String toString() {
-        return "PhieuNhapDTO{" + "maphieunhap=" + maphieunhap + ", mancc=" + mancc + ", makhuvuc=" + makhuvuc + ", manv="
+        return "PhieuNhapDTO{" + "maphieunhap=" + maphieunhap + ", mancc=" + mancc + ", manv="
                 + manv + ", thoigian=" + thoigian + ", tongtien=" + tongtien + "}";
     }
 }

@@ -8,6 +8,7 @@ import DTO.SanPhamDTO;
 import GUI.add.addkho;
 import GUI.details.detailskho;
 import GUI.update.updatekho;
+import helper.FormatPrice;
 import java.awt.Dimension;
 import java.util.*;
 import javax.swing.JFrame;
@@ -42,6 +43,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class khohang extends javax.swing.JPanel {
     
     ArrayList<KhoHangDTO> list = new ArrayList<KhoHangDTO>();
+    private FormatPrice formatPrice;
     public KhoHangBUS khBUS = new KhoHangBUS();
     public SanPhamBUS spBUS = new SanPhamBUS();
     public ArrayList<KhoHangDTO> listKVK = khBUS.getAll();
@@ -52,6 +54,7 @@ public class khohang extends javax.swing.JPanel {
         initComponents();
         cbxAllDisplay();
         list = khBUS.kvkDAO.selectAll();
+        formatPrice = new FormatPrice();
         displaytoTable(list);
         tblkho.setFocusable(false);
         tblkho.setDefaultEditor(Object.class, null);
@@ -99,7 +102,7 @@ public class khohang extends javax.swing.JPanel {
             for (KhoHangDTO sp : result) {
                 if (sp.getSlton() != 0) {
                     dt.addRow(new Object[] {
-                        sp.getMaphieunhap(), sp.getTensp(), sp.getSlton(), sp.getGia(), sp.getHinhanh()
+                        sp.getTensp(), sp.getSlton(), formatPrice.formatCurrency(sp.getGia())
                     });
                     i++;
                 }
@@ -303,24 +306,17 @@ public class khohang extends javax.swing.JPanel {
 
         tblsanpham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Mã PN", "Mã NCC", "SL", "Tổng tiền", "Ảnh"
+                "Tên sản phẩm", "Số lượng tồn kho", "Giá nhập"
             }
         ));
         tblsanpham.setRowHeight(50);
         jScrollPane1.setViewportView(tblsanpham);
-        if (tblsanpham.getColumnModel().getColumnCount() > 0) {
-            tblsanpham.getColumnModel().getColumn(0).setHeaderValue("Mã PN");
-            tblsanpham.getColumnModel().getColumn(1).setHeaderValue("Tên SP");
-            tblsanpham.getColumnModel().getColumn(2).setHeaderValue("SL");
-            tblsanpham.getColumnModel().getColumn(3).setHeaderValue("Tổng tiền");
-            tblsanpham.getColumnModel().getColumn(4).setHeaderValue("Ảnh");
-        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

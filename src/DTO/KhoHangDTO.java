@@ -29,6 +29,13 @@ public class KhoHangDTO {
         this.ghichu = ghichu;
     }
 
+    public KhoHangDTO(int makhuvuc, String tensp, int slton, long gia) {
+        this.makhuvuc = makhuvuc;
+        this.tensp = tensp;
+        this.slton = slton;
+        this.gia = gia;
+    }
+
     public KhoHangDTO(int makhuvuc, int maphieunhap, String tensp, int slton, long gia, String hinhanh) {
         this.makhuvuc = makhuvuc;
         this.maphieunhap = maphieunhap;

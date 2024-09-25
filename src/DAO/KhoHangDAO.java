@@ -97,22 +97,19 @@ public class KhoHangDAO implements DAOinterface<KhoHangDTO> {
         ArrayList<KhoHangDTO> result = new ArrayList<KhoHangDTO>();
         try {
             Connection con = (Connection) JDBC.getConnection();
-            String sql = " SELECT kv.makhuvuc, pn.maphieunhap, sp.masp, sp.tensp, sp.soluongton, sp.gia, sp.hinhanh" +
+            String sql = " SELECT kv.makhuvuc, sp.tensp, sp.soluongton, sp.gianhap" +
                         " FROM khuvuckho kv" +
-                        " INNER JOIN phieunhap pn ON kv.makhuvuc = pn.makhuvuc" +
-                        " INNER JOIN ctphieunhap ctpn ON pn.maphieunhap = ctpn.maphieunhap" +
+                        " INNER JOIN ctphieunhap ctpn ON kv.makhuvuc = ctpn.makhuvuc" +
                         " INNER JOIN sanpham sp ON ctpn.masp = sp.masp" +
-                        " WHERE kv.trangthai = 1 AND pn.trangthai = 1 AND sp.trangthai = 1";
+                        " WHERE kv.trangthai = 1";
             PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
                 KhoHangDTO kh = new KhoHangDTO();
                 kh.setMakhuvuc(rs.getInt("makhuvuc"));
-                kh.setMaphieunhap(rs.getInt("maphieunhap"));
                 kh.setTensp(rs.getString("tensp"));
                 kh.setSlton(rs.getInt("soluongton"));
-                kh.setGia(rs.getLong("gia"));
-                kh.setHinhanh(rs.getString("hinhanh"));
+                kh.setGia(rs.getLong("gianhap"));
                 result.add(kh);
             }
             JDBC.closeConnection(con);

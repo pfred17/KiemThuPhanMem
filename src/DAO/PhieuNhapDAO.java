@@ -23,14 +23,13 @@ public class PhieuNhapDAO implements DAOinterface<PhieuNhapDTO> {
         int result = 0;
         try {
             Connection con = (Connection) JDBC.getConnection();
-            String sql = "INSERT INTO `phieunhap`(`maphieunhap`, `mancc`, `makhuvuc`, `manv`, `thoigian`, `tongtien`, `trangthai`) VALUES (?,?,?,?,?,?,1)";
+            String sql = "INSERT INTO `phieunhap`(`maphieunhap`, `mancc`, `manv`, `thoigian`, `tongtien`, `trangthai`) VALUES (?,?,?,?,?,1)";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, t.getMaphieunhap());
             pst.setInt(2, t.getMancc());
-            pst.setInt(3, t.getMakhuvuc());
-            pst.setInt(4, t.getManv());
-            pst.setDate(5, t.getThoigian());
-            pst.setLong(6, t.getTongtien());
+            pst.setInt(3, t.getManv());
+            pst.setDate(4, t.getThoigian());
+            pst.setLong(5, t.getTongtien());
             result = pst.executeUpdate();
             JDBC.closeConnection(con);
         } catch (SQLException ex) {
@@ -62,14 +61,13 @@ public class PhieuNhapDAO implements DAOinterface<PhieuNhapDTO> {
         int result = 0;
         try {
             Connection con = (Connection) JDBC.getConnection();
-            String sql = "UPDATE `phieunhap` SET `mancc`=?, `makhuvuc`=?, `manv`=?, `thoigian`=?, `tongtien`=? WHERE `maphieunhap`=?";
+            String sql = "UPDATE `phieunhap` SET `mancc`=?, `manv`=?, `thoigian`=?, `tongtien`=? WHERE `maphieunhap`=?";
             PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
             pst.setInt(1, t.getMancc());
-            pst.setInt(2, t.getMakhuvuc());
-            pst.setInt(3, t.getManv());
-            pst.setDate(4, t.getThoigian());
-            pst.setLong(5, t.getTongtien());
-            pst.setInt(6, t.getMaphieunhap());
+            pst.setInt(2, t.getManv());
+            pst.setDate(3, t.getThoigian());
+            pst.setLong(4, t.getTongtien());
+            pst.setInt(5, t.getMaphieunhap());
             result = pst.executeUpdate();
             JDBC.closeConnection(con);
         } catch (SQLException ex) {
@@ -149,7 +147,7 @@ public class PhieuNhapDAO implements DAOinterface<PhieuNhapDTO> {
                         " FROM phieunhap pn" +
                         " JOIN ctphieunhap ctp ON pn.maphieunhap = ctp.maphieunhap" +
                         " JOIN sanpham sp ON ctp.masp = sp.masp" +
-                        " JOIN khuvuckho kv ON pn.makhuvuc = kv.makhuvuc";
+                        " JOIN khuvuckho kv ON ctp.makhuvuc = kv.makhuvuc";
             PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
