@@ -56,6 +56,21 @@ public class SanPhamDTO {
         this.trangthai = trangthai;
 
     }
+    
+    public SanPhamDTO(int masp, int maloai, String tensp, String hinhanh, Date NSX, Date HSD, int maxuatxu, int mathuonghieu, int soluongton, double gianhap, int trangthai) {
+        this.masp = masp;
+        this.maloai = maloai;
+        this.tensp = tensp;
+        this.hinhanh = hinhanh;
+        this.NSX = NSX;
+        this.HSD = HSD;
+        this.mathuonghieu = mathuonghieu;
+        this.maxuatxu = maxuatxu;
+        this.gianhap = gianhap;
+        this.soluongton = soluongton;
+        this.trangthai = trangthai;
+
+    }
 
     public int getMasp() {
         return masp;

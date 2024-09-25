@@ -60,7 +60,7 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
         int ketQua = 0;
         try {
             java.sql.Connection con = JDBC.getConnection();
-            String sql = "UPDATE sanpham SET  maloai=?, tensp=?, hinhanh=?, xuatxu=?,NSX=?,HSD=?,thuonghieu=?,giaban=? WHERE masp=?";
+            String sql = "UPDATE sanpham SET  maloai=?, tensp=?, hinhanh=?, xuatxu=?,NSX=?,HSD=?,thuonghieu=? WHERE masp=?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, t.getMaloai());
             pst.setString(2, t.getTensp());
@@ -69,8 +69,7 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
             pst.setString(5, "" + t.getNSX());
             pst.setString(6, "" + t.getHSD());
             pst.setInt(7, t.getMathuonghieu());
-            pst.setString(8, "" + t.getGiaban());
-            pst.setInt(9, t.getMasp());
+            pst.setInt(8, t.getMasp());
             ketQua = pst.executeUpdate();
             JDBC.closeConnection(con);
         } catch (Exception e) {
