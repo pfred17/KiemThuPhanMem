@@ -26,7 +26,6 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
         return new SanPhamDAO();
     }
 
-
     @Override
     public int insert(SanPhamDTO t) {
         int ketQua = 0;
@@ -60,17 +59,13 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
         int ketQua = 0;
         try {
             java.sql.Connection con = JDBC.getConnection();
-            String sql = "UPDATE sanpham SET  maloai=?, tensp=?, hinhanh=?, xuatxu=?,NSX=?,HSD=?,thuonghieu=?,giaban=? WHERE masp=?";
+            String sql = "UPDATE sanpham SET  maloai=?, hinhanh=?, xuatxu=?, thuonghieu=? WHERE masp=?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, t.getMaloai());
-            pst.setString(2, t.getTensp());
-            pst.setString(3, t.getHinhanh());
-            pst.setInt(4, t.getMaxuatxu());
-            pst.setString(5, "" + t.getNSX());
-            pst.setString(6, "" + t.getHSD());
-            pst.setInt(7, t.getMathuonghieu());
-            pst.setString(8, "" + t.getGiaban());
-            pst.setInt(9, t.getMasp());
+            pst.setString(2, t.getHinhanh());
+            pst.setInt(3, t.getMaxuatxu());
+            pst.setInt(4, t.getMathuonghieu());
+            pst.setInt(5, t.getMasp());
             ketQua = pst.executeUpdate();
             JDBC.closeConnection(con);
         } catch (Exception e) {

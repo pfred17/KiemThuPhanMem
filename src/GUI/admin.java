@@ -88,6 +88,11 @@ public class admin extends javax.swing.JFrame {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/home.png"))); // NOI18N
         jButton1.setText("Trang chủ");
         jButton1.setBorder(null);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(176, 212, 235));
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -329,6 +334,11 @@ public class admin extends javax.swing.JFrame {
         jpload.jPanelLoader(panel_load, tke);
     }//GEN-LAST:event_jButton11ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        bgadmin bg = new bgadmin();
+        jpload.jPanelLoader(panel_load, bg);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {
         taikhoan tk = new taikhoan();
         jpload.jPanelLoader(panel_load, tk);
@@ -392,12 +402,6 @@ public class admin extends javax.swing.JFrame {
             login a = new login();
             a.setVisible(true);
         }
-    }
-
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        phanquyen1 pn = new phanquyen1();
-        jpload.jPanelLoader(panel_load, pn);
     }
 
     /**
