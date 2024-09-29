@@ -4,13 +4,10 @@ import BUS.NhanVienBUS;
 import BUS.NhomQuyenBUS;
 import Controler.SearchTK;
 import BUS.TaiKhoanBUS;
-import DAO.NhaCungCapDAO;
 import DAO.TaiKhoanDAO;
 import DTO.NhanVienDTO;
-import DTO.NhomQuyenDTO;
 import DTO.TaiKhoanDTO;
 import GUI.add.addTaiKhoan;
-import GUI.add.addnhacungcap;
 import GUI.update.updateTaiKhoan;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,22 +15,20 @@ import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
 public class taikhoan extends javax.swing.JPanel {
-    
+
     private DefaultTableModel tblModel;
     private ArrayList<TaiKhoanDTO> accounts = new ArrayList<TaiKhoanDTO>();
     private ArrayList<NhanVienDTO> nhanVienList = new ArrayList<NhanVienDTO>();
-    
+
     private Map<Integer, String> listNhanVien = new HashMap<>();
-    
+
     private TaiKhoanBUS tkbus = new TaiKhoanBUS();
     private NhomQuyenBUS nhomQuyenBUS = new NhomQuyenBUS();
     private NhanVienBUS nhanVienBUS = new NhanVienBUS();
-    
+
     public taikhoan() {
         initComponents();
         accounts = TaiKhoanDAO.getInstance().selectAll();
@@ -42,12 +37,12 @@ public class taikhoan extends javax.swing.JPanel {
         loadDataToTable(accounts);
         tblTaiKhoan.setDefaultEditor(Object.class, null);
     }
-    
+
     public final void initTable() {
         tblModel = new DefaultTableModel();
         String[] headerTbl = new String[]{"Họ tên", "Tên đăng nhập", "Mật khẩu", "Nhóm quyền", "Trạng thái"};
         tblModel.setColumnIdentifiers(headerTbl);
-        
+
         tblTaiKhoan.setModel(tblModel);
         tblTaiKhoan.getColumnModel().getColumn(0).setPreferredWidth(20);
         tblTaiKhoan.getColumnModel().getColumn(1).setPreferredWidth(70);
@@ -55,7 +50,7 @@ public class taikhoan extends javax.swing.JPanel {
         tblTaiKhoan.getColumnModel().getColumn(3).setPreferredWidth(30);
         tblTaiKhoan.getColumnModel().getColumn(4).setPreferredWidth(30);
     }
-    
+
     public void loadDataToTable(ArrayList<TaiKhoanDTO> list) {
         tblModel.setRowCount(0);
         for (TaiKhoanDTO taiKhoanDTO : list) {
@@ -70,28 +65,27 @@ public class taikhoan extends javax.swing.JPanel {
                 }
             }
             tblModel.addRow(new Object[]{
-                listNhanVien.get(taiKhoanDTO.getManv()), 
+                listNhanVien.get(taiKhoanDTO.getManv()),
                 taiKhoanDTO.getTendangnhap(),
                 taiKhoanDTO.getMatkhau(),
-                tkbus.getNhomQuyenDTO(taiKhoanDTO.getManhomquyen()).getTennhomquyen(), 
+                tkbus.getNhomQuyenDTO(taiKhoanDTO.getManhomquyen()).getTennhomquyen(),
                 trangthaiString
             });
         }
     }
-    
+
     public TaiKhoanDTO getAccountSelect() {
         int i_row = tblTaiKhoan.getSelectedRow();
         TaiKhoanDTO tk = TaiKhoanDAO.getInstance().selectById(tblTaiKhoan.getValueAt(i_row, 1).toString());
         return tk;
     }
-    
+
     public void loadDataDSNV() {
         ArrayList<NhanVienDTO> listNV = nhanVienBUS.getAll();
         for (NhanVienDTO nv : listNV) {
             listNhanVien.put(nv.getManv(), nv.getHoten());
         }
     }
-        
 
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -288,32 +282,38 @@ public class taikhoan extends javax.swing.JPanel {
 
     private void btnSuaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btnSuaFocusLost
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnSuaFocusLost
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
         int i = tblTaiKhoan.getSelectedRow();
+        if (i == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn tài khoản muốn sửa");
+            return;
+        }
+
         String isAdminChoose = (String) tblModel.getValueAt(i, 1);
         if (isAdminChoose.equals("admin")) {
             JOptionPane.showMessageDialog(this, "Tài khoản admin không thể được chỉnh sửa!!!");
             return;
-        } 
-        if (tblTaiKhoan.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn tài khoản muốn sửa");
-        } else {
-            updateTaiKhoan up = new updateTaiKhoan(this, (JFrame) SwingUtilities.getWindowAncestor(this), true);
-            up.setVisible(true);
         }
-        
+        updateTaiKhoan up = new updateTaiKhoan(this, (JFrame) SwingUtilities.getWindowAncestor(this), true);
+        up.setVisible(true);
+
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
-        String luachon = (String) cbxLuachon.getSelectedItem();
+        String choice = (String) cbxLuachon.getSelectedItem();
         String searchContent = txtSearch.getText();
         ArrayList<TaiKhoanDTO> result = new ArrayList<>();
-        switch (luachon) {
-            case "Tất cả":
+        if(searchContent.isEmpty())
+        {
+            loadDataToTable(TaiKhoanDAO.getInstance().selectAll());
+            return;
+        }
+        switch (choice) {
+            case "Tất Cả":
                 result = SearchTK.getInstance().searchTatCaAcc(searchContent);
                 break;
             case "Tên đăng nhập":
@@ -324,9 +324,8 @@ public class taikhoan extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSearchKeyReleased
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        addTaiKhoan a = new addTaiKhoan();
+        addTaiKhoan a = new addTaiKhoan(null,true);
         a.setVisible(true);
-        
         loadDataToTable(tkbus.tkDAO.selectAll());
     }//GEN-LAST:event_btnThemActionPerformed
 
@@ -338,7 +337,7 @@ public class taikhoan extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
-        
+
     }//GEN-LAST:event_txtSearchActionPerformed
 
 

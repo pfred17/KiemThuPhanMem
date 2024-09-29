@@ -240,7 +240,6 @@ public class updateTaiKhoan extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "Lỗi sửa tài khoản", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            System.out.println(matkhau);
             JOptionPane.showMessageDialog(this, "Sửa thành công!");
             dispose();
             parent.loadDataToTable(tkbus.tkDAO.selectAll());

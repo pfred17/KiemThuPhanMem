@@ -4,11 +4,6 @@ import BUS.NhanVienBUS;
 import DAO.TaiKhoanDAO;
 import DTO.NhanVienDTO;
 import DTO.TaiKhoanDTO;
-import java.awt.Color;
-import javax.swing.JOptionPane;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 
 /**
@@ -350,13 +345,11 @@ public class admin extends javax.swing.JFrame {
     }
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
         nhanvien nv = new nhanvien();
         jpload.jPanelLoader(panel_load, nv);
     }
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
     }
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {
