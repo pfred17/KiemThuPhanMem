@@ -33,16 +33,12 @@ public class SanPhamBUS {
     
     
     public SanPhamDTO getByMaSP(int masp) {
-        int vitri = -1;
-        int i = 0;
-        while (i <= this.listSP.size() && vitri == -1) {
-            if (this.listSP.get(i).getMasp() == masp) {
-                vitri = i;
-            } else {
-                i++;
+        for (SanPhamDTO sp : this.listSP) {
+            if (sp.getMasp() == masp) {
+                return sp;
             }
         }
-        return this.listSP.get(vitri);
+        return null;
     }
 
     public int getIndexByMaSP(int masanpham) {

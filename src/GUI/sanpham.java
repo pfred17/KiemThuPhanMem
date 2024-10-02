@@ -13,7 +13,8 @@ import GUI.update.updatesanpham;
 import GUI.details.dtsanpham;
 import helper.FormatPrice;
 import java.awt.Desktop;
-import java.io.BufferedInputStream;
+import java.io.BufferedInputStream;  
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -304,13 +305,20 @@ public final class sanpham extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThemActionPerformed
     public SanPhamDTO getSanPhamSelect() {
         int i_row = tablesp.getSelectedRow();
-        SanPhamDTO sp = spBUS.spDAO.selectAll().get(i_row);
+        int masp = (int) tblModel.getValueAt(i_row, 0);
+        SanPhamDTO sp = spBUS.getByMaSP(masp);
+//        SanPhamDTO sp = spBUS.spDAO.selectAll().get(i_row);
         return sp;
     }
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         if (tablesp.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm muốn xoá");
         } else {
+            SanPhamDTO sp = getSanPhamSelect();
+            if (sp.getSoluongton() != 0) {
+                JOptionPane.showMessageDialog(this, "Xóa không thành công, số lượng tồn của sản phẩm khác 0", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             int output = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá sản phẩm này?", "Xác nhận xoá sản phẩm", JOptionPane.YES_NO_OPTION);
             if (output == JOptionPane.YES_OPTION) {
                 spBUS.spDAO.delete(getSanPhamSelect());
