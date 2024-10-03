@@ -6,18 +6,6 @@ import DTO.NhomQuyenDTO;
 import DTO.TaiKhoanDTO;
 import java.util.ArrayList;
 
-import DAO.NhomQuyenDAO;
-import DAO.SanPhamDAO;
-import DAO.TaiKhoanDAO;
-import DTO.NhomQuyenDTO;
-import DTO.SanPhamDTO;
-import DTO.TaiKhoanDTO;
-import java.util.ArrayList;
-
-/**
- *
- * @author robot
- */
 public class TaiKhoanBUS {
 
     private ArrayList<TaiKhoanDTO> listTaiKhoan;

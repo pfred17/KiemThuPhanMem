@@ -3,13 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/sanpham.java</file>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/phieuxuat.java</file>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/add/addTaiKhoan.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/admin.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/thuoctinh.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/DTO/NhanVienDTO.java</file>
             <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/taikhoan.java</file>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/update/updateTaiKhoan.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/DTO/TaiKhoanDTO.java</file>
             <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/login.java</file>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/phieunhap.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/khohang.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/BUS/TaiKhoanBUS.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/ThongKe.java</file>
         </group>
     </open-files>
 </project-private>

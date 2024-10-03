@@ -196,14 +196,12 @@ public class login extends javax.swing.JFrame {
         disable.setVisible(false);
         disable.setEnabled(false);
         show.setEnabled(true);
-        show.setEnabled(true);
     }//GEN-LAST:event_disableMouseClicked
 
     private void showMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showMouseClicked
         txtpassword.setEchoChar((char) 8226);
         disable.setVisible(true);
         disable.setEnabled(true);
-        show.setEnabled(false);
         show.setEnabled(false);
     }//GEN-LAST:event_showMouseClicked
 
@@ -221,7 +219,6 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void txtusernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtusernameMouseClicked
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtusernameMouseClicked
 
     private void txtusernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtusernameKeyPressed
@@ -263,38 +260,52 @@ public class login extends javax.swing.JFrame {
 
     public void checkLogin() throws UnsupportedLookAndFeelException {
         String usernameCheck = txtusername.getText();
-         String passwordCheck = new String(txtpassword.getPassword());
+        String passwordCheck = new String(txtpassword.getPassword());
 
-        if (usernameCheck.equals("") || passwordCheck.equals("")) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin đầy đủ", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
-        } else {
-            TaiKhoanDTO tk = TaiKhoanDAO.getInstance().selectByUser(usernameCheck);
+        if (usernameCheck.equals("") && passwordCheck.equals("")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ các thông tin", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+            txtusername.requestFocus();
+            return;
+        }
+        if (usernameCheck.equals("")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên đăng nhập", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+            txtusername.requestFocus();
+            return;
+        }
+        if (passwordCheck.equals("")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập mật khẩu", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+            txtpassword.requestFocus();
+            return;
+        }
 
-            if (tk == null) {
-                JOptionPane.showMessageDialog(this, "Tài khoản của bạn không tồn tại trên hệ thống", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
-                return;
-            } else {
-                if (tk.getTrangthai() == 0) {
-                    JOptionPane.showMessageDialog(this, "Tài khoản của bạn đang bị khóa", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
-                    return;
-                } else {
-                    if (passwordCheck.equals(tk.getMatkhau())) {
-                        this.dispose();
-                        if (tk.getManhomquyen() == 1) {
-                            admin ad = new admin(tk);
-                            ad.setVisible(true);
-                        } else if (tk.getManhomquyen() == 2) {
-                            nvnhaphang ql = new nvnhaphang(tk);
-                            ql.setVisible(true);
-                        } else if (tk.getManhomquyen() == 3) {
-                            nvxuathang ql = new nvxuathang(tk);
-                            ql.setVisible(true);
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Mật khẩu không chính xác", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
-                    }
-                }
-            }
+        TaiKhoanDTO tk = TaiKhoanDAO.getInstance().selectByUser(usernameCheck);
+
+        if (tk == null) {
+            JOptionPane.showMessageDialog(this, "Tài khoản của bạn không tồn tại trên hệ thống", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (!passwordCheck.equals(tk.getMatkhau())) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu không chính xác", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+            txtpassword.requestFocus();
+            return;
+        }
+        if (tk.getTrangthai() == 0) {
+            JOptionPane.showMessageDialog(this, "Tài khoản của bạn đã bị khóa", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        this.dispose();
+        
+        switch (tk.getManhomquyen()) {
+            case 1:
+                new admin(tk).setVisible(true);
+                break;
+            case 2:
+                new nvnhaphang(tk).setVisible(true);
+                break;
+            case 3:
+                new nvxuathang(tk).setVisible(true);
+                break;
         }
     }
 
