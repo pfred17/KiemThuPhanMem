@@ -434,6 +434,11 @@ public class addphieunhap extends javax.swing.JPanel {
     }//GEN-LAST:event_btnthemspActionPerformed
 
     private void btnnhaphangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnhaphangActionPerformed
+         int selectedRow = tblphieunhapin.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm từ bảng 1.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         DefaultTableModel model = (DefaultTableModel) tblphieunhapout.getModel();
         ArrayList<NhanVienDTO> listnv = nvBUS.getAll();
         int rowCount = model.getRowCount();

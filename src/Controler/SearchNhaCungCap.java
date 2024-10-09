@@ -82,5 +82,15 @@ public class SearchNhaCungCap {
         }
         return result;
     }
+    public ArrayList<NhaCungCapDTO> searchEmail(String text) {
+        ArrayList<NhaCungCapDTO> result = new ArrayList<>();
+        ArrayList<NhaCungCapDTO> armt = NhaCungCapDAO.getInstance().selectAll();
+        for (var ncc : armt) {
+            if (ncc.getEmail().toLowerCase().contains(text.toLowerCase())) {
+                result.add(ncc);
+            }
+        }
+        return result;
+    }
 }
 

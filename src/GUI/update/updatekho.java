@@ -16,19 +16,19 @@ import javax.swing.JOptionPane;
  * @author NeON
  */
 public class updatekho extends javax.swing.JDialog {
-    
+
     private khohang parent;
     KhoHangBUS khBUS = new KhoHangBUS();
-    
+
     public updatekho(khohang parent, javax.swing.JFrame owner, boolean modal) {
         super(owner, modal);
-        this.parent = (khohang)parent;
+        this.parent = (khohang) parent;
         initComponents();
         setModal(modal);
         setLocationRelativeTo(null);
         displayInfo();
     }
-    
+
     public updatekho() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -36,12 +36,13 @@ public class updatekho extends javax.swing.JDialog {
     private updatekho(JFrame jFrame, boolean b) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     private void displayInfo() {
         KhoHangDTO kh = parent.getKhoHangSelect();
         txttenkho.setText("" + kh.getTenkhuvuc());
         txtghichu.setText("" + kh.getGhichu());
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -190,7 +191,11 @@ public class updatekho extends javax.swing.JDialog {
             if (tenkvk.isBlank() || ghichu.isBlank()) {
                 JOptionPane.showMessageDialog(this, "Không được để trống bất kì trường nhập liệu nào !");
             }
-            else {
+            if (txttenkho.getText().length()== 20 || txtghichu.getText().length() == 20) {
+                JOptionPane.showMessageDialog(this, "Không được nhập quá giới hạn 20 ký tự");
+                
+
+            } else {
                 int makho = parent.getKhoHangSelect().getMakhuvuc();
                 KhoHangDTO kh = new KhoHangDTO(makho, tenkvk, ghichu);
                 khBUS.update(kh);
