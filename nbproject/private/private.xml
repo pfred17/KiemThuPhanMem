@@ -4,6 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/DTO/NhaCungCapDTO.java</file>
+<<<<<<< HEAD
+=======
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/Controler/SearchTK.java</file>
+>>>>>>> bao
             <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/GUI/nhacungcap.java</file>
             <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/GUI/details/detailsphieuxuat.java</file>
             <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/GUI/sanpham.java</file>
@@ -26,7 +30,10 @@
             <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/GUI/add/addphieuxuat.java</file>
             <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/BUS/NhanVienBUS.java</file>
             <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/Controler/SearchPhieuNhap.java</file>
+<<<<<<< HEAD
             <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/DTO/NhanVienDTO.java</file>
+=======
+>>>>>>> bao
         </group>
     </open-files>
 </project-private>

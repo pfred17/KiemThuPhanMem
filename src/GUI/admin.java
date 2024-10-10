@@ -36,7 +36,7 @@ public class admin extends javax.swing.JFrame {
     }
     
     public NhanVienDTO getNhanVien() {
-        return nhanVienBUS.getNhanVienByMaNv(taikhoan.getAccountId());
+        return nhanVienBUS.getNhanVienByMaNv(taikhoan.getStaffId());
     }
 
     @SuppressWarnings("unchecked")

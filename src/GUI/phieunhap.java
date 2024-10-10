@@ -4,13 +4,10 @@ import Controler.SearchPhieuNhap;
 import BUS.PhieuNhapBUS;
 import DTO.NhanVienDTO;
 import DTO.PhieuNhapDTO;
-import DTO.TaiKhoanDTO;
 import GUI.add.addphieunhap;
 import GUI.details.detailsphieunhap;
 import helper.FormatPrice;
 import java.util.*;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -98,7 +95,7 @@ public final class phieunhap extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel5 = new javax.swing.JPanel();
-        jButton23 = new javax.swing.JButton();
+        resetBtn = new javax.swing.JButton();
         txttimkiem = new javax.swing.JTextField();
         cbxAll = new javax.swing.JComboBox<>();
         jToolBar3 = new javax.swing.JToolBar();
@@ -117,14 +114,19 @@ public final class phieunhap extends javax.swing.JPanel {
         jPanel5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel5.setPreferredSize(new java.awt.Dimension(1110, 90));
 
-        jButton23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/refresh.png"))); // NOI18N
-        jButton23.setText("Làm mới");
-        jButton23.addActionListener(new java.awt.event.ActionListener() {
+        resetBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/refresh.png"))); // NOI18N
+        resetBtn.setText("Làm mới");
+        resetBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton23ActionPerformed(evt);
+                resetBtnActionPerformed(evt);
             }
         });
 
+        txttimkiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txttimkiemActionPerformed(evt);
+            }
+        });
         txttimkiem.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txttimkiemKeyReleased(evt);
@@ -178,7 +180,7 @@ public final class phieunhap extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(txttimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton23)
+                .addComponent(resetBtn)
                 .addGap(22, 22, 22))
         );
         jPanel5Layout.setVerticalGroup(
@@ -188,7 +190,7 @@ public final class phieunhap extends javax.swing.JPanel {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbxAll, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txttimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(resetBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
@@ -357,13 +359,18 @@ public final class phieunhap extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnChiTietActionPerformed
 
-    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
+    private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnActionPerformed
         // TODO add your handling code here:
         cbxAll.setSelectedIndex(0);
         txttimkiem.setText("");
         cbncc.setSelectedIndex(0);
         cbnvien.setSelectedIndex(0);
-    }//GEN-LAST:event_jButton23ActionPerformed
+        displaytoTable(list);
+    }//GEN-LAST:event_resetBtnActionPerformed
+
+    private void txttimkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttimkiemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txttimkiemActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -372,7 +379,6 @@ public final class phieunhap extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cbncc;
     private javax.swing.JComboBox<String> cbnvien;
     private javax.swing.JComboBox<String> cbxAll;
-    private javax.swing.JButton jButton23;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel3;
@@ -380,6 +386,7 @@ public final class phieunhap extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar jToolBar3;
+    private javax.swing.JButton resetBtn;
     private javax.swing.JTable tblphieunhap;
     private javax.swing.JTextField txttimkiem;
     // End of variables declaration//GEN-END:variables

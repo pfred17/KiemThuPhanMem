@@ -141,6 +141,11 @@ public class updatesanpham extends javax.swing.JDialog {
         txttensp.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txttensp.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
         txttensp.setEnabled(false);
+        txttensp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txttenspActionPerformed(evt);
+            }
+        });
 
         cbxthuonghieu.setBorder(null);
         cbxthuonghieu.addActionListener(new java.awt.event.ActionListener() {
@@ -365,6 +370,10 @@ public class updatesanpham extends javax.swing.JDialog {
     private void cbxthuonghieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxthuonghieuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxthuonghieuActionPerformed
+
+    private void txttenspActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttenspActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txttenspActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {

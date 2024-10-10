@@ -352,7 +352,10 @@ public class addsanpham extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập tên sản phẩm");
                 return;
             }
-
+            if (txttensp.getText().matches("^[^a-zA-Z]+$")) {
+                JOptionPane.showMessageDialog(this, "Tên sản phẩm chỉ được chứa chữ cái");
+                return;
+            }
             String tensp = txttensp.getText();
             java.sql.Date sqlNsx = new java.sql.Date(nsx.getTime());
             java.sql.Date sqlHsd = new java.sql.Date(hsd.getTime());

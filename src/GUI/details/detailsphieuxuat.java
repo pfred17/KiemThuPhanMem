@@ -1,11 +1,12 @@
 package GUI.details;
 
 import BUS.CTPhieuXuatBUS;
-import helper.writePDF;
+import BUS.GiamGiaBUS;
 import BUS.PhieuXuatBUS;
 import DTO.PhieuXuatDTO;
 import BUS.SanPhamBUS;
 import DTO.ChiTietPhieuXuatDTO;
+import DTO.GiamGiaDTO;
 import DTO.SanPhamDTO;
 import GUI.phieuxuat;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class detailsphieuxuat extends javax.swing.JDialog {
     private phieuxuat parent;
     PhieuXuatBUS pxBUS = new PhieuXuatBUS();
     SanPhamBUS spBUS = new SanPhamBUS();
+    GiamGiaBUS ggBUS = new GiamGiaBUS();
 
     public detailsphieuxuat(phieuxuat parent, javax.swing.JFrame owner, boolean modal) {
         super(owner, modal);
@@ -40,11 +42,13 @@ public class detailsphieuxuat extends javax.swing.JDialog {
         tblModel.setColumnIdentifiers(headerTbl);
         tblctsanpham.setModel(tblModel);
         tblctsanpham.getColumnModel().getColumn(0).setPreferredWidth(5);
-        tblctsanpham.getColumnModel().getColumn(0).setPreferredWidth(5);
-        tblctsanpham.getColumnModel().getColumn(0).setPreferredWidth(5);
-        tblctsanpham.getColumnModel().getColumn(0).setPreferredWidth(5);
+        tblctsanpham.getColumnModel().getColumn(1).setPreferredWidth(5);
+        tblctsanpham.getColumnModel().getColumn(2).setPreferredWidth(5);
+        tblctsanpham.getColumnModel().getColumn(3).setPreferredWidth(5);
+       
+
     }
-    
+
     public detailsphieuxuat() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -68,7 +72,7 @@ public class detailsphieuxuat extends javax.swing.JDialog {
         try {
             DefaultTableModel dt = (DefaultTableModel) tblctsanpham.getModel();
             ArrayList<SanPhamDTO> listsp = spBUS.spDAO.selectAll();
-
+            ArrayList<GiamGiaDTO> listgg = ggBUS.getAll();
             dt.setRowCount(0);
             for (PhieuXuatDTO i : list) {
 
@@ -81,13 +85,16 @@ public class detailsphieuxuat extends javax.swing.JDialog {
                             break;
                         }
                     }
+                   
 
                     dt.addRow(new Object[]{
                         i.getMasp(), tensp, i.getSoluong(), i.getDongia()
                     });
 
                 }
+               
             }
+            
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -206,31 +213,32 @@ public class detailsphieuxuat extends javax.swing.JDialog {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(15, 15, 15)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(101, 101, 101))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                            .addComponent(txtmapx, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(80, 80, 80)))
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel4)
-                                        .addComponent(txttenkh, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(jLabel3))
-                            .addGap(89, 89, 89)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txttennvnhap, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel5))
-                            .addGap(105, 105, 105)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtthoigian, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(101, 101, 101))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                .addComponent(txtmapx, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(80, 80, 80)))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel4)
+                                            .addComponent(txttenkh, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel3))
+                                .addGap(89, 89, 89)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txttennvnhap, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5))
+                                .addGap(105, 105, 105)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtthoigian, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(333, 333, 333)
                         .addComponent(btnthoat)))
@@ -311,7 +319,6 @@ public class detailsphieuxuat extends javax.swing.JDialog {
         }
         return ctpx;
     }
-
 
     public static void main(String args[]) {
         /* Create and display the dialog */
