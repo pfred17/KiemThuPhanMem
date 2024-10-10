@@ -14,7 +14,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -47,9 +46,9 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
             pst.setInt(12, t.getTrangthai());
             ketQua = pst.executeUpdate();
             JDBC.closeConnection(con);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Không thêm được sản phẩm " + t.getMasp(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
+        } catch (SQLException e) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
+
         }
         return ketQua;
     }
@@ -68,9 +67,8 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
             pst.setInt(5, t.getMasp());
             ketQua = pst.executeUpdate();
             JDBC.closeConnection(con);
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
+        } catch (SQLException e) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
     }
@@ -86,23 +84,24 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
             pst.setInt(2, sp.getMasp());
             ketQua = pst.executeUpdate();
             JDBC.closeConnection(con);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
     }
 
     @Override
     public ArrayList<SanPhamDTO> selectAll() {
-        ArrayList<SanPhamDTO> ketQua = new ArrayList<SanPhamDTO>();
-        try (Connection con = JDBC.getConnection(); Statement s = con.createStatement(); ResultSet rs = s.executeQuery("SELECT sanpham.masp, sanpham.maloai, sanpham.tensp, sanpham.hinhanh, sanpham.xuatxu,\n"
-                + "       sanpham.NSX, sanpham.HSD, sanpham.thuonghieu, sanpham.gianhap,sanpham.giaban, sanpham.soluongton, sanpham.trangthai,\n"
-                + "       loaisanpham.tenloai, thuonghieu.tenthuonghieu, xuatxu.tenxuatxu, loaisanpham.trangthai, xuatxu.trangthai, thuonghieu.mathuonghieu\n"
-                + "FROM sanpham\n"
-                + "INNER JOIN loaisanpham ON sanpham.maloai = loaisanpham.maloai\n"
-                + "INNER JOIN thuonghieu ON sanpham.thuonghieu = thuonghieu.mathuonghieu\n"
-                + "INNER JOIN xuatxu ON sanpham.xuatxu = xuatxu.maxuatxu\n"
-                + "ORDER BY sanpham.masp;")) {
+        ArrayList<SanPhamDTO> ketQua = new ArrayList<>();
+        try (Connection con = JDBC.getConnection(); Statement s = con.createStatement(); ResultSet rs = s.executeQuery("""
+                                                                                                                       SELECT sanpham.masp, sanpham.maloai, sanpham.tensp, sanpham.hinhanh, sanpham.xuatxu,
+                                                                                                                              sanpham.NSX, sanpham.HSD, sanpham.thuonghieu, sanpham.gianhap,sanpham.giaban, sanpham.soluongton, sanpham.trangthai,
+                                                                                                                              loaisanpham.tenloai, thuonghieu.tenthuonghieu, xuatxu.tenxuatxu, loaisanpham.trangthai, xuatxu.trangthai, thuonghieu.mathuonghieu
+                                                                                                                       FROM sanpham
+                                                                                                                       INNER JOIN loaisanpham ON sanpham.maloai = loaisanpham.maloai
+                                                                                                                       INNER JOIN thuonghieu ON sanpham.thuonghieu = thuonghieu.mathuonghieu
+                                                                                                                       INNER JOIN xuatxu ON sanpham.xuatxu = xuatxu.maxuatxu
+                                                                                                                       ORDER BY sanpham.masp;""")) {
 
             while (rs.next()) {
                 LoaiSanPhamDTO lsp = new LoaiSanPhamDTO(rs.getInt("maloai"), rs.getString("tenloai"));
@@ -128,7 +127,7 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
                 ketQua.add(sp);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
     }
@@ -157,9 +156,8 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
                 int trangthai = rs.getInt("trangthai");
                 ketQua = new SanPhamDTO(masp, maloai, tensp, hinhanh, NSX, HSD, maxuatxu, mathuonghieu, soluongton, gianhap, giaban, trangthai);
             }
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
+        } catch (SQLException e) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
     }
@@ -196,7 +194,7 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
             result = pst.executeUpdate();
             JDBC.closeConnection(con);
         } catch (SQLException ex) {
-            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }
@@ -213,8 +211,8 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
             pst.setInt(4, sp.getMasp());
             ketQua = pst.executeUpdate();
             JDBC.closeConnection(con);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return ketQua;
     }

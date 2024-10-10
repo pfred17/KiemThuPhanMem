@@ -15,7 +15,7 @@ public class login extends javax.swing.JFrame {
         txtusername.setBackground(new java.awt.Color(0, 0, 0, 1));
         txtpassword.setBackground(new java.awt.Color(0, 0, 0, 1));
         txtusername.setText("admin");
-        txtpassword.setText("abc");
+        txtpassword.setText("admin");
     }
 
     /**
@@ -188,7 +188,7 @@ public class login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        System.exit(0);
+//        System.exit(0);
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void disableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_disableMouseClicked
@@ -206,14 +206,11 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_showMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        for (double i = 0.0; i <= 1.0; i = i + 0.1) {
-            String val = i + "";
-            float f = Float.valueOf(val);
-            this.setOpacity(f);
+        for (float i = 0f; i < 1; i += 0.1f) {
+            this.setOpacity(i);
             try {
                 Thread.sleep(50);
-            } catch (Exception e) {
-
+            } catch (InterruptedException e) {
             }
         }
     }//GEN-LAST:event_formWindowOpened
@@ -278,34 +275,28 @@ public class login extends javax.swing.JFrame {
             return;
         }
 
-        TaiKhoanDTO tk = TaiKhoanDAO.getInstance().selectByUser(usernameCheck);
-
+        TaiKhoanDTO tk = TaiKhoanDAO.getInstance().selectByUsername(usernameCheck);
+        
         if (tk == null) {
             JOptionPane.showMessageDialog(this, "Tài khoản của bạn không tồn tại trên hệ thống", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (!passwordCheck.equals(tk.getMatkhau())) {
+        if (!passwordCheck.equals(tk.getPassword())) {
             JOptionPane.showMessageDialog(this, "Mật khẩu không chính xác", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
             txtpassword.requestFocus();
             return;
         }
-        if (tk.getTrangthai() == 0) {
+        if (tk.getStatus() == 0) {
             JOptionPane.showMessageDialog(this, "Tài khoản của bạn đã bị khóa", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         this.dispose();
-        
-        switch (tk.getManhomquyen()) {
-            case 1:
-                new admin(tk).setVisible(true);
-                break;
-            case 2:
-                new nvnhaphang(tk).setVisible(true);
-                break;
-            case 3:
-                new nvxuathang(tk).setVisible(true);
-                break;
+
+        switch (tk.getRoleId()) {
+            case 1 -> new admin(tk).setVisible(true);
+            case 2 -> new nvnhaphang(tk).setVisible(true);
+            case 3 -> new nvxuathang(tk).setVisible(true);
         }
     }
 
@@ -338,10 +329,8 @@ public class login extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new login().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new login().setVisible(true);
         });
     }
 

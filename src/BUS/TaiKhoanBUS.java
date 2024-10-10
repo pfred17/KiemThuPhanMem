@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 public class TaiKhoanBUS {
 
-    private ArrayList<TaiKhoanDTO> listTaiKhoan;
+    private final ArrayList<TaiKhoanDTO> listTaiKhoan;
     public final TaiKhoanDAO tkDAO = new TaiKhoanDAO();
-    private ArrayList<NhomQuyenDTO> listNhomQuyen;
-    private NhomQuyenDAO nhomQuyenDAO = NhomQuyenDAO.getInstance();
+    private final ArrayList<NhomQuyenDTO> listNhomQuyen;
+    private final NhomQuyenDAO nhomQuyenDAO = NhomQuyenDAO.getInstance();
 
     public TaiKhoanBUS() {
         this.listTaiKhoan = TaiKhoanDAO.getInstance().selectAll();
@@ -30,38 +30,25 @@ public class TaiKhoanBUS {
         return listTaiKhoan.get(index);
     }
 
-    public int getTaiKhoanByMaNV(int manv) {
-        int i = 0;
-        int vitri = -1;
-        while (i < this.listTaiKhoan.size() && vitri == -1) {
-            if (listTaiKhoan.get(i).getManv() == manv) {
-                vitri = i;
-            } else {
-                i++;
-            }
-        }
-        return vitri;
-    }
-    
     public int getMaNVbyUsername(String username) {
         int i = 0;
         for (TaiKhoanDTO tk : this.listTaiKhoan) {
-            if (tk.getTendangnhap().equals(username)) {
-                return i = tk.getManv();
+            if (tk.getUsername().equals(username)) {
+                return i = tk.getAccountId();
             }
         }
         return i;
     }
-    
-    public Boolean checkExistAccount(String username) {
+
+    public Boolean isUsernameExists(String username) {
         for (TaiKhoanDTO tk : this.listTaiKhoan) {
-            if (tk.getTendangnhap().equals(username)) {
+            if (tk.getUsername().equals(username)) {
                 return true;
             }
         }
         return false;
     }
-    
+
     public Boolean add(TaiKhoanDTO tk) {
         boolean check = tkDAO.insert(tk) != 0;
         if (check) {
@@ -71,17 +58,26 @@ public class TaiKhoanBUS {
     }
 
     public Boolean delete(TaiKhoanDTO tk) {
-        boolean check = tkDAO.delete(tk.getManv()) != 0;
+        boolean check = tkDAO.delete(tk.getAccountId()) != 0;
         if (check) {
             this.listTaiKhoan.remove(tk);
         }
         return check;
     }
 
+    public int findAccountByAccountId(int accountId) {
+        for (int i = 0; i < this.listTaiKhoan.size(); i++) {
+            if (listTaiKhoan.get(i).getAccountId() == accountId) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public Boolean update(TaiKhoanDTO tk) {
         boolean check = tkDAO.update(tk) != 0;
         if (check) {
-            this.listTaiKhoan.set(getTaiKhoanByMaNV(tk.getManv()), tk);
+            this.listTaiKhoan.set(findAccountByAccountId(tk.getAccountId()), tk);
         }
         return check;
     }
@@ -92,21 +88,21 @@ public class TaiKhoanBUS {
         switch (type) {
             case "Tất cả" -> {
                 for (TaiKhoanDTO i : listTaiKhoan) {
-                    if (Integer.toString(i.getManv()).contains(txt) || i.getTendangnhap().contains(txt)) {
+                    if (Integer.toString(i.getAccountId()).contains(txt) || i.getUsername().contains(txt)) {
                         result.add(i);
                     }
                 }
             }
             case "Mã nhân viên" -> {
                 for (TaiKhoanDTO i : listTaiKhoan) {
-                    if (Integer.toString(i.getManv()).contains(txt)) {
+                    if (Integer.toString(i.getAccountId()).contains(txt)) {
                         result.add(i);
                     }
                 }
             }
             case "Username" -> {
                 for (TaiKhoanDTO i : listTaiKhoan) {
-                    if (i.getTendangnhap().toLowerCase().contains(txt)) {
+                    if (i.getUsername().toLowerCase().contains(txt)) {
                         result.add(i);
                     }
                 }

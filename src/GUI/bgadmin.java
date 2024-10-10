@@ -29,33 +29,25 @@ public class bgadmin extends javax.swing.JPanel {
         panel_load = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
+        setLayout(new java.awt.BorderLayout());
+
         panel_load.setBackground(new java.awt.Color(255, 255, 255));
-        panel_load.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/imageSanPham/bgr.jpg"))); // NOI18N
         jLabel1.setPreferredSize(new java.awt.Dimension(1100, 500));
-        panel_load.add(jLabel1, java.awt.BorderLayout.CENTER);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1271, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panel_load, javax.swing.GroupLayout.DEFAULT_SIZE, 1259, Short.MAX_VALUE)
-                    .addContainerGap()))
+        javax.swing.GroupLayout panel_loadLayout = new javax.swing.GroupLayout(panel_load);
+        panel_load.setLayout(panel_loadLayout);
+        panel_loadLayout.setHorizontalGroup(
+            panel_loadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1259, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 792, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(panel_load, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
-                    .addContainerGap()))
+        panel_loadLayout.setVerticalGroup(
+            panel_loadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 780, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
+
+        add(panel_load, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 

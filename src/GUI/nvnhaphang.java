@@ -39,7 +39,7 @@ public class nvnhaphang extends javax.swing.JFrame {
     }
 
     public NhanVienDTO getNhanVien() {
-        return nhanVienBUS.getNhanVienByMaNv(taikhoan.getManv());
+        return nhanVienBUS.getNhanVienByMaNv(taikhoan.getAccountId());
     }
     
     @SuppressWarnings("unchecked")
@@ -271,7 +271,7 @@ public class nvnhaphang extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        phieunhap pn = new phieunhap(getNhanVien(), taikhoan.getManhomquyen());
+        phieunhap pn = new phieunhap(getNhanVien(), taikhoan.getRoleId());
         jpload.jPanelLoader(panel_load, pn);
     }//GEN-LAST:event_jButton5ActionPerformed
 

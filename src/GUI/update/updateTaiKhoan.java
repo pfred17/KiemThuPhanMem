@@ -1,40 +1,28 @@
 package GUI.update;
 
 import BUS.TaiKhoanBUS;
-import DAO.NhomQuyenDAO;
-import DAO.TaiKhoanDAO;
-import DTO.NhomQuyenDTO;
 import DTO.TaiKhoanDTO;
 import GUI.taikhoan;
-import java.util.ArrayList;
+import helper.Validation;
+import java.awt.HeadlessException;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author babib
- */
 public class updateTaiKhoan extends javax.swing.JDialog {
 
-    private Map<String, Integer> listQuyen = new HashMap<>();
-
-    private int manv;
-    private taikhoan parent;
-    private TaiKhoanBUS tkbus = new TaiKhoanBUS();
-    private ArrayList<NhomQuyenDTO> listNq = NhomQuyenDAO.getInstance().selectAll();
-    private ArrayList<TaiKhoanDTO> listTK = TaiKhoanDAO.getInstance().selectAll();
+    private final Map<String, Integer> listQuyen = new HashMap<>();
+    private final taikhoan parent;
+    private final TaiKhoanBUS taiKhoanBUS = new TaiKhoanBUS();
+    Validation v = new Validation();
 
     public updateTaiKhoan(taikhoan parent, javax.swing.JFrame owner, boolean modal) {
         super(owner, modal);
         this.parent = (taikhoan) parent;
         initComponents();
         loadDataDSQuyen();
-        TaiKhoanDTO a = parent.getAccountSelect();
         display();
         setLocationRelativeTo(null);
-
     }
 
     public void loadDataDSQuyen() {
@@ -42,30 +30,15 @@ public class updateTaiKhoan extends javax.swing.JDialog {
         listQuyen.put("Nhân viên xuất hàng", 3);
     }
 
-    public updateTaiKhoan(taikhoan taiKhoan, JFrame owner, String title, boolean modal, String type, TaiKhoanDTO tk) {
-        super(owner, title, modal);
-        this.manv = tk.getManv();
-        txtTenDangNhap.setText(tk.getTendangnhap());
-//        cbbNhomQuyen.setSelectedItem(NhomQuyenDAO.getInstance().selectById(tk.getManhomquyen() + "").getTennhomquyen());
-        cbbNhomQuyen.setSelectedItem(listQuyen.get(tk.getManv()));
-        cbbTrangThai.setSelectedIndex(tk.getTrangthai());
-        setLocationRelativeTo(null);
-        setVisible(true);
-    }
-
-    private updateTaiKhoan(JFrame jFrame, boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     public void display() {
-        TaiKhoanDTO taiKhoanSelected = parent.getAccountSelect();
-        txtTenDangNhap.setText(taiKhoanSelected.getTendangnhap());
-        txtMatKhau.setText(taiKhoanSelected.getMatkhau());
-        cbbNhomQuyen.setSelectedItem(tkbus.getNhomQuyenDTO(taiKhoanSelected.getManhomquyen()).getTennhomquyen());
+        TaiKhoanDTO taiKhoanSelected = parent.getSelectedAccount();
+        txtTenDangNhap.setText(taiKhoanSelected.getUsername());
+        txtMatKhau.setText(taiKhoanSelected.getPassword());
+        cbbNhomQuyen.setSelectedItem(taiKhoanBUS.getNhomQuyenDTO(taiKhoanSelected.getRoleId()).getTennhomquyen());
         String trangthaiString = "";
-        switch (taiKhoanSelected.getTrangthai()) {
+        switch (taiKhoanSelected.getStatus()) {
             case 1 -> {
-                trangthaiString = "Hoạt động";
+                trangthaiString = "Đang hoạt động";
             }
             case 2 -> {
                 trangthaiString = "Ngưng hoạt động";
@@ -90,8 +63,8 @@ public class updateTaiKhoan extends javax.swing.JDialog {
         txtTenDangNhap = new javax.swing.JTextField();
         cbbTrangThai = new javax.swing.JComboBox<>();
         cbbNhomQuyen = new javax.swing.JComboBox<>();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        btnHuy = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         txtMatKhau = new javax.swing.JTextField();
@@ -126,31 +99,46 @@ public class updateTaiKhoan extends javax.swing.JDialog {
 
         jLabel8.setText("Tên Đăng Nhập");
 
-        txtTenDangNhap.setBackground(new java.awt.Color(204, 204, 204));
         txtTenDangNhap.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        txtTenDangNhap.setEnabled(false);
-
-        cbbTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ngưng hoạt động", "Hoạt động" }));
-
-        cbbNhomQuyen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhân viên nhập hàng", "Nhân viên xuất hàng" }));
-
-        jButton3.setBackground(new java.awt.Color(0, 204, 0));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Lưu");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        txtTenDangNhap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                txtTenDangNhapActionPerformed(evt);
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(204, 0, 51));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Hủy");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        cbbTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ngưng hoạt động", "Đang hoạt động" }));
+
+        cbbNhomQuyen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhân viên nhập hàng", "Nhân viên xuất hàng" }));
+
+        btnSave.setBackground(new java.awt.Color(0, 204, 0));
+        btnSave.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSave.setForeground(new java.awt.Color(255, 255, 255));
+        btnSave.setText("Lưu");
+        btnSave.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnSaveActionPerformed(evt);
+            }
+        });
+        btnSave.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnSaveKeyPressed(evt);
+            }
+        });
+
+        btnHuy.setBackground(new java.awt.Color(204, 0, 51));
+        btnHuy.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnHuy.setForeground(new java.awt.Color(255, 255, 255));
+        btnHuy.setText("Hủy");
+        btnHuy.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnHuy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHuyActionPerformed(evt);
+            }
+        });
+        btnHuy.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnHuyKeyPressed(evt);
             }
         });
 
@@ -168,9 +156,9 @@ public class updateTaiKhoan extends javax.swing.JDialog {
                 .addGap(64, 64, 64)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel9)
                     .addComponent(jLabel12)
                     .addComponent(jLabel11)
@@ -202,8 +190,8 @@ public class updateTaiKhoan extends javax.swing.JDialog {
                 .addComponent(cbbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(64, 64, 64))
         );
 
@@ -226,81 +214,80 @@ public class updateTaiKhoan extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (!(txtTenDangNhap.getText().isEmpty())) {
-            int manv = parent.getAccountSelect().getManv();
-            String tendangnhap = txtTenDangNhap.getText();
-            String matkhau = txtMatKhau.getText();
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        try {
+            int accountId = parent.getSelectedAccount().getAccountId();
+            int staffId = parent.getSelectedAccount().getStaffId();
+            String username = txtTenDangNhap.getText().trim();
+            String password = txtMatKhau.getText().trim();
+            int roleId = cbbNhomQuyen.getSelectedIndex() + 2;
+            int status = cbbTrangThai.getSelectedIndex();
 
-            int maNhomQuyen = cbbNhomQuyen.getSelectedIndex() + 2;
-            int trangThai = cbbTrangThai.getSelectedIndex();
+            TaiKhoanDTO currentAccount = parent.getSelectedAccount();
 
-            TaiKhoanDTO tk = new TaiKhoanDTO(manv, matkhau, maNhomQuyen, tendangnhap, trangThai);
-            if (!tkbus.update(tk)) {
-                JOptionPane.showMessageDialog(null, "Lỗi sửa tài khoản", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                return;
+            if (v.isValidUsername(username) != null) {
+                JOptionPane.showMessageDialog(this, v.isValidUsername(username), "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                txtTenDangNhap.requestFocus();
+            } else if (!username.equals(currentAccount.getUsername()) && taiKhoanBUS.isUsernameExists(username)) {
+                JOptionPane.showMessageDialog(this, "Tên đăng nhập đã tồn tại! Vui lòng nhập tên đăng nhập khác khác.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                txtTenDangNhap.requestFocus();
+            } else {
+                if (v.isValidPassword(password) != null) {
+                    JOptionPane.showMessageDialog(this, v.isValidPassword(password), "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    txtMatKhau.requestFocus();
+                } else {
+                    boolean hasChanges = !username.equals(currentAccount.getUsername())
+                            || !password.equals(currentAccount.getPassword())
+                            || roleId != currentAccount.getRoleId()
+                            || status != currentAccount.getStatus();
+                    if (!hasChanges) {
+                        JOptionPane.showMessageDialog(null, "Không có thay đổi nào mới để sửa!");
+                        return;
+                    }
+                    TaiKhoanDTO tk = new TaiKhoanDTO(accountId, staffId, username, password, roleId, status);
+                    if (taiKhoanBUS.update(tk)) {
+                        JOptionPane.showMessageDialog(this, "Sửa tài khoản thành công!");
+                        dispose();
+                        parent.loadDataToTable(taiKhoanBUS.tkDAO.selectAll());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Sửa tài khoản thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
             }
-            JOptionPane.showMessageDialog(this, "Sửa thành công!");
-            dispose();
-            parent.loadDataToTable(tkbus.tkDAO.selectAll());
-        } else {
-            JOptionPane.showMessageDialog(null, "Vui lòng không để trống tên");
+        } catch (HeadlessException ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi không xác định!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
+    }//GEN-LAST:event_btnSaveActionPerformed
 
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
+        int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn hủy bỏ thao tác sửa tài khoản?", "Thông báo", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnHuyActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void txtTenDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenDangNhapActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_txtTenDangNhapActionPerformed
+
+    private void btnSaveKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnSaveKeyPressed
+        btnSaveActionPerformed(new java.awt.event.ActionEvent(evt.getSource(), evt.getID(), "Enter Key Pressed"));
+
+    }//GEN-LAST:event_btnSaveKeyPressed
+
+    private void btnHuyKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnHuyKeyPressed
+        btnHuyActionPerformed(new java.awt.event.ActionEvent(evt.getSource(), evt.getID(), "Enter Key Pressed"));
+    }//GEN-LAST:event_btnHuyKeyPressed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(updateTaiKhoan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(updateTaiKhoan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(updateTaiKhoan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(updateTaiKhoan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-            updateTaiKhoan dialog = new updateTaiKhoan(new javax.swing.JFrame(), true);
-            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    System.exit(0);
-                }
-            });
-            dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnHuy;
+    private javax.swing.JButton btnSave;
     private javax.swing.JComboBox<String> cbbNhomQuyen;
     private javax.swing.JComboBox<String> cbbTrangThai;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel7;

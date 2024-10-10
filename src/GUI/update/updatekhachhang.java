@@ -8,6 +8,7 @@ import BUS.KhachHangBUS;
 import DTO.KhachHangDTO;
 import GUI.khachhang;
 import helper.Validation;
+import java.awt.HeadlessException;
 import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -55,7 +56,7 @@ public class updatekhachhang extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        btnGroup = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -108,9 +109,15 @@ public class updatekhachhang extends javax.swing.JDialog {
         btnXacnhan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnXacnhan.setForeground(new java.awt.Color(255, 255, 255));
         btnXacnhan.setText("Xác nhận");
+        btnXacnhan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnXacnhan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXacnhanActionPerformed(evt);
+            }
+        });
+        btnXacnhan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnXacnhanKeyPressed(evt);
             }
         });
 
@@ -118,18 +125,24 @@ public class updatekhachhang extends javax.swing.JDialog {
         btnHuy.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnHuy.setForeground(new java.awt.Color(255, 255, 255));
         btnHuy.setText("Hủy bỏ");
+        btnHuy.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnHuy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHuyActionPerformed(evt);
             }
         });
+        btnHuy.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnHuyKeyPressed(evt);
+            }
+        });
 
         jLabel5.setText("Số điện thoại");
 
-        buttonGroup1.add(rbtnNam);
+        btnGroup.add(rbtnNam);
         rbtnNam.setText("Nam");
 
-        buttonGroup1.add(rbtnNu);
+        btnGroup.add(rbtnNu);
         rbtnNu.setText("Nữ");
 
         jLabel7.setText("Giới tính");
@@ -225,27 +238,66 @@ public class updatekhachhang extends javax.swing.JDialog {
             String sdt = txtSdt.getText().trim();
             String gioitinh = rbtnNam.isSelected() ? "Nam" : "Nữ";
             Date ngaythamgia = parent.getKhachHangSelect().getNgaythamgia();
-            
-            if (hoten.equals("") || diachi.equals("") || sdt.equals("") || gioitinh.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin !", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
-            } else if (!v.isValidPhoneNumber(sdt)) {
-                JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
-            } else {
-                KhachHangDTO kh = new KhachHangDTO(makh, hoten, diachi, gioitinh, sdt, ngaythamgia, 1);
 
-                khBUS.update(kh);
-                JOptionPane.showMessageDialog(this, "Sửa thành công!");
-                this.dispose();
-                parent.loadDataToTable(khBUS.khDAO.selectAll());
+            KhachHangDTO currentKhachHang = parent.getKhachHangSelect();
+
+            if (v.isValidFullname(hoten) != null) {
+                JOptionPane.showMessageDialog(this, v.isValidFullname(hoten), "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                txtHoten.requestFocus();
+            } else {
+                if (diachi.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Địa chỉ không được để trống!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    txtDiachi.requestFocus();
+                } else {
+                    if (btnGroup.getSelection() == null) {
+                        JOptionPane.showMessageDialog(this, "Vui lòng chọn giới tính", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                        rbtnNam.requestFocus();
+                    } else {
+                        if (v.isValidPhoneNumber(sdt) != null) {
+                            JOptionPane.showMessageDialog(this, v.isValidPhoneNumber(sdt), "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                            txtSdt.requestFocus();
+                        } else if (!sdt.equals(currentKhachHang.getSdt()) && khBUS.isPhoneNumberExists(sdt)) {
+                            JOptionPane.showMessageDialog(this, "Số điện thoại đã tồn tại! Vui lòng nhập số điện thoại khác.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                            txtSdt.requestFocus();
+                        } else {
+                            boolean hasChange = !hoten.equals(currentKhachHang.getHoten())
+                                    || !diachi.equals(currentKhachHang.getDiachi())
+                                    || !gioitinh.equals(currentKhachHang.getGioitinh())
+                                    || !sdt.equals(currentKhachHang.getSdt());
+                            if (!hasChange) {
+                                JOptionPane.showMessageDialog(null, "Không có thay đổi nào mới để sửa!");
+                                return;
+                            }
+
+                            KhachHangDTO kh = new KhachHangDTO(makh, hoten, diachi, gioitinh, sdt, ngaythamgia, 1);
+
+                            khBUS.update(kh);
+                            JOptionPane.showMessageDialog(this, "Sửa khách hàng thành công!");
+                            this.dispose();
+                            parent.loadDataToTable(khBUS.khDAO.selectAll());
+                        }
+                    }
+                }
             }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Thất bại !");
+        } catch (HeadlessException ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi không xác định!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnXacnhanActionPerformed
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
-        this.dispose();
+        int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn hủy bỏ thao tác sửa nhân viên?", "Thông báo", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            this.dispose();
+        }
     }//GEN-LAST:event_btnHuyActionPerformed
+
+    private void btnXacnhanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnXacnhanKeyPressed
+        btnXacnhanActionPerformed(new java.awt.event.ActionEvent(evt.getSource(), evt.getID(), "Enter Key Pressed"));
+    }//GEN-LAST:event_btnXacnhanKeyPressed
+
+    private void btnHuyKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnHuyKeyPressed
+        btnHuyActionPerformed(new java.awt.event.ActionEvent(evt.getSource(), evt.getID(), "Enter Key Pressed"));
+    }//GEN-LAST:event_btnHuyKeyPressed
 
     /**
      * @param args the command line arguments
@@ -291,9 +343,9 @@ public class updatekhachhang extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup btnGroup;
     private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnXacnhan;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

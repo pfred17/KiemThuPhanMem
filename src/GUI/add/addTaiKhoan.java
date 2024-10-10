@@ -5,6 +5,7 @@ import BUS.TaiKhoanBUS;
 import DTO.NhanVienDTO;
 import DTO.TaiKhoanDTO;
 import helper.Validation;
+import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,21 +15,23 @@ import javax.swing.JOptionPane;
  *
  * @author NTC
  */
-public class addTaiKhoan extends javax.swing.JDialog {
+public class addtaikhoan extends javax.swing.JDialog {
 
-    private static Map<String, Integer> listNVNoAccount = new HashMap<>(); // Lưu mã và tên nhân viên
-    private static Map<String, Integer> listQuyen = new HashMap<>(); // Danh sách các quyền
+    private static final Map<String, Integer> listNVNoAccount = new HashMap<>(); // Lưu mã và tên nhân viên
+    private static final Map<String, Integer> listQuyen = new HashMap<>(); // Danh sách các quyền
 
-    private NhanVienBUS nhanVienBUS;
-    private TaiKhoanBUS taiKhoanBUS;
-    private Validation validation;
+    private final NhanVienBUS nhanVienBUS;
+    private final TaiKhoanBUS taiKhoanBUS;
+    private final Validation v;
 
-    /** Creates new form addTaiKhoan */
-    public addTaiKhoan(java.awt.Frame parent, boolean modal) {
+    /** Creates new form addTaiKhoan
+     * @param parent
+     * @param modal */
+    public addtaikhoan(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        validation = new Validation();
+        v = new Validation();
         nhanVienBUS = new NhanVienBUS();
         taiKhoanBUS = new TaiKhoanBUS();
         loadListQuyen();
@@ -74,8 +77,8 @@ public class addTaiKhoan extends javax.swing.JDialog {
         txtMatKhau = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         cbbVaiTro = new javax.swing.JComboBox<>();
-        btnthem = new javax.swing.JButton();
-        btnthem1 = new javax.swing.JButton();
+        btnThem = new javax.swing.JButton();
+        btnHuy = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -136,24 +139,46 @@ public class addTaiKhoan extends javax.swing.JDialog {
 
         cbbVaiTro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn vai trò", "Nhân viên nhập hàng", "Nhân viên xuất hàng" }));
         cbbVaiTro.setToolTipText("");
-
-        btnthem.setBackground(new java.awt.Color(51, 204, 0));
-        btnthem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnthem.setForeground(new java.awt.Color(255, 255, 255));
-        btnthem.setText("THÊM");
-        btnthem.addActionListener(new java.awt.event.ActionListener() {
+        cbbVaiTro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnthemActionPerformed(evt);
+                cbbVaiTroActionPerformed(evt);
             }
         });
 
-        btnthem1.setBackground(new java.awt.Color(255, 51, 51));
-        btnthem1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnthem1.setForeground(new java.awt.Color(255, 255, 255));
-        btnthem1.setText("HỦY");
-        btnthem1.addActionListener(new java.awt.event.ActionListener() {
+        btnThem.setBackground(new java.awt.Color(51, 204, 0));
+        btnThem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnThem.setForeground(new java.awt.Color(255, 255, 255));
+        btnThem.setText("THÊM");
+        btnThem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnthem1ActionPerformed(evt);
+                btnThemActionPerformed(evt);
+            }
+        });
+        btnThem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnThemKeyPressed(evt);
+            }
+        });
+
+        btnHuy.setBackground(new java.awt.Color(255, 51, 51));
+        btnHuy.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnHuy.setForeground(new java.awt.Color(255, 255, 255));
+        btnHuy.setText("HỦY");
+        btnHuy.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnHuy.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnHuyMouseClicked(evt);
+            }
+        });
+        btnHuy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHuyActionPerformed(evt);
+            }
+        });
+        btnHuy.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnHuyKeyPressed(evt);
             }
         });
 
@@ -184,9 +209,9 @@ public class addTaiKhoan extends javax.swing.JDialog {
                                                 .addComponent(cbbTenNhanVien, 0, 300, Short.MAX_VALUE))))))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(btnthem, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnthem1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -215,8 +240,8 @@ public class addTaiKhoan extends javax.swing.JDialog {
                 .addComponent(cbbVaiTro, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnthem, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnthem1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14))
         );
 
@@ -247,52 +272,101 @@ public class addTaiKhoan extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMaNVActionPerformed
 
-    private void btnthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthemActionPerformed
-        // Validate tên nhân viên
-        if (cbbTenNhanVien.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn tên nhân viên!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // Nếu chỉ có 1 giá trị mặc định hiển thị comboBox
+        if (cbbTenNhanVien.getItemCount() == 1) {
+            JOptionPane.showMessageDialog(this, "Không còn nhân viên nào để thêm tài khoản! Vui lòng thêm nhân viên trước.", "Thông báo !!!", JOptionPane.WARNING_MESSAGE);
+            this.dispose();
             return;
         }
+        try {
+            int staff = Integer.parseInt(txtMaNV.getText());
+            String username = txtTenDangNhap.getText().trim();
+            String password = txtMatKhau.getText().trim();
+            String selectedRole = (String) cbbVaiTro.getSelectedItem();
 
-        // Validate username
-        String username = txtTenDangNhap.getText();
-        if (validation.isEmpty(username)) {
-            JOptionPane.showMessageDialog(null, "Tên đăng nhập không được để trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            return;
-        } else if (taiKhoanBUS.checkExistAccount(username)) {
-            JOptionPane.showMessageDialog(null, "Tên đăng nhập đã tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        // Validate password
-        String password = txtMatKhau.getText();
-        if (validation.isEmpty(password)) {
-            JOptionPane.showMessageDialog(null, "Mật khẩu không được để trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            return;
-        } else if (password.length() < 3) {
-            JOptionPane.showMessageDialog(null, "Mật khẩu phải từ 3 kí tự trở lên!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        int manv = Integer.parseInt(txtMaNV.getText());
-        // Validate vai trò
-        if (cbbVaiTro.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn vai trò!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        String selectedItemQuyen = (String) cbbVaiTro.getSelectedItem();
-        int maquyen = Integer.parseInt(String.valueOf(listQuyen.get(selectedItemQuyen)));
+            String usernameError = v.isValidUsername(username);
+            String passwordError = v.isValidPassword(password);
+            String roleError = (selectedRole.equals("Chọn vai trò")) ? "Vui lòng chọn vai trò!" : null;
 
-        TaiKhoanDTO taiKhoanMoi = new TaiKhoanDTO(manv, password, maquyen, username, 1);
+            if (usernameError != null) {
+                JOptionPane.showMessageDialog(this, usernameError, "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                txtTenDangNhap.requestFocusInWindow();
+            } else if (taiKhoanBUS.isUsernameExists(username)) {
+                JOptionPane.showMessageDialog(this, "Tên đăng nhập đã tồn tại!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                txtTenDangNhap.requestFocusInWindow();
+            } else {
+                if (passwordError != null) {
+                    JOptionPane.showMessageDialog(this, passwordError, "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    txtMatKhau.requestFocusInWindow();
+                } else {
+                    if (roleError != null) {
+                        JOptionPane.showMessageDialog(this, roleError, "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                        cbbVaiTro.requestFocusInWindow();
+                        cbbVaiTro.showPopup();
+                    } else {
+                        int role = Integer.parseInt(String.valueOf(listQuyen.get(selectedRole)));
+                        TaiKhoanDTO accountNew = new TaiKhoanDTO(staff, username, password, role, 1);
 
-        if (taiKhoanBUS.add(taiKhoanMoi)) {
-            JOptionPane.showMessageDialog(null, "Thêm tài khoản mới thành công!");
+                        if (taiKhoanBUS.add(accountNew)) {
+                            JOptionPane.showMessageDialog(this, "Thêm tài khoản mới thành công!");
+                            this.dispose();
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Thêm tài khoản thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+            }
+        } catch (HeadlessException ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi không xác định!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn 1 nhân viên!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+            cbbTenNhanVien.requestFocusInWindow();
+            cbbTenNhanVien.showPopup();
+        }
+    }//GEN-LAST:event_btnThemActionPerformed
+    private void clearInputFieldsOrExit() {
+        btnHuy.requestFocusInWindow();
+
+        boolean isStaffName = cbbTenNhanVien.getSelectedIndex() == 0;
+        boolean isUsernameEmpty = txtTenDangNhap.getText().isEmpty();
+        boolean isPasswordEmpty = txtMatKhau.getText().isEmpty();
+        boolean isRoleEmpty = cbbVaiTro.getSelectedIndex() == 0;
+
+        if (isStaffName && isUsernameEmpty && isPasswordEmpty && isRoleEmpty) {
+            int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn hủy bỏ thao tác thêm tài khoản?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                this.dispose();
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "Thêm tài khoản thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa tất cả thông tin vừa nhập không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                cbbTenNhanVien.setSelectedIndex(0);
+                txtTenDangNhap.setText("");
+                txtMatKhau.setText("");
+                cbbVaiTro.setSelectedIndex(0);
+            }
         }
+    }
+    private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
+        clearInputFieldsOrExit();
+    }//GEN-LAST:event_btnHuyActionPerformed
 
-    }//GEN-LAST:event_btnthemActionPerformed
+    private void cbbVaiTroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbVaiTroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbbVaiTroActionPerformed
 
-    private void btnthem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthem1ActionPerformed
-    }//GEN-LAST:event_btnthem1ActionPerformed
+    private void btnHuyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHuyMouseClicked
+        clearInputFieldsOrExit();
+    }//GEN-LAST:event_btnHuyMouseClicked
+
+    private void btnHuyKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnHuyKeyPressed
+        clearInputFieldsOrExit();
+    }//GEN-LAST:event_btnHuyKeyPressed
+
+    private void btnThemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnThemKeyPressed
+        btnThemActionPerformed(new java.awt.event.ActionEvent(evt.getSource(), evt.getID(), "Enter Key Pressed"));
+    }//GEN-LAST:event_btnThemKeyPressed
 
     /**
      * @param args the command line arguments
@@ -308,23 +382,32 @@ public class addTaiKhoan extends javax.swing.JDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(addTaiKhoan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(addtaikhoan.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(addTaiKhoan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(addtaikhoan.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(addTaiKhoan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(addtaikhoan.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(addTaiKhoan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(addtaikhoan.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                addTaiKhoan dialog = new addTaiKhoan(new javax.swing.JFrame(), true);
+                addtaikhoan dialog = new addtaikhoan(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -337,8 +420,8 @@ public class addTaiKhoan extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnthem;
-    private javax.swing.JButton btnthem1;
+    private javax.swing.JButton btnHuy;
+    private javax.swing.JButton btnThem;
     private javax.swing.JComboBox<String> cbbTenNhanVien;
     private javax.swing.JComboBox<String> cbbVaiTro;
     private javax.swing.JLabel jLabel1;

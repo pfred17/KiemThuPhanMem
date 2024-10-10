@@ -2,7 +2,6 @@ package BUS;
 
 import DAO.NhanVienDAO;
 import DTO.NhanVienDTO;
-import GUI.nhanvien;
 import java.util.ArrayList;
 
 public class NhanVienBUS {
@@ -18,20 +17,14 @@ public class NhanVienBUS {
     public ArrayList<DTO.NhanVienDTO> getAll() {
         return this.listNv;
     }
-    
+
     // Lấy danh sách nhân viên chưa có tài khoản
     public ArrayList<NhanVienDTO> getListNVNoAccount() {
-        ArrayList<NhanVienDTO> list = new ArrayList<>();
-        if (nvDAO.getListNVNoAccount() != null) {
-            return nvDAO.getListNVNoAccount();
-        }
-        return null;
+        ArrayList<NhanVienDTO> list = nvDAO.getListNVNoAccount();
+        return (list != null) ? list : new ArrayList<>();
     }
-    
-    // Lấy
 
     public NhanVienDTO getNhanVienByMaNv(int maNV) {
-        NhanVienDTO nv = new NhanVienDTO();
         for (NhanVienDTO i : this.listNv) {
             if (i.getManv() == maNV) {
                 return i;
@@ -39,7 +32,7 @@ public class NhanVienBUS {
         }
         return null;
     }
-    
+
     public NhanVienDTO getByIndex(int index) {
         return this.listNv.get(index);
     }
@@ -68,7 +61,7 @@ public class NhanVienBUS {
 
     public String getNameById(int manv) {
         return nhanVienDAO.selectById(manv + "").getHoten();
-    } 
+    }
 
     public String[] getArrTenNhanVien() {
         int size = listNv.size();
@@ -94,14 +87,17 @@ public class NhanVienBUS {
         }
         return check;
     }
-    
+
     public ArrayList<NhanVienDTO> searchTatCa(String text) {
         ArrayList<NhanVienDTO> result = new ArrayList<>();
         ArrayList<NhanVienDTO> armt = NhanVienDAO.getInstance().selectAll();
         for (var nv : armt) {
-            if ((""+nv.getManv()).toLowerCase().contains(text.toLowerCase())
-                    || nv.getHoten().toLowerCase().contains(text.toLowerCase()))
-             {
+            if (("" + nv.getManv()).toLowerCase().contains(text.toLowerCase())
+                    || nv.getHoten().toLowerCase().contains(text.toLowerCase())
+                    || nv.getEmail().toLowerCase().contains(text.toLowerCase())
+                    || nv.getSdt().contains(text)
+                    || nv.getGioitinh().toLowerCase().contains(text.toLowerCase())
+                    || (nv.getNgaysinh() + "").contains(text)) {
                 result.add(nv);
             }
         }
@@ -123,7 +119,7 @@ public class NhanVienBUS {
         ArrayList<NhanVienDTO> result = new ArrayList<>();
         ArrayList<NhanVienDTO> armt = NhanVienDAO.getInstance().selectAll();
         for (var nv : armt) {
-            if ((""+nv.getManv()).toLowerCase().contains(text.toLowerCase())) {
+            if (("" + nv.getManv()).toLowerCase().contains(text.toLowerCase())) {
                 result.add(nv);
             }
         }
@@ -140,7 +136,7 @@ public class NhanVienBUS {
         }
         return result;
     }
-    
+
     public ArrayList<NhanVienDTO> searchEmail(String text) {
         ArrayList<NhanVienDTO> result = new ArrayList<>();
         ArrayList<NhanVienDTO> armt = NhanVienDAO.getInstance().selectAll();
@@ -150,5 +146,23 @@ public class NhanVienBUS {
             }
         }
         return result;
+    }
+
+    public boolean isEmailExists(String email) {
+        for (NhanVienDTO nv : this.listNv) {
+            if (nv.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isPhoneNumberExists(String phoneNumber) {
+        for (NhanVienDTO nv : this.listNv) {
+            if (nv.getSdt().equals(phoneNumber)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

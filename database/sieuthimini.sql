@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th9 12, 2024 lúc 07:35 PM
+-- Thời gian đã tạo: Th9 18, 2024 lúc 09:20 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -30,11 +30,10 @@ SET time_zone = "+00:00";
 CREATE TABLE `ctphieunhap` (
   `maphieunhap` int(11) NOT NULL,
   `masp` int(11) NOT NULL,
+  `makhuvuc` int(11) NOT NULL,
   `soluong` int(11) NOT NULL,
-  `gianhap` DECIMAL(10, 2) NOT NULL
+  `gianhap` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-
 
 -- --------------------------------------------------------
 
@@ -46,11 +45,8 @@ CREATE TABLE `ctphieuxuat` (
   `maphieuxuat` int(11) NOT NULL,
   `masp` int(11) NOT NULL DEFAULT 0,
   `soluong` int(11) NOT NULL DEFAULT 0,
-  `dongia` DECIMAL(10, 2) NOT NULL DEFAULT 0
+  `dongia` decimal(10,2) NOT NULL DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-
-
 
 -- --------------------------------------------------------
 
@@ -63,11 +59,6 @@ CREATE TABLE `danhmucchucnang` (
   `tenchucnang` varchar(255) NOT NULL,
   `trangthai` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Đang đổ dữ liệu cho bảng `danhmucchucnang`
---
-
 
 -- --------------------------------------------------------
 
@@ -86,8 +77,9 @@ CREATE TABLE `giamgia` (
 -- Đang đổ dữ liệu cho bảng `giamgia`
 --
 
-
-
+INSERT INTO `giamgia` (`magiamgia`, `tenctgiamgia`, `mocgiamgia`, `sotienduocgiam`) VALUES
+(1, 'Mừng đại lễ 2/9', 200000, 20000),
+(2, 'Hành trình 10 năm', 150000, 9300);
 -- --------------------------------------------------------
 
 --
@@ -104,6 +96,12 @@ CREATE TABLE `khachhang` (
   `trangthai` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `khachhang`
+--
+INSERT INTO `khachhang` (`makh`, `tenkhachhang`, `diachi`, `gioitinh`,`sdt`, `ngaythamgia`, `trangthai`) VALUES
+(1, 'Huỳnh Minh Đại', 'Quận 1', 'Nam', '0368387671', '2024-09-11', 1),
+(2, 'Đỗ Thị Trâm Anh', 'Tiền Giang', 'Nữ', '0365387631', '2024-09-19', 1);
 
 
 -- --------------------------------------------------------
@@ -202,11 +200,12 @@ CREATE TABLE `nhanvien` (
 --
 
 INSERT INTO `nhanvien` (`manv`, `hoten`, `gioitinh`, `ngaysinh`, `sdt`, `email`, `trangthai`) VALUES
-(1, 'Huỳnh Lê Phúc', 'Nam', '2004-01-09', '0387913347', 'phucle@gmail.com', 1),
-(2, 'Nguyễn Bảo', 'Nam', '2004-04-22', '0355374322', 'bao@gmail.com', 1),
-(3, 'Nguyễn Tấn Cảnh', 'Nam', '2003-04-11', '0123456789', 'canh@gmail.com', 1),
-(4, 'Nguyễn Trung Trực', 'Nam', '2003-04-03', '0123456789', 'trungtruc@gmail.com', 1),
-(5, 'Nguyễn Quang Dương', 'Nam', '2023-05-06', '0123456789', 'quangduong@gmail.com', 1);
+(1, 'admin', 'Nam', '2004-01-21', '0387913347', 'admin@gmail.com', 1),
+(2, 'Nguyễn Bảo', 'Nam', '2004-10-22', '0355374322', 'bao@gmail.com', 1),
+(3, 'Nguyễn Tấn Cảnh', 'Nam', '2000-01-11', '0989338281', 'canh@gmail.com', 1),
+(4, 'Nguyễn Trung Trực', 'Nam', '2003-04-03', '0367890283', 'trungtruc@gmail.com', 1),
+(5, 'Nguyễn Quang Dương', 'Nam', '2004-05-06', '0378119329', 'quangduong@gmail.com', 1),
+(6, 'Huỳnh Lê Phúc', 'Nam', '2004-01-09', '0369308081', 'phucle@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -238,15 +237,11 @@ INSERT INTO `nhomquyen` (`manhomquyen`, `tennhomquyen`, `trangthai`) VALUES
 CREATE TABLE `phieunhap` (
   `maphieunhap` int(11) NOT NULL,
   `mancc` int(11) NOT NULL,
-  `makhuvuc` int(11) NOT NULL,
   `manv` int(11) NOT NULL,
   `thoigian` datetime DEFAULT current_timestamp(),
-  `tongtien` DECIMAL(10, 2) NOT NULL DEFAULT 0,
+  `tongtien` decimal(10,2) NOT NULL DEFAULT 0.00,
   `trangthai` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
-
 
 -- --------------------------------------------------------
 
@@ -257,19 +252,13 @@ CREATE TABLE `phieunhap` (
 CREATE TABLE `phieuxuat` (
   `maphieuxuat` int(11) NOT NULL,
   `thoigian` datetime NOT NULL DEFAULT current_timestamp(),
-  `tongtien` DECIMAL(10, 2) DEFAULT NULL,
+  `tongtien` decimal(10,2) DEFAULT NULL,
   `soluong` int(11) NOT NULL,
   `manv` int(11) NOT NULL,
   `makh` int(11) NOT NULL,
   `magiamgia` int(11) DEFAULT NULL,
   `trangthai` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Đang đổ dữ liệu cho bảng `phieuxuat`
---
-
-
 
 -- --------------------------------------------------------
 
@@ -286,10 +275,10 @@ CREATE TABLE `sanpham` (
   `NSX` date NOT NULL,
   `HSD` date NOT NULL,
   `thuonghieu` int(11) DEFAULT NULL,
-  `gianhap` DECIMAL(10, 2) DEFAULT NULL, 
+  `gianhap` decimal(10,2) DEFAULT NULL,
   `soluongton` int(11) DEFAULT 0,
   `trangthai` tinyint(1) DEFAULT 1,
-  `giaban` DECIMAL(10, 2) DEFAULT NULL
+  `giaban` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -297,27 +286,26 @@ CREATE TABLE `sanpham` (
 --
 
 INSERT INTO `sanpham` (`masp`, `maloai`, `tensp`, `hinhanh`, `xuatxu`, `NSX`, `HSD`, `thuonghieu`, `gianhap`, `soluongton`, `trangthai`, `giaban`) VALUES
-(1, 2, 'pepsi', '', 1, '2023-04-11', '2024-04-11', 1, 10000, 0, 1, 0),
-(2, 1, 'bánh kem', '', 1, '2023-04-11', '2024-04-11', 1, 400000, 0, 1, 0),
-(3, 1, 'bánh quy', '', 1, '2023-04-11', '2024-04-11', 1, 50000, 0, 1, 0),
-(4, 3, 'cà rốt', '', 1, '2023-04-11', '2024-04-11', 1, 6000, 0, 1, 0),
-(5, 3, 'khoai tây', '', 1, '2023-04-11', '2024-04-11', 1, 10000, 0, 1, 0),
-(6, 1, 'rau muống', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2024-04-11', 1, 7000, 0, 1, 0),
-(7, 1, 'coca', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2024-04-11', 1, 10000, 0, 1, 0),
-(8, 1, 'bút xóa', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2024-04-11', 1, 15000, 0, 1, 0),
-(9, 1, 'thước kẻ', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2024-09-11', '2025-09-11', 1, 123, 0, 1, 0),
-(10, 2, 'bánh mì', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2024-09-12', '2025-09-12', 1, 10000, 0, 1, 0),
-(11, 2, 'nước suối', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-06-11', '2024-06-11', 1, 5000, 0, 1, 0),
-(12, 1, 'sữa chua', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-05-11', '2024-05-11', 1, 12000, 0, 1, 0),
-(13, 2, 'kẹo dừa', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-07-01', '2024-07-01', 1, 45000, 0, 1, 0),
-(14, 3, 'hành tây', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-08-11', '2024-08-11', 1, 7000, 0, 1, 0),
-(15, 3, 'cà chua', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-09-01', '2024-09-01', 1, 9000, 0, 1, 0),
-(16, 2, 'trái cây sấy', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-03-11', '2024-03-11', 1, 60000, 0, 1, 0),
-(17, 1, 'bánh kẹo', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-02-11', '2024-02-11', 1, 30000, 0, 1, 0),
-(18, 2, 'kẹo bạc hà', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2024-04-11', 1, 15000, 0, 1, 0),
-(19, 1, 'kem đánh răng', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-05-11', '2024-05-11', 1, 20000, 0, 1, 0),
-(20, 1, 'dầu gội', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-06-11', '2024-06-11', 1, 45000, 0, 1, 0);
-
+(1, 2, 'pepsi', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2024-12-11', 1, 10000.00, 0, 1, 0.00),
+(2, 1, 'bánh kem', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2024-12-11', 1, 400000.00, 0, 1, 0.00),
+(3, 1, 'bánh quy', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2024-11-11', 1, 50000.00, 0, 1, 0.00),
+(4, 3, 'cà rốt', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2024-04-11', 1, 6000.00, 0, 1, 0.00),
+(5, 3, 'khoai tây', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2024-04-11', 1, 10000.00, 0, 1, 0.00),
+(6, 1, 'rau muống', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2024-04-11', 1, 7000.00, 0, 1, 0.00),
+(7, 1, 'coca', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2024-04-11', 1, 10000.00, 0, 1, 0.00),
+(8, 1, 'bút xóa', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2024-04-11', 1, 15000.00, 0, 1, 0.00),
+(9, 1, 'thước kẻ', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2024-09-11', '2025-10-11', 1, 123.00, 0, 1, 0.00),
+(10, 2, 'bánh mì', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2024-09-12', '2025-09-12', 1, 10000.00, 0, 1, 0.00),
+(11, 2, 'nước suối', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-06-11', '2024-06-11', 1, 5000.00, 0, 1, 0.00),
+(12, 1, 'sữa chua', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-05-11', '2024-05-11', 1, 12000.00, 0, 1, 0.00),
+(13, 2, 'kẹo dừa', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-07-01', '2024-11-01', 1, 45000.00, 0, 1, 0.00),
+(14, 3, 'hành tây', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-08-11', '2024-10-11', 1, 7000.00, 0, 1, 0.00),
+(15, 3, 'cà chua', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-09-01', '2024-09-01', 1, 9000.00, 0, 1, 0.00),
+(16, 2, 'trái cây sấy', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-03-11', '2024-03-11', 1, 60000.00, 0, 1, 0.00),
+(17, 1, 'bánh kẹo', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-02-11', '2024-02-11', 1, 30000.00, 0, 1, 0.00),
+(18, 2, 'kẹo bạc hà', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-04-11', '2024-12-11', 1, 15000.00, 0, 1, 0.00),
+(19, 1, 'kem đánh răng', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-05-11', '2024-05-11', 1, 20000.00, 0, 1, 0.00),
+(20, 1, 'dầu gội', 'src/GUI/imageSanPham/comingsoon.jpg', 1, '2023-06-11', '2024-12-11', 1, 45000.00, 0, 1, 0.00);
 
 -- --------------------------------------------------------
 
@@ -402,6 +390,7 @@ INSERT INTO `xuatxu` (`maxuatxu`, `tenxuatxu`, `trangthai`) VALUES
 --
 ALTER TABLE `ctphieunhap`
   ADD KEY `fk_ctphieunhap_maphieunhap` (`maphieunhap`),
+  ADD KEY `fk_phieunhap_makhuvuc` (`makhuvuc`),
   ADD KEY `fk_ctphieunhap_masp` (`masp`);
 
 --
@@ -465,7 +454,6 @@ ALTER TABLE `nhomquyen`
 ALTER TABLE `phieunhap`
   ADD PRIMARY KEY (`maphieunhap`),
   ADD KEY `fk_phieunhap_mancc` (`mancc`),
-  ADD KEY `fk_phieunhap_makhuvuc` (`makhuvuc`),
   ADD KEY `fk_phieunhap_manv` (`manv`);
 
 --
@@ -574,7 +562,7 @@ ALTER TABLE `phieuxuat`
 -- AUTO_INCREMENT cho bảng `sanpham`
 --
 ALTER TABLE `sanpham`
-  MODIFY `masp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `masp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT cho bảng `taikhoan`
@@ -603,7 +591,8 @@ ALTER TABLE `xuatxu`
 --
 ALTER TABLE `ctphieunhap`
   ADD CONSTRAINT `fk_ctphieunhap_maphieunhap` FOREIGN KEY (`maphieunhap`) REFERENCES `phieunhap` (`maphieunhap`),
-  ADD CONSTRAINT `fk_ctphieunhap_masp` FOREIGN KEY (`masp`) REFERENCES `sanpham` (`masp`);
+  ADD CONSTRAINT `fk_ctphieunhap_masp` FOREIGN KEY (`masp`) REFERENCES `sanpham` (`masp`),
+  ADD CONSTRAINT `fk_phieunhap_makhuvuc` FOREIGN KEY (`makhuvuc`) REFERENCES `khuvuckho` (`makhuvuc`);
 
 --
 -- Các ràng buộc cho bảng `ctphieuxuat`
@@ -616,7 +605,6 @@ ALTER TABLE `ctphieuxuat`
 -- Các ràng buộc cho bảng `phieunhap`
 --
 ALTER TABLE `phieunhap`
-  ADD CONSTRAINT `fk_phieunhap_makhuvuc` FOREIGN KEY (`makhuvuc`) REFERENCES `khuvuckho` (`makhuvuc`),
   ADD CONSTRAINT `fk_phieunhap_mancc` FOREIGN KEY (`mancc`) REFERENCES `nhacungcap` (`mancc`),
   ADD CONSTRAINT `fk_phieunhap_manv` FOREIGN KEY (`manv`) REFERENCES `nhanvien` (`manv`);
 
