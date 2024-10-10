@@ -63,7 +63,7 @@
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="txttimkiem" min="-2" pref="170" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jButton24" min="-2" max="-2" attributes="0"/>
+                  <Component id="resetBtn" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -75,7 +75,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="cbxAll" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="txttimkiem" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="jButton24" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="resetBtn" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
@@ -88,15 +88,18 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton24">
+        <Component class="javax.swing.JButton" name="resetBtn">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/icon/refresh.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="L&#xe0;m m&#x1edb;i"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Hand Cursor"/>
+            </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton24ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetBtnActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txttimkiem">
@@ -139,6 +142,9 @@
                   <Image iconType="3" name="/icon/add.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="TH&#xca;M"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
@@ -155,6 +161,9 @@
                   <Image iconType="3" name="/icon/detail.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="XEM CHI TI&#x1ebe;T"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>

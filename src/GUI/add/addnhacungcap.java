@@ -6,11 +6,11 @@ package GUI.add;
 
 import BUS.NhaCungCapBUS;
 import DTO.NhaCungCapDTO;
+import helper.Validation;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 /**
  *
@@ -20,6 +20,7 @@ public class addnhacungcap extends javax.swing.JDialog {
 
     int mancc;
     NhaCungCapBUS nccBUS = new NhaCungCapBUS();
+    Validation v = new Validation();
 
     public addnhacungcap(javax.swing.JFrame parent, boolean modal) {
         super(parent, modal);
@@ -249,48 +250,50 @@ public class addnhacungcap extends javax.swing.JDialog {
     }//GEN-LAST:event_txttennccActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-
         try {
-
-            if (txttenncc.getText().matches("")) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập tên nhà cung cấp");
-                txttenncc.requestFocus();
-                return;
-            }
-            if (txtsodt.getText().matches("")) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập số điện thoại");
-                return;
-            }
-            if (txtemail.getText().matches("")) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập email");
-                return;
-            }
-            if (txtdiachi.getText().matches("")) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập địa chỉ");
-                return;
-            }
-            if (!txtsodt.getText().matches("^(03|08|09)\\d{8}$")) {
-                JOptionPane.showMessageDialog(this, "Số điện thoại gồm 10 chữ số bắt đầu bằng 03|08|09");
-                return;
-            }
-            if (!txtemail.getText().matches("^[a-zA-Z0-9._%+-]+@gmail\\.com$")) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng ...@gmail.com");
-                return;
-            }
-
             String tenncc = txttenncc.getText();
             String sodt = txtsodt.getText();
             String email = txtemail.getText();
             String diachi = txtdiachi.getText();
             mancc = nccBUS.nccDAO.getAutoIncrement();
-            NhaCungCapDTO ncc = new NhaCungCapDTO(mancc, tenncc, diachi, email, sodt, 1);
-            nccBUS.add(ncc);
-            JOptionPane.showMessageDialog(this, "Thêm Thành Công !");
-            this.dispose();
+
+            String nameNCCError = v.isValidFullname(txttenncc.getText());
+            String emailError = v.isValidEmail(txtemail.getText());
+            String phoneNumberError = v.isValidPhoneNumber(txtsodt.getText());
+
+            if (nameNCCError != null) {
+                JOptionPane.showMessageDialog(this, nameNCCError, "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                txttenncc.requestFocus();
+            } else {
+                if (emailError != null) {
+                    JOptionPane.showMessageDialog(this, emailError, "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    txtemail.requestFocus();
+                } else if (nccBUS.isEmailExists(email)) {
+                    JOptionPane.showMessageDialog(this, "Email đã tồn tại! Vui lòng nhập email khác.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    txtemail.requestFocus();
+                } else {
+                    if (phoneNumberError != null) {
+                        JOptionPane.showMessageDialog(this, phoneNumberError, "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                        txtsodt.requestFocus();
+                    } else if (nccBUS.isPhoneNumberExists(sodt)) {
+                        JOptionPane.showMessageDialog(this, "Số điện thoại đã tồn tại! Vui lòng nhập số điện thoại khác khác.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                        txtsodt.requestFocus();
+                    } else {
+                        if (txtdiachi.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(this, "Địa chỉ không được để trống", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                            txtdiachi.requestFocus();
+                        } else {
+                            NhaCungCapDTO ncc = new NhaCungCapDTO(mancc, tenncc, diachi, email, sodt, 1);
+                            nccBUS.add(ncc);
+                            JOptionPane.showMessageDialog(this, "Thêm Thành Công !");
+                            this.dispose();
+                        }
+                    }
+                }
+            }
         } catch (HeadlessException ex) {
             JOptionPane.showMessageDialog(this, "Thất bại !");
         }
-
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
@@ -301,7 +304,7 @@ public class addnhacungcap extends javax.swing.JDialog {
             txtsodt.setText("");
             txttenncc.setText("");
         }
-        this.dispose();
+      
     }//GEN-LAST:event_btnHuyActionPerformed
 
     private void btnThemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMouseEntered
@@ -324,28 +327,28 @@ public class addnhacungcap extends javax.swing.JDialog {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) { // Kiểm tra xem phím Enter có được nhấn không
             btnThemActionPerformed(null); // Gọi phương thức xử lý của nút
         }
-      
+
     }//GEN-LAST:event_txttennccKeyPressed
 
     private void txtemailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtemailKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) { // Kiểm tra xem phím Enter có được nhấn không
             btnThemActionPerformed(null); // Gọi phương thức xử lý của nút
         }
-        
+
     }//GEN-LAST:event_txtemailKeyPressed
 
     private void txtsodtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtsodtKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) { // Kiểm tra xem phím Enter có được nhấn không
             btnThemActionPerformed(null); // Gọi phương thức xử lý của nút
         }
-       
+
     }//GEN-LAST:event_txtsodtKeyPressed
 
     private void txtdiachiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiachiKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) { // Kiểm tra xem phím Enter có được nhấn không
             btnThemActionPerformed(null); // Gọi phương thức xử lý của nút
         }
-        
+
     }//GEN-LAST:event_txtdiachiKeyPressed
 
     private void btnHuyKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnHuyKeyPressed

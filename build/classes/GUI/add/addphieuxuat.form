@@ -369,6 +369,7 @@
               <ComponentRef name="groupGioiTinh"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Nam"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rdnu">
@@ -377,6 +378,7 @@
               <ComponentRef name="groupGioiTinh"/>
             </Property>
             <Property name="text" type="java.lang.String" value="N&#x1eef;"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="combohoten">

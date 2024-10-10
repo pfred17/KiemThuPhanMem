@@ -3,11 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package BUS;
+
 import DAO.NhaCungCapDAO;
 import DTO.NhaCungCapDTO;
 import java.util.ArrayList;
+
 public class NhaCungCapBUS {
- 
+
     public final NhaCungCapDAO nccDAO = new NhaCungCapDAO();
 
     private ArrayList<NhaCungCapDTO> listNCC = new ArrayList<>();
@@ -74,6 +76,7 @@ public class NhaCungCapBUS {
         }
         return check;
     }
+
     public ArrayList<NhaCungCapDTO> search(String text) {
         text = text.toLowerCase();
         ArrayList<NhaCungCapDTO> result = new ArrayList<>();
@@ -84,6 +87,22 @@ public class NhaCungCapBUS {
         }
         return result;
     }
-    
-}
 
+    public boolean isEmailExists(String email) {
+        for (NhaCungCapDTO ncc : listNCC) {
+            if (ncc.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isPhoneNumberExists(String phone) {
+        for (NhaCungCapDTO ncc : listNCC) {
+            if (ncc.getSdt().equals(phone)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}

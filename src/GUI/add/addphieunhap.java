@@ -157,6 +157,7 @@ public class addphieunhap extends javax.swing.JPanel {
         btnthemsp.setBackground(new java.awt.Color(102, 204, 0));
         btnthemsp.setForeground(new java.awt.Color(255, 255, 255));
         btnthemsp.setText("Thêm sản phẩm");
+        btnthemsp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnthemsp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnthemspActionPerformed(evt);
@@ -259,6 +260,7 @@ public class addphieunhap extends javax.swing.JPanel {
         btnnhaphang.setBackground(new java.awt.Color(102, 204, 0));
         btnnhaphang.setForeground(new java.awt.Color(255, 255, 255));
         btnnhaphang.setText("Nhập hàng");
+        btnnhaphang.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnnhaphang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnnhaphangActionPerformed(evt);
@@ -434,30 +436,29 @@ public class addphieunhap extends javax.swing.JPanel {
     }//GEN-LAST:event_btnthemspActionPerformed
 
     private void btnnhaphangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnhaphangActionPerformed
-         int selectedRow = tblphieunhapin.getSelectedRow();
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm từ bảng 1.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+
         DefaultTableModel model = (DefaultTableModel) tblphieunhapout.getModel();
         ArrayList<NhanVienDTO> listnv = nvBUS.getAll();
         int rowCount = model.getRowCount();
-
+        if (rowCount == 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng Thêm sản phẩm từ bảng 1.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         int mapn = pnBUS.phieunhapDAO.getAutoIncrement();
         if (combonhacc.getSelectedItem().equals("Tất cả")) {
-            JOptionPane.showMessageDialog(null,"Vui lòng chọn nhà cung cấp", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn nhà cung cấp", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
         int mancc = Integer.parseInt("" + combonhacc.getSelectedItem());
         int manv = nhanVienDTO.getManv();
         String tennv = nhanVienDTO.getHoten();
-        
+
         if (combomakhuvuc.getSelectedItem().equals("Tất cả")) {
-            JOptionPane.showMessageDialog(null,"Vui lòng chọn nhà khu vực kho", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn nhà khu vực kho", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
         int makhuvuc = Integer.parseInt("" + combomakhuvuc.getSelectedItem());
-        
+
         Date thoigian = new Date(System.currentTimeMillis());
         java.sql.Date sqlDate = new java.sql.Date(thoigian.getTime());
         long tongtien = 0;
