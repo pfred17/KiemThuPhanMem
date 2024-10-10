@@ -3,18 +3,30 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/BUS/KhachHangBUS.java</file>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/add/addnhanvien.java</file>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/add/addtaikhoan.java</file>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/khachhang.java</file>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/add/addkhachhang.java</file>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/DTO/KhachHangDTO.java</file>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/nhanvien.java</file>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/taikhoan.java</file>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/BUS/NhanVienBUS.java</file>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/update/updatekhachhang.java</file>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/login.java</file>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/helper/Validation.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/DTO/NhaCungCapDTO.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/GUI/nhacungcap.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/GUI/details/detailsphieuxuat.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/GUI/sanpham.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/Controler/SearchSanPham.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/GUI/update/updatenhacungcap.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/GUI/phieuxuat.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/DAO/PhieuXuatDAO.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/GUI/phieunhap.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/GUI/update/updatekho.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/GUI/add/addphieunhap.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/DTO/GiamGiaDTO.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/GUI/add/addkhachhang.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/DTO/PhieuXuatDTO.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/BUS/NhaCungCapBUS.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/helper/Validation.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/Controler/SearchNhaCungCap.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/Controler/SearchPhieuXuat.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/GUI/login.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/GUI/add/addnhacungcap.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/GUI/add/addphieuxuat.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/BUS/NhanVienBUS.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/Controler/SearchPhieuNhap.java</file>
+            <file>file:/F:/KTPM%20new/KiemThuPhanMem/src/DTO/NhanVienDTO.java</file>
         </group>
     </open-files>
 </project-private>
