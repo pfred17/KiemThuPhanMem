@@ -12,27 +12,23 @@ import DTO.SanPhamDTO;
 import DTO.KhoHangDTO;
 import DTO.NhanVienDTO;
 import helper.FormatPrice;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class addphieunhap extends javax.swing.JPanel {
 
-    ArrayList<SanPhamDTO> list = new ArrayList<SanPhamDTO>();
+    ArrayList<SanPhamDTO> list = new ArrayList<>();
 
-    private NhanVienDTO nhanVienDTO;
-    private FormatPrice formatPrice;
+    private final NhanVienDTO nhanVienDTO;
+    private final FormatPrice formatPrice;
 
     KhoHangBUS khBUS = new KhoHangBUS();
     SanPhamBUS spBUS = new SanPhamBUS();
     PhieuNhapBUS pnBUS = new PhieuNhapBUS();
     NhaCungCapBUS nccBUS = new NhaCungCapBUS();
     NhanVienBUS nvBUS = new NhanVienBUS();
-    int current = 0;
 
     public addphieunhap(NhanVienDTO nv) {
         initComponents();

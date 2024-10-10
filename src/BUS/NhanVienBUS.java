@@ -25,7 +25,7 @@ public class NhanVienBUS {
     }
 
     public NhanVienDTO getNhanVienByMaNv(int maNV) {
-        for (NhanVienDTO i : this.listNv) {
+        for (NhanVienDTO i : listNv) {
             if (i.getManv() == maNV) {
                 return i;
             }

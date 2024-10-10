@@ -115,6 +115,7 @@ public class NhanVienDAO implements DAOinterface<NhanVienDTO> {
                 nv.setSdt(rs.getString("sdt"));
                 nv.setEmail(rs.getString("email"));
                 nv.setTrangthai(rs.getInt("trangthai"));
+                
                 result.add(nv);
             }
         } catch (SQLException e) {
@@ -195,5 +196,5 @@ public class NhanVienDAO implements DAOinterface<NhanVienDTO> {
         }
         return result;
     }
-
+    
 }

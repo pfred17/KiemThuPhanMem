@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
  * @author ASUS
  */
 public class admin extends javax.swing.JFrame {
+
     private TaiKhoanDAO currentAcc;
     private TaiKhoanDTO taikhoan;
     private NhanVienBUS nhanVienBUS;
@@ -34,9 +35,9 @@ public class admin extends javax.swing.JFrame {
     public TaiKhoanDAO getCurrentAcc() {
         return currentAcc;
     }
-    
+
     public NhanVienDTO getNhanVien() {
-        return nhanVienBUS.getNhanVienByMaNv(taikhoan.getAccountId());
+        return nhanVienBUS.getNhanVienByMaNv(taikhoan.getStaffId());
     }
 
     @SuppressWarnings("unchecked")
@@ -423,7 +424,7 @@ public class admin extends javax.swing.JFrame {
         // </editor-fold>
         // </editor-fold>
         // </editor-fold>
-        
+
         // </editor-fold>
         // </editor-fold>
         // </editor-fold>

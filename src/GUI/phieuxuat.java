@@ -19,10 +19,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public final class phieuxuat extends javax.swing.JPanel {
 
-    private NhanVienDTO nhanVienDTO;
-    private FormatPrice formatPrice;
-    private int maQuyen;
-    ArrayList<PhieuXuatDTO> list = new ArrayList<PhieuXuatDTO>();
+    private final NhanVienDTO nhanVienDTO;
+    private final FormatPrice formatPrice;
+    private final int maQuyen;
+    ArrayList<PhieuXuatDTO> list = new ArrayList<>();
     JpanelLoader jp = new JpanelLoader();
     PhieuXuatBUS pxBUS = new PhieuXuatBUS();
 
@@ -294,23 +294,12 @@ public final class phieuxuat extends javax.swing.JPanel {
         String text = txttimkiem.getText();
         String choose = (String) cbxAll.getSelectedItem();
         switch (choose) {
-            case "Tất cả":
-                result = SearchPhieuXuat.getInstance().searchTatCa(text);
-                break;
-            case "Mã phiếu xuất":
-                result = SearchPhieuXuat.getInstance().searchMaphieuxuat(text);
-                break;
-            case "Khách hàng":
-                result = SearchPhieuXuat.getInstance().searchTenkhachhang(text);
-                break;
-            case "Nhân viên xuất":
-                result = SearchPhieuXuat.getInstance().searchTennvnhap(text);
-                break;
-            case "Thời gian":
-                result = SearchPhieuXuat.getInstance().searchThoigian(text);
-                break;
-            case "Tổng tiền":
-                result = SearchPhieuXuat.getInstance().searchTongtien(text);
+            case "Tất cả" -> result = SearchPhieuXuat.getInstance().searchTatCa(text);
+            case "Mã phiếu xuất" -> result = SearchPhieuXuat.getInstance().searchMaphieuxuat(text);
+            case "Khách hàng" -> result = SearchPhieuXuat.getInstance().searchTenkhachhang(text);
+            case "Nhân viên xuất" -> result = SearchPhieuXuat.getInstance().searchTennvnhap(text);
+            case "Thời gian" -> result = SearchPhieuXuat.getInstance().searchThoigian(text);
+            case "Tổng tiền" -> result = SearchPhieuXuat.getInstance().searchTongtien(text);
         }
         displaytoTable(result);
     }//GEN-LAST:event_txttimkiemKeyReleased

@@ -11,6 +11,7 @@ import BUS.KhachHangBUS;
 import DTO.KhachHangDTO;
 import BUS.NhanVienBUS;
 import DTO.NhanVienDTO;
+import GUI.admin;
 import helper.FormatPrice;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,22 +24,21 @@ import javax.swing.table.DefaultTableModel;
  */
 public class addphieuxuat extends javax.swing.JPanel {
 
-    ArrayList<SanPhamDTO> list = new ArrayList<SanPhamDTO>();
-    private NhanVienDTO nhanVienDTO;
-    private FormatPrice formatPrice;
+    ArrayList<SanPhamDTO> list = new ArrayList<>();
+    private final NhanVienDTO nhanVienDTO;
+    private final FormatPrice formatPrice;
     SanPhamBUS spBUS = new SanPhamBUS();
     PhieuXuatBUS pxBUS = new PhieuXuatBUS();
     GiamGiaBUS ggBUS = new GiamGiaBUS();
     KhachHangBUS khBUS = new KhachHangBUS();
     NhanVienBUS nvBUS = new NhanVienBUS();
-    int current = 0;
 
     public addphieuxuat(NhanVienDTO nv) {
         initComponents();
-        this.nhanVienDTO = nv;
         formatPrice = new FormatPrice();
         comboctgiamgiaDisplay();
         combohotenDisplay();
+        this.nhanVienDTO = nv;
         txtsdt.setEditable(false);
         txtdiachi.setEditable(false);
         txtTenNhanVien.setText(nhanVienDTO.getHoten());
@@ -52,13 +52,13 @@ public class addphieuxuat extends javax.swing.JPanel {
         try {
             DefaultTableModel dt = (DefaultTableModel) tblphieuxuatin.getModel();
             dt.setRowCount(0);
-             Date currentDate = new Date();
+            Date currentDate = new Date();
             for (SanPhamDTO i : list) {
-                if(i.getHSD().getTime()>currentDate.getTime() && i.getSoluongton() > 0){
-                dt.addRow(new Object[]{
-                    i.getMasp(), i.getTensp(), i.getSoluongton(), i.getGiaban(),i.getHSD()
-                });
-            }
+                if (i.getHSD().getTime() > currentDate.getTime() && i.getSoluongton() > 0) {
+                    dt.addRow(new Object[]{
+                        i.getMasp(), i.getTensp(), i.getSoluongton(), i.getGiaban(), i.getHSD()
+                    });
+                }
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -183,6 +183,11 @@ public class addphieuxuat extends javax.swing.JPanel {
         txtTenNhanVien.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtTenNhanVien.setForeground(new java.awt.Color(255, 255, 255));
         txtTenNhanVien.setEnabled(false);
+        txtTenNhanVien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTenNhanVienActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -404,10 +409,10 @@ public class addphieuxuat extends javax.swing.JPanel {
 
         // Lấy số lượng xuất
         int soluong;
-        
+
         try {
             soluong = Integer.parseInt(txtSoLuongXuat.getText().trim());
-            
+
             int soLuongTon = (int) rowData[2];
             Date hsd = (Date) rowData[4];
             if (soluong > soLuongTon) {
@@ -488,7 +493,7 @@ public class addphieuxuat extends javax.swing.JPanel {
                 tongtien = tongtien - gg.getSotienduocgiam();
             }
         }
-        
+
         pxAll = new PhieuXuatDTO(mapx, sqlDate, tongtien, sumsoluong, manv, makh, magg);
         pxBUS.updateTongTien(pxAll);
 
@@ -507,6 +512,10 @@ public class addphieuxuat extends javax.swing.JPanel {
     private void txtSoLuongXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSoLuongXuatActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSoLuongXuatActionPerformed
+
+    private void txtTenNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenNhanVienActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTenNhanVienActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

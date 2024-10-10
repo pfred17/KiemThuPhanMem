@@ -3,18 +3,26 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/BUS/KhachHangBUS.java</file>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/add/addnhanvien.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/nvxuathang.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/add/addphieuxuat.java</file>
             <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/add/addtaikhoan.java</file>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/khachhang.java</file>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/add/addkhachhang.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/phieuxuat.java</file>
             <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/DTO/KhachHangDTO.java</file>
             <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/nhanvien.java</file>
-            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/taikhoan.java</file>
             <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/BUS/NhanVienBUS.java</file>
             <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/update/updatekhachhang.java</file>
             <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/login.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/nvnhaphang.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/admin.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/BUS/KhachHangBUS.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/add/addnhanvien.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/add/addphieunhap.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/khachhang.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/add/addkhachhang.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/DAO/NhanVienDAO.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/taikhoan.java</file>
             <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/helper/Validation.java</file>
+            <file>file:/C:/Users/NTC/Workspace/DoAnKTPM/KiemThuPhanMem/src/GUI/phieunhap.java</file>
         </group>
     </open-files>
 </project-private>
