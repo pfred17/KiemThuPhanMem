@@ -17,8 +17,41 @@ public class NhaCungCapBUS {
     }
 
     public ArrayList<NhaCungCapDTO> getAll() {
-
         return this.listNCC;
+    }
+    
+    public void loadData() {
+        listNCC = nccDAO.selectAll();
+    }
+    
+    public Boolean checkExitsTenNCC(String tenNCC) {
+        loadData();
+        for (NhaCungCapDTO ncc : listNCC) {
+            if (ncc.getTenncc().equals(tenNCC)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public Boolean checkExitsSDT(String SDT) {
+        loadData();
+        for (NhaCungCapDTO ncc : listNCC) {
+            if (ncc.getSdt().equals(SDT)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public Boolean checkExitsEmail(String email) {
+        loadData();
+        for (NhaCungCapDTO ncc : listNCC) {
+            if (ncc.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public NhaCungCapDTO getByIndex(int index) {

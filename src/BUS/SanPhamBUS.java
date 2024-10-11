@@ -23,7 +23,6 @@ public class SanPhamBUS {
     }
 
     public ArrayList<SanPhamDTO> getAll() {
-
         return this.listSP;
     }
 
@@ -33,6 +32,7 @@ public class SanPhamBUS {
     
     
     public SanPhamDTO getByMaSP(int masp) {
+        loadData();
         for (SanPhamDTO sp : this.listSP) {
             if (sp.getMasp() == masp) {
                 return sp;
@@ -55,11 +55,10 @@ public class SanPhamBUS {
     }
 
     public Boolean add(SanPhamDTO sp) {
-        boolean check = spDAO.insert(sp) != 0;
-        if (check) {
-            this.listSP.add(sp);
+        if (spDAO.insert(sp) != 0) {
+            return true;
         }
-        return check;
+        return false;
     }
 
     public Boolean delete(SanPhamDTO sp) {

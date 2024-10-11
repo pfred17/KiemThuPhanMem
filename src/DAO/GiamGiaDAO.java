@@ -26,7 +26,7 @@ public class GiamGiaDAO implements DAOinterface<GiamGiaDTO> {
         int ketQua = 0;
         try {
             java.sql.Connection con = JDBC.getConnection();
-            String sql = "INSERT INTO giamgia  VALUES (?,?,?,?)";
+            String sql = "INSERT INTO giamgia  VALUES (?,?,?,?,1)";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, t.getMagiamgia());
             pst.setString(2, t.getTenctgiamgia());
@@ -78,7 +78,8 @@ public class GiamGiaDAO implements DAOinterface<GiamGiaDTO> {
                 String tenctgiamgia = rs.getString("tenctgiamgia");
                 int mocgiamgia = rs.getInt("mocgiamgia");
                 int sotienduocgiam = rs.getInt("sotienduocgiam");
-                GiamGiaDTO gg = new GiamGiaDTO(magiamgia, tenctgiamgia, mocgiamgia, sotienduocgiam);
+                int trangThai = rs.getInt("trangthai");
+                GiamGiaDTO gg = new GiamGiaDTO(magiamgia, tenctgiamgia, mocgiamgia, sotienduocgiam, trangThai);
                 result.add(gg);
             }
             JDBC.closeConnection(con);
@@ -113,13 +114,13 @@ public class GiamGiaDAO implements DAOinterface<GiamGiaDTO> {
         }
         return result;
     }
-
+                                                                                        
     @Override
     public int delete(GiamGiaDTO t) {
         int ketQua = 0;
         try {
             java.sql.Connection con = JDBC.getConnection();
-            String sql = "DELETE FROM giamgia WHERE magiamgia=?";
+            String sql = "UPDATE giamgia set trangthai = 0 WHERE magiamgia=?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, ""+t.getMagiamgia());
             ketQua = pst.executeUpdate();

@@ -216,10 +216,15 @@ public class xuatxu extends javax.swing.JDialog {
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         try {
             String tenxuatxu = txtxuatxu.getText();
+            if (txtxuatxu.getText().length() > 29) {
+                JOptionPane.showMessageDialog(this, "Tên xuất xứ vượt giới hạn kí tự cho phép", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             int maxuatxu = xxBUS.xxDAO.getAutoIncrement();
             if (!"".equals(tenxuatxu)) {
                 XuatXuDTO xx = new XuatXuDTO(maxuatxu, tenxuatxu, 1);
                 xxBUS.add(xx);
+                txtxuatxu.setText("");
                 JOptionPane.showMessageDialog(this, "Thêm Thành Công !");
                 loadDataToTable(xxBUS.xxDAO.selectAll());
             } else {
@@ -241,6 +246,10 @@ public class xuatxu extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn nơi xuất xứ  muốn sửa");
             } else {
                 String tenxuatxu = txtxuatxu.getText();
+                if (txtxuatxu.getText().length() > 29) {
+                    JOptionPane.showMessageDialog(this, "Tên xuất xứ vượt giới hạn kí tự cho phép", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 int maxuatxu = this.getXuatXuSelect().getMaxuatxu();
                 if (!"".equals(tenxuatxu)) {
                     XuatXuDTO xx = new XuatXuDTO(maxuatxu, tenxuatxu);

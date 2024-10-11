@@ -70,16 +70,17 @@ CREATE TABLE `giamgia` (
   `magiamgia` int(11) NOT NULL,
   `tenctgiamgia` varchar(50) NOT NULL,
   `mocgiamgia` int(11) NOT NULL,
-  `sotienduocgiam` int(11) NOT NULL
+  `sotienduocgiam` int(11) NOT NULL,
+  `trangthai` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `giamgia`
 --
 
-INSERT INTO `giamgia` (`magiamgia`, `tenctgiamgia`, `mocgiamgia`, `sotienduocgiam`) VALUES
-(1, 'Mừng đại lễ 2/9', 200000, 20000),
-(2, 'Hành trình 10 năm', 150000, 9300);
+INSERT INTO `giamgia` (`magiamgia`, `tenctgiamgia`, `mocgiamgia`, `sotienduocgiam`, `trangthai`) VALUES
+(1, 'Mừng đại lễ 2/9', 200000, 20000, 1),
+(2, 'Hành trình 10 năm', 150000, 9300, 1);
 -- --------------------------------------------------------
 
 --

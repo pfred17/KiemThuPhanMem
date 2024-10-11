@@ -14,8 +14,17 @@ public class GiamGiaDTO {
     private String tenctgiamgia;
     private int mocgiamgia;
     private int sotienduocgiam;
+    private int trangThai;
 
     public GiamGiaDTO() {
+    }
+
+    public GiamGiaDTO(int magiamgia, String tenctgiamgia, int mocgiamgia, int sotienduocgiam, int trangThai) {
+        this.magiamgia = magiamgia;
+        this.tenctgiamgia = tenctgiamgia;
+        this.mocgiamgia = mocgiamgia;
+        this.sotienduocgiam = sotienduocgiam;
+        this.trangThai = trangThai;
     }
 
     public GiamGiaDTO(int magiamgia, String tenctgiamgia, int mocgiamgia, int sotienduocgiam) {
@@ -55,6 +64,14 @@ public class GiamGiaDTO {
 
     public void setSotienduocgiam(int sotienduocgiam) {
         this.sotienduocgiam = sotienduocgiam;
+    }
+
+    public int getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
     }
 
 }

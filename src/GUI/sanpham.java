@@ -13,17 +13,10 @@ import GUI.update.updatesanpham;
 import GUI.details.dtsanpham;
 import helper.FormatPrice;
 import java.awt.Desktop;
-import java.io.BufferedInputStream;  
-
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -32,8 +25,6 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public final class sanpham extends javax.swing.JPanel {
@@ -307,7 +298,6 @@ public final class sanpham extends javax.swing.JPanel {
         int i_row = tablesp.getSelectedRow();
         int masp = (int) tblModel.getValueAt(i_row, 0);
         SanPhamDTO sp = spBUS.getByMaSP(masp);
-//        SanPhamDTO sp = spBUS.spDAO.selectAll().get(i_row);
         return sp;
     }
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
@@ -315,14 +305,13 @@ public final class sanpham extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm muốn xoá");
         } else {
             SanPhamDTO sp = getSanPhamSelect();
-            if (sp.getSoluongton() != 0) {
+            if (sp.getSoluongton() == 0) {
                 JOptionPane.showMessageDialog(this, "Xóa không thành công, số lượng tồn của sản phẩm khác 0", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
-            }
+            } 
             int output = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá sản phẩm này?", "Xác nhận xoá sản phẩm", JOptionPane.YES_NO_OPTION);
             if (output == JOptionPane.YES_OPTION) {
                 spBUS.spDAO.delete(getSanPhamSelect());
-
                 JOptionPane.showMessageDialog(this, "Xóa thành công!");
                 loadDataToTable(spBUS.spDAO.selectAll());
             }
@@ -349,7 +338,7 @@ public final class sanpham extends javax.swing.JPanel {
         if (tablesp.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm muốn sửa");
         } else {
-            updatesanpham up = new updatesanpham(this, (JFrame) SwingUtilities.getWindowAncestor(this), true);
+            updatesanpham up = new updatesanpham(this, (JFrame) SwingUtilities.getWindowAncestor(this), true, getSanPhamSelect());
             up.setVisible(true);
         }
     }//GEN-LAST:event_btnSuaActionPerformed

@@ -325,7 +325,6 @@ public class addsanpham extends javax.swing.JDialog {
     }//GEN-LAST:event_cbxloaispActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-
         try {
             Date nsx = nsxchooser.getDate();
             Date hsd = hsdchooser.getDate();
@@ -362,8 +361,11 @@ public class addsanpham extends javax.swing.JDialog {
             masp = spBUS.spDAO.getAutoIncrement();
             // Thêm sản phẩm vào CSDL
             SanPhamDTO result = new SanPhamDTO(masp, maloai, tensp, imagePath, sqlNsx, sqlHsd, maxuatxu, mathuonghieu, 0, 0, 0, 1);
-            spBUS.add(result);
-            JOptionPane.showMessageDialog(this, "Thêm Thành Công !");
+            if (spBUS.add(result)) {
+                JOptionPane.showMessageDialog(this, "Thêm Thành Công !");
+            } else {
+                JOptionPane.showMessageDialog(this, "Thất bại !", "Lỗi", JOptionPane.ERROR_MESSAGE );
+            }
             this.dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Thất bại !");

@@ -37,6 +37,15 @@ public class GiamGiaBUS {
         }
         return vitri;
     }
+    
+    public GiamGiaDTO getGiamGiaByID(int magg) {
+        for (GiamGiaDTO gg : listGG) {
+            if (gg.getMagiamgia() == magg) {
+                return gg;
+            }
+        }
+        return null;
+    }
 
     public Boolean add(GiamGiaDTO gg) {
         boolean check = ggDAO.insert(gg) != 0;

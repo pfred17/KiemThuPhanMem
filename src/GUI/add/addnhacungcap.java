@@ -199,18 +199,29 @@ public class addnhacungcap extends javax.swing.JDialog {
     }//GEN-LAST:event_txttennccActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        // TODO add your handling code here:
         try {
             if (txttenncc.getText().matches("")) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập tên nhà cung cấp");
+                return;
+            }
+            if (nccBUS.checkExitsTenNCC(txttenncc.getText())) {
+                JOptionPane.showMessageDialog(this, "Tên nhà cung cấp đã tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             if (txtsodt.getText().matches("")) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập số điện thoại");
                 return;
             }
+            if (nccBUS.checkExitsSDT(txtsodt.getText())) {
+                JOptionPane.showMessageDialog(this, "SĐT đã tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             if (txtemail.getText().matches("")) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập email");
+                return;
+            }
+            if (nccBUS.checkExitsEmail(txtemail.getText())) {
+                JOptionPane.showMessageDialog(this, "Email đã tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             if (txtdiachi.getText().matches("")) {
@@ -224,7 +235,7 @@ public class addnhacungcap extends javax.swing.JDialog {
             if(!txtemail.getText().matches("^[a-zA-Z0-9._%+-]+@gmail\\.com$")){
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng ...@gmail.com");
                 return;
-            }               
+            }             
             String tenncc = txttenncc.getText();
             String sodt = txtsodt.getText();
             String email = txtemail.getText();

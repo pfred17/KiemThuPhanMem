@@ -369,18 +369,23 @@ public final class nhacungcap extends javax.swing.JPanel {
         switch (luachon) {
             case "Tất cả":
                 result = SearchNhaCungCap.getInstance().searchTatCa(searchContent);
+                loadDataToTable(result);
                 break;
             case "Mã Nhà Cung Cấp":
                 result = SearchNhaCungCap.getInstance().searchMaNCC(searchContent);
+                loadDataToTable(result);
                 break;
             case "Tên Nhà Cung Cấp":
                 result = SearchNhaCungCap.getInstance().searchTenNCC(searchContent);
+                loadDataToTable(result);
                 break;
             case "Địa Chỉ":
                 result = SearchNhaCungCap.getInstance().searchDiaChi(searchContent);
+                loadDataToTable(result);
                 break;
             case "Số Điện Thoại":
                 result = SearchNhaCungCap.getInstance().searchSdt(searchContent);
+                loadDataToTable(result);
                 break;
         }
         loadDataToTable(result);

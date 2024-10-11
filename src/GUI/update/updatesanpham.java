@@ -28,12 +28,14 @@ public class updatesanpham extends javax.swing.JDialog {
     ThuongHieuBUS thBUS = new ThuongHieuBUS();
     LoaiSanPhamBUS lspBUS = new LoaiSanPhamBUS();
     SanPhamBUS spBUS = new SanPhamBUS();
-    private sanpham parent; // Assuming nhacungcap is the type of the parent frame\
+    private SanPhamDTO sanPhamDTO;
+    private sanpham parent; 
     String imagePath;
 
-    public updatesanpham(sanpham parent, javax.swing.JFrame owner, boolean modal) {
+    public updatesanpham(sanpham parent, javax.swing.JFrame owner, boolean modal, SanPhamDTO sp) {
         super(owner, modal);
         this.parent = (sanpham) parent;
+        this.sanPhamDTO = sp;
         initComponents();
         setLocationRelativeTo(null);
         setThuongHieuCbx();
@@ -48,11 +50,9 @@ public class updatesanpham extends javax.swing.JDialog {
     }
 
     private void displayInfo() {
-        SanPhamDTO a = parent.getSanPhamSelect();
-
-        imagePath = a.getHinhanh();
+        
         // Kiểm tra xem đường dẫn hình ảnh có tồn tại không
-        if (imagePath != null && !imagePath.isEmpty()) {
+        if (sanPhamDTO.getHinhanh() != null && !sanPhamDTO.getHinhanh().isEmpty()) {
             // Tạo một đối tượng ImageIcon từ đường dẫn hình ảnh
             ImageIcon imageIcon = new ImageIcon(imagePath);
             lbimg.setIcon(imageIcon);
@@ -61,12 +61,10 @@ public class updatesanpham extends javax.swing.JDialog {
             ImageIcon imageIcon = new ImageIcon(imagePath);
             lbimg.setIcon(imageIcon);
         }
-        txttensp.setText("" + a.getTensp());
-        cbxxuatxu.setSelectedItem("" + a.getXuatxu());
-        cbxthuonghieu.setSelectedItem("" + a.getThuonghieu());
-        cbxloaisp.setSelectedItem("" + a.getMaloai());
-        // nsxchooser.setDate(a.getNSX());
-        // hsdchooser.setDate(a.getHSD());
+        txttensp.setText("" + sanPhamDTO.getTensp());
+        cbxxuatxu.setSelectedItem("" + sanPhamDTO.getXuatxu());
+        cbxthuonghieu.setSelectedItem("" + sanPhamDTO.getThuonghieu());
+        cbxloaisp.setSelectedItem("" + sanPhamDTO.getMaloai());
 
     }
 

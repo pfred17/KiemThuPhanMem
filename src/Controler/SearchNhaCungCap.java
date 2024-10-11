@@ -26,13 +26,13 @@ public class SearchNhaCungCap {
     public ArrayList<NhaCungCapDTO> searchTatCa(String text) {
         ArrayList<NhaCungCapDTO> result = new ArrayList<>();
         ArrayList<NhaCungCapDTO> armt = NhaCungCapDAO.getInstance().selectAll();
-        for (var ncc : armt) {
-            if ((""+ncc.getMancc()).toLowerCase().contains(text.toLowerCase())
+
+        for (NhaCungCapDTO ncc : armt) {
+            if (("" + ncc.getMancc()).toLowerCase().contains(text.toLowerCase())
                     || ncc.getTenncc().toLowerCase().contains(text.toLowerCase())
                     || ncc.getSdt().toLowerCase().contains(text.toLowerCase())
                     || ncc.getDiachi().toLowerCase().contains(text.toLowerCase())
-                    || ncc.getEmail().toLowerCase().contains(text.toLowerCase()))
-             {
+                    || ncc.getEmail().toLowerCase().contains(text.toLowerCase())) {
                 result.add(ncc);
             }
         }
@@ -42,7 +42,7 @@ public class SearchNhaCungCap {
     public ArrayList<NhaCungCapDTO> searchTenNCC(String text) {
         ArrayList<NhaCungCapDTO> result = new ArrayList<>();
         ArrayList<NhaCungCapDTO> armt = NhaCungCapDAO.getInstance().selectAll();
-        for (var ncc : armt) {
+        for (NhaCungCapDTO ncc : armt) {
             if (ncc.getTenncc().toLowerCase().contains(text.toLowerCase())) {
                 result.add(ncc);
             }
@@ -53,8 +53,8 @@ public class SearchNhaCungCap {
     public ArrayList<NhaCungCapDTO> searchMaNCC(String text) {
         ArrayList<NhaCungCapDTO> result = new ArrayList<>();
         ArrayList<NhaCungCapDTO> armt = NhaCungCapDAO.getInstance().selectAll();
-        for (var ncc : armt) {
-            if ((""+ncc.getMancc()).toLowerCase().contains(text.toLowerCase())) {
+        for (NhaCungCapDTO ncc : armt) {
+            if (("" + ncc.getMancc()).toLowerCase().contains(text.toLowerCase())) {
                 result.add(ncc);
             }
         }
@@ -64,7 +64,7 @@ public class SearchNhaCungCap {
     public ArrayList<NhaCungCapDTO> searchDiaChi(String text) {
         ArrayList<NhaCungCapDTO> result = new ArrayList<>();
         ArrayList<NhaCungCapDTO> armt = NhaCungCapDAO.getInstance().selectAll();
-        for (var ncc : armt) {
+        for (NhaCungCapDTO ncc : armt) {
             if (ncc.getDiachi().toLowerCase().contains(text.toLowerCase())) {
                 result.add(ncc);
             }
@@ -75,7 +75,7 @@ public class SearchNhaCungCap {
     public ArrayList<NhaCungCapDTO> searchSdt(String text) {
         ArrayList<NhaCungCapDTO> result = new ArrayList<>();
         ArrayList<NhaCungCapDTO> armt = NhaCungCapDAO.getInstance().selectAll();
-        for (var ncc : armt) {
+        for (NhaCungCapDTO ncc : armt) {
             if (ncc.getSdt().toLowerCase().contains(text.toLowerCase())) {
                 result.add(ncc);
             }
@@ -83,4 +83,3 @@ public class SearchNhaCungCap {
         return result;
     }
 }
-

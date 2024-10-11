@@ -8,8 +8,6 @@ import GUI.add.addphieuxuat;
 import GUI.details.detailsphieuxuat;
 import helper.FormatPrice;
 import java.util.*;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
