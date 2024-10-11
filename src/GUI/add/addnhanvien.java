@@ -11,10 +11,6 @@ import java.awt.HeadlessException;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author ASUS
- */
 public class addnhanvien extends javax.swing.JDialog {
 
     NhanVienBUS nvBUS = new NhanVienBUS();
@@ -36,7 +32,7 @@ public class addnhanvien extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        btnGroup = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -80,29 +76,23 @@ public class addnhanvien extends javax.swing.JDialog {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        txthoten.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txthotenActionPerformed(evt);
-            }
-        });
-
         jLabel3.setText("Email");
 
         jLabel4.setText("Họ và tên");
-
-        txtemail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtemailActionPerformed(evt);
-            }
-        });
 
         btnThem.setBackground(new java.awt.Color(51, 204, 0));
         btnThem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnThem.setForeground(new java.awt.Color(255, 255, 255));
         btnThem.setText("Thêm nhân viên");
+        btnThem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThemActionPerformed(evt);
+            }
+        });
+        btnThem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnThemKeyPressed(evt);
             }
         });
 
@@ -110,9 +100,20 @@ public class addnhanvien extends javax.swing.JDialog {
         btnHuy.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnHuy.setForeground(new java.awt.Color(255, 255, 255));
         btnHuy.setText("Hủy bỏ");
+        btnHuy.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnHuy.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnHuyMouseClicked(evt);
+            }
+        });
         btnHuy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHuyActionPerformed(evt);
+            }
+        });
+        btnHuy.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnHuyKeyPressed(evt);
             }
         });
 
@@ -120,10 +121,10 @@ public class addnhanvien extends javax.swing.JDialog {
 
         jLabel6.setText("Ngày sinh");
 
-        buttonGroup1.add(rbtnNam);
+        btnGroup.add(rbtnNam);
         rbtnNam.setText("Nam");
 
-        buttonGroup1.add(rbtnNu);
+        btnGroup.add(rbtnNu);
         rbtnNu.setText("Nữ");
 
         jLabel7.setText("Giới tính");
@@ -221,12 +222,8 @@ public class addnhanvien extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtemailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtemailActionPerformed
-
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
-        this.dispose();
+        clearInputFieldsOrExit();
     }//GEN-LAST:event_btnHuyActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
@@ -234,37 +231,106 @@ public class addnhanvien extends javax.swing.JDialog {
             String hoten = txthoten.getText().trim();
             String email = txtemail.getText().trim();
             String sdt = txtsdt.getText().trim();
-            String gioitinh = rbtnNam.isSelected() ? "Nam" : "Nữ";
             Date date = txtNgaysinh.getDate();
 
-            if (hoten.isEmpty() || email.isEmpty() || sdt.isEmpty() || gioitinh.isEmpty() || date == null) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
-            } else if (!v.isValidEmail(email)) {
-                JOptionPane.showMessageDialog(this, "Email không hợp lệ!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
-            } else if (!v.isValidPhoneNumber(sdt)) {
-                JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+            // Sử dụng các hàm kiểm tra để xác thực dữ liệu đầu vào
+            String fullnameError = v.isValidFullname(hoten);
+            String emailError = v.isValidEmail(email);
+            String phoneError = v.isValidPhoneNumber(sdt);
+            String dobError = v.validateDateOfBirth(date);
+
+            // Kiểm tra họ tên
+            if (fullnameError != null) {
+                JOptionPane.showMessageDialog(this, fullnameError, "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                txthoten.requestFocusInWindow();
             } else {
-                java.sql.Date ngaysinh = new java.sql.Date(txtNgaysinh.getDate().getTime());
+                // Kiểm tra email
+                if (emailError != null) {
+                    JOptionPane.showMessageDialog(this, emailError, "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    txtemail.requestFocusInWindow();
+                } else if (nvBUS.isEmailExists(email)) {
+                    JOptionPane.showMessageDialog(this, "Email đã tồn tại! Vui lòng nhập email khác.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    txtemail.requestFocusInWindow();
+                } else {
+                    // Kiểm tra số điện thoại
+                    if (phoneError != null) {
+                        JOptionPane.showMessageDialog(this, phoneError, "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                        txtsdt.requestFocusInWindow();
+                    } else if (nvBUS.isPhoneNumberExists(sdt)) {
+                        JOptionPane.showMessageDialog(this, "Số điện thoại đã tồn tại! Vui lòng nhập số điện thoại khác.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                        txtsdt.requestFocusInWindow();
+                    } else {
+                        // Kiểm tra giới tính
+                        if (btnGroup.getSelection() == null) {
+                            JOptionPane.showMessageDialog(this, "Vui lòng chọn giới tính", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                            rbtnNam.requestFocusInWindow(); // Focus vào một nút radio
+                        } else {
+                            // Kiểm tra ngày sinh
+                            if (dobError != null) {
+                                JOptionPane.showMessageDialog(this, dobError, "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                                txtNgaysinh.requestFocusInWindow();
+                            } else {
+                                // Nếu tất cả hợp lệ, tiến hành thêm nhân viên
+                                String gioitinh = rbtnNam.isSelected() ? "Nam" : "Nữ";
+                                java.sql.Date ngaysinh = new java.sql.Date(date.getTime());
 
-                NhanVienDTO nv = new NhanVienDTO();
-                nv.setEmail(email);
-                nv.setHoten(hoten);
-                nv.setSdt(sdt);
-                nv.setGioitinh(gioitinh);
-                nv.setNgaysinh(ngaysinh);
+                                NhanVienDTO nv = new NhanVienDTO();
+                                nv.setHoten(hoten);
+                                nv.setEmail(email);
+                                nv.setSdt(sdt);
+                                nv.setGioitinh(gioitinh);
+                                nv.setNgaysinh(ngaysinh);
 
-                nvBUS.add(nv);
-                JOptionPane.showMessageDialog(this, "Thêm thành công!");
-                this.dispose();
+                                // Thêm nhân viên vào hệ thống
+                                nvBUS.add(nv);
+                                JOptionPane.showMessageDialog(this, "Thêm nhân viên mới thành công!");
+                                this.dispose(); // Đóng form sau khi thêm thành công
+                            }
+                        }
+                    }
+                }
             }
         } catch (HeadlessException ex) {
             JOptionPane.showMessageDialog(this, "Lỗi không xác định!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnThemActionPerformed
+    private void clearInputFieldsOrExit() {
+        btnHuy.requestFocusInWindow();
 
-    private void txthotenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txthotenActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txthotenActionPerformed
+        boolean isHotenEmpty = txthoten.getText().isEmpty();
+        boolean isEmailEmpty = txtemail.getText().isEmpty();
+        boolean isSdtEmpty = txtsdt.getText().isEmpty();
+        boolean isNamSelected = rbtnNam.isSelected();
+        boolean isNuSelected = rbtnNu.isSelected();
+        boolean isNgaySinhEmpty = txtNgaysinh.getDate() == null;
+
+        if (isHotenEmpty && isEmailEmpty && isSdtEmpty && !isNamSelected && !isNuSelected && isNgaySinhEmpty) {
+            int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn hủy bỏ thao tác thêm nhân viên?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                this.dispose();
+            }
+        } else {
+            int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa tất cả thông tin vừa nhập không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                txthoten.setText("");
+                txtemail.setText("");
+                txtsdt.setText("");
+                btnGroup.clearSelection();
+                txtNgaysinh.setDate(null);
+            }
+        }
+    }
+    private void btnThemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnThemKeyPressed
+        btnThemActionPerformed(new java.awt.event.ActionEvent(evt.getSource(), evt.getID(), "Enter Key Pressed"));
+    }//GEN-LAST:event_btnThemKeyPressed
+
+    private void btnHuyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHuyMouseClicked
+        clearInputFieldsOrExit();
+    }//GEN-LAST:event_btnHuyMouseClicked
+
+    private void btnHuyKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnHuyKeyPressed
+        clearInputFieldsOrExit();
+    }//GEN-LAST:event_btnHuyKeyPressed
 
     /**
      * @param args the command line arguments
@@ -280,39 +346,45 @@ public class addnhanvien extends javax.swing.JDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(addnhanvien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(addnhanvien.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(addnhanvien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(addnhanvien.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(addnhanvien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(addnhanvien.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(addnhanvien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(addnhanvien.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                addnhanvien dialog = new addnhanvien(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            addnhanvien dialog = new addnhanvien(new javax.swing.JFrame(), true);
+            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    System.exit(0);
+                }
+            });
+            dialog.setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup btnGroup;
     private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnThem;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

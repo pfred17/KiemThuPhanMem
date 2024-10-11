@@ -100,6 +100,7 @@ public class khachhang extends javax.swing.JPanel {
 
         btnReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/refresh.png"))); // NOI18N
         btnReset.setText("Làm mới");
+        btnReset.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnResetActionPerformed(evt);
@@ -130,6 +131,7 @@ public class khachhang extends javax.swing.JPanel {
         btnThem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/add.png"))); // NOI18N
         btnThem.setText("THÊM");
+        btnThem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnThem.setFocusable(false);
         btnThem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnThem.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -143,6 +145,7 @@ public class khachhang extends javax.swing.JPanel {
         btnSua.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/edit.png"))); // NOI18N
         btnSua.setText("SỬA");
+        btnSua.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSua.setFocusable(false);
         btnSua.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSua.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -161,6 +164,7 @@ public class khachhang extends javax.swing.JPanel {
         btnXoa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/delete.png"))); // NOI18N
         btnXoa.setText("XÓA");
+        btnXoa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnXoa.setFocusable(false);
         btnXoa.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnXoa.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -174,6 +178,7 @@ public class khachhang extends javax.swing.JPanel {
         btnChitiet.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnChitiet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/detail.png"))); // NOI18N
         btnChitiet.setText("XEM CHI TIẾT");
+        btnChitiet.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnChitiet.setFocusable(false);
         btnChitiet.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnChitiet.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);

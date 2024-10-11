@@ -15,7 +15,7 @@ public class login extends javax.swing.JFrame {
         txtusername.setBackground(new java.awt.Color(0, 0, 0, 1));
         txtpassword.setBackground(new java.awt.Color(0, 0, 0, 1));
         txtusername.setText("admin");
-        txtpassword.setText("abc");
+        txtpassword.setText("admin");
     }
 
     /**
@@ -188,14 +188,13 @@ public class login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        System.exit(0);
+//        System.exit(0);
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void disableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_disableMouseClicked
         txtpassword.setEchoChar((char) 0);
         disable.setVisible(false);
         disable.setEnabled(false);
-        show.setEnabled(true);
         show.setEnabled(true);
     }//GEN-LAST:event_disableMouseClicked
 
@@ -204,24 +203,19 @@ public class login extends javax.swing.JFrame {
         disable.setVisible(true);
         disable.setEnabled(true);
         show.setEnabled(false);
-        show.setEnabled(false);
     }//GEN-LAST:event_showMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        for (double i = 0.0; i <= 1.0; i = i + 0.1) {
-            String val = i + "";
-            float f = Float.valueOf(val);
-            this.setOpacity(f);
+        for (float i = 0f; i < 1; i += 0.1f) {
+            this.setOpacity(i);
             try {
                 Thread.sleep(50);
-            } catch (Exception e) {
-
+            } catch (InterruptedException e) {
             }
         }
     }//GEN-LAST:event_formWindowOpened
 
     private void txtusernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtusernameMouseClicked
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtusernameMouseClicked
 
     private void txtusernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtusernameKeyPressed
@@ -263,38 +257,46 @@ public class login extends javax.swing.JFrame {
 
     public void checkLogin() throws UnsupportedLookAndFeelException {
         String usernameCheck = txtusername.getText();
-         String passwordCheck = new String(txtpassword.getPassword());
+        String passwordCheck = new String(txtpassword.getPassword());
 
-        if (usernameCheck.equals("") || passwordCheck.equals("")) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập thông tin đầy đủ", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
-        } else {
-            TaiKhoanDTO tk = TaiKhoanDAO.getInstance().selectByUser(usernameCheck);
+        if (usernameCheck.equals("") && passwordCheck.equals("")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ các thông tin", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+            txtusername.requestFocus();
+            return;
+        }
+        if (usernameCheck.equals("")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên đăng nhập", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+            txtusername.requestFocus();
+            return;
+        }
+        if (passwordCheck.equals("")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập mật khẩu", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+            txtpassword.requestFocus();
+            return;
+        }
 
-            if (tk == null) {
-                JOptionPane.showMessageDialog(this, "Tài khoản của bạn không tồn tại trên hệ thống", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
-                return;
-            } else {
-                if (tk.getTrangthai() == 0) {
-                    JOptionPane.showMessageDialog(this, "Tài khoản của bạn đang bị khóa", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
-                    return;
-                } else {
-                    if (passwordCheck.equals(tk.getMatkhau())) {
-                        this.dispose();
-                        if (tk.getManhomquyen() == 1) {
-                            admin ad = new admin(tk);
-                            ad.setVisible(true);
-                        } else if (tk.getManhomquyen() == 2) {
-                            nvnhaphang ql = new nvnhaphang(tk);
-                            ql.setVisible(true);
-                        } else if (tk.getManhomquyen() == 3) {
-                            nvxuathang ql = new nvxuathang(tk);
-                            ql.setVisible(true);
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Mật khẩu không chính xác", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
-                    }
-                }
-            }
+        TaiKhoanDTO tk = TaiKhoanDAO.getInstance().selectByUsername(usernameCheck);
+        
+        if (tk == null) {
+            JOptionPane.showMessageDialog(this, "Tài khoản của bạn không tồn tại trên hệ thống", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (!passwordCheck.equals(tk.getPassword())) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu không chính xác", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+            txtpassword.requestFocus();
+            return;
+        }
+        if (tk.getStatus() == 0) {
+            JOptionPane.showMessageDialog(this, "Tài khoản của bạn đã bị khóa", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        this.dispose();
+
+        switch (tk.getRoleId()) {
+            case 1 -> new admin(tk).setVisible(true);
+            case 2 -> new nvnhaphang(tk).setVisible(true);
+            case 3 -> new nvxuathang(tk).setVisible(true);
         }
     }
 
@@ -327,10 +329,8 @@ public class login extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new login().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new login().setVisible(true);
         });
     }
 

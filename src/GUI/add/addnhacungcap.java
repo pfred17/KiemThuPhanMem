@@ -6,7 +6,10 @@ package GUI.add;
 
 import BUS.NhaCungCapBUS;
 import DTO.NhaCungCapDTO;
+import helper.Validation;
+import java.awt.Color;
 import java.awt.HeadlessException;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,12 +20,15 @@ public class addnhacungcap extends javax.swing.JDialog {
 
     int mancc;
     NhaCungCapBUS nccBUS = new NhaCungCapBUS();
+    Validation v = new Validation();
 
     public addnhacungcap(javax.swing.JFrame parent, boolean modal) {
         super(parent, modal);
         setModal(modal);
         initComponents();
         setLocationRelativeTo(null);
+        getRootPane().setDefaultButton(btnThem);
+        btnThem.setBackground(new Color(51, 204, 0));
     }
 
     addnhacungcap() {
@@ -68,8 +74,19 @@ public class addnhacungcap extends javax.swing.JDialog {
                 txtsodtActionPerformed(evt);
             }
         });
+        txtsodt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtsodtKeyPressed(evt);
+            }
+        });
 
         jLabel4.setText("Số điện thoại");
+
+        txtemail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtemailKeyPressed(evt);
+            }
+        });
 
         jLabel5.setText("Địa chỉ ");
 
@@ -78,11 +95,25 @@ public class addnhacungcap extends javax.swing.JDialog {
                 txttennccActionPerformed(evt);
             }
         });
+        txttenncc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txttennccKeyPressed(evt);
+            }
+        });
 
         btnThem.setBackground(new java.awt.Color(51, 204, 0));
         btnThem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnThem.setForeground(new java.awt.Color(255, 255, 255));
         btnThem.setText("THÊM");
+        btnThem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnThem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnThemMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnThemMouseExited(evt);
+            }
+        });
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThemActionPerformed(evt);
@@ -93,9 +124,23 @@ public class addnhacungcap extends javax.swing.JDialog {
         btnHuy.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnHuy.setForeground(new java.awt.Color(255, 255, 255));
         btnHuy.setText("HỦY");
+        btnHuy.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnHuy.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnHuyMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnHuyMouseExited(evt);
+            }
+        });
         btnHuy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHuyActionPerformed(evt);
+            }
+        });
+        btnHuy.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnHuyKeyPressed(evt);
             }
         });
 
@@ -118,6 +163,12 @@ public class addnhacungcap extends javax.swing.JDialog {
         );
 
         jLabel6.setText("Email ");
+
+        txtdiachi.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtdiachiKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -200,60 +251,111 @@ public class addnhacungcap extends javax.swing.JDialog {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         try {
-            if (txttenncc.getText().matches("")) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập tên nhà cung cấp");
-                return;
-            }
-            if (nccBUS.checkExitsTenNCC(txttenncc.getText())) {
-                JOptionPane.showMessageDialog(this, "Tên nhà cung cấp đã tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            if (txtsodt.getText().matches("")) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập số điện thoại");
-                return;
-            }
-            if (nccBUS.checkExitsSDT(txtsodt.getText())) {
-                JOptionPane.showMessageDialog(this, "SĐT đã tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            if (txtemail.getText().matches("")) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập email");
-                return;
-            }
-            if (nccBUS.checkExitsEmail(txtemail.getText())) {
-                JOptionPane.showMessageDialog(this, "Email đã tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            if (txtdiachi.getText().matches("")) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập địa chỉ");
-                return;
-            }
-            if (!txtsodt.getText().matches("^(03|08|09)\\d{8}$")) {
-                JOptionPane.showMessageDialog(this, "Số điện thoại gồm 10 chữ số bắt đầu bằng 03|08|09");
-                return;
-            }
-            if(!txtemail.getText().matches("^[a-zA-Z0-9._%+-]+@gmail\\.com$")){
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng ...@gmail.com");
-                return;
-            }             
             String tenncc = txttenncc.getText();
             String sodt = txtsodt.getText();
             String email = txtemail.getText();
             String diachi = txtdiachi.getText();
             mancc = nccBUS.nccDAO.getAutoIncrement();
-            NhaCungCapDTO ncc = new NhaCungCapDTO(mancc, tenncc, diachi, email, sodt, 1);
-            nccBUS.add(ncc);
-            JOptionPane.showMessageDialog(this, "Thêm Thành Công !");
-            this.dispose();
+
+            String nameNCCError = v.isValidFullname(txttenncc.getText());
+            String emailError = v.isValidEmail(txtemail.getText());
+            String phoneNumberError = v.isValidPhoneNumber(txtsodt.getText());
+
+            if (nameNCCError != null) {
+                JOptionPane.showMessageDialog(this, nameNCCError, "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                txttenncc.requestFocus();
+            } else {
+                if (emailError != null) {
+                    JOptionPane.showMessageDialog(this, emailError, "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    txtemail.requestFocus();
+                } else if (nccBUS.isEmailExists(email)) {
+                    JOptionPane.showMessageDialog(this, "Email đã tồn tại! Vui lòng nhập email khác.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    txtemail.requestFocus();
+                } else {
+                    if (phoneNumberError != null) {
+                        JOptionPane.showMessageDialog(this, phoneNumberError, "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                        txtsodt.requestFocus();
+                    } else if (nccBUS.isPhoneNumberExists(sodt)) {
+                        JOptionPane.showMessageDialog(this, "Số điện thoại đã tồn tại! Vui lòng nhập số điện thoại khác khác.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                        txtsodt.requestFocus();
+                    } else {
+                        if (txtdiachi.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(this, "Địa chỉ không được để trống", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                            txtdiachi.requestFocus();
+                        } else {
+                            NhaCungCapDTO ncc = new NhaCungCapDTO(mancc, tenncc, diachi, email, sodt, 1);
+                            nccBUS.add(ncc);
+                            JOptionPane.showMessageDialog(this, "Thêm Thành Công !");
+                            this.dispose();
+                        }
+                    }
+                }
+            }
         } catch (HeadlessException ex) {
             JOptionPane.showMessageDialog(this, "Thất bại !");
         }
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
-
-        this.dispose();
+        int output = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn hủy bỏ và xóa toàn bộ dữ liệu vừa nhập không?", "Xác nhận xoá dữ liệu vừa nhập", JOptionPane.YES_NO_OPTION);
+        if (output == JOptionPane.YES_OPTION) {
+            txtdiachi.setText("");
+            txtemail.setText("");
+            txtsodt.setText("");
+            txttenncc.setText("");
+        }
+      
     }//GEN-LAST:event_btnHuyActionPerformed
+
+    private void btnThemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMouseEntered
+        btnThem.setBackground(Color.BLUE); // Màu khi di chuột vào
+    }//GEN-LAST:event_btnThemMouseEntered
+
+    private void btnHuyMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHuyMouseEntered
+        btnHuy.setBackground(Color.BLUE);
+    }//GEN-LAST:event_btnHuyMouseEntered
+
+    private void btnThemMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMouseExited
+        btnThem.setBackground(Color.GREEN);
+    }//GEN-LAST:event_btnThemMouseExited
+
+    private void btnHuyMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHuyMouseExited
+        btnHuy.setBackground(Color.RED);
+    }//GEN-LAST:event_btnHuyMouseExited
+
+    private void txttennccKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttennccKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) { // Kiểm tra xem phím Enter có được nhấn không
+            btnThemActionPerformed(null); // Gọi phương thức xử lý của nút
+        }
+
+    }//GEN-LAST:event_txttennccKeyPressed
+
+    private void txtemailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtemailKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) { // Kiểm tra xem phím Enter có được nhấn không
+            btnThemActionPerformed(null); // Gọi phương thức xử lý của nút
+        }
+
+    }//GEN-LAST:event_txtemailKeyPressed
+
+    private void txtsodtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtsodtKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) { // Kiểm tra xem phím Enter có được nhấn không
+            btnThemActionPerformed(null); // Gọi phương thức xử lý của nút
+        }
+
+    }//GEN-LAST:event_txtsodtKeyPressed
+
+    private void txtdiachiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiachiKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) { // Kiểm tra xem phím Enter có được nhấn không
+            btnThemActionPerformed(null); // Gọi phương thức xử lý của nút
+        }
+
+    }//GEN-LAST:event_txtdiachiKeyPressed
+
+    private void btnHuyKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnHuyKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) { // Kiểm tra xem phím Enter có được nhấn không
+            btnHuyActionPerformed(null); // Gọi phương thức xử lý của nút
+        }
+    }//GEN-LAST:event_btnHuyKeyPressed
 
     /**
      * @param args the command line arguments

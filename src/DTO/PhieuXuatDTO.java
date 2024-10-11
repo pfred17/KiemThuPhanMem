@@ -28,12 +28,13 @@ public class PhieuXuatDTO {
         this.magiamgia = magiamgia;
     }
 
-    public PhieuXuatDTO(int maphieuxuat, String tenkhachhang, String tennvnhap, Date thoigian, long tongtien) {
+    public PhieuXuatDTO(int maphieuxuat, String tenkhachhang, String tennvnhap, Date thoigian, long tongtien ) {
         this.maphieuxuat = maphieuxuat;
         this.thoigian = thoigian;
         this.tongtien = tongtien;
         this.tenkhachhang = tenkhachhang;
         this.tennvnhap = tennvnhap;
+       
     }
     
     // Constructor ct
@@ -43,6 +44,7 @@ public class PhieuXuatDTO {
         this.soluong = soluong;
         this.masp = masp;
         this.dongia = dongia;
+        
     }
     
     public int getMaphieuxuat() {

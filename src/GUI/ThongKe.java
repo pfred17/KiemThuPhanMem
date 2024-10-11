@@ -17,10 +17,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Admin
- */
 public final class ThongKe extends javax.swing.JPanel {
 
     PhieuNhapBUS pnBus = new PhieuNhapBUS();

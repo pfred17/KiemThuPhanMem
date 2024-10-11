@@ -80,20 +80,23 @@ public class KhachHangBUS {
     public KhachHangDTO selectKh(int makh) {
         return khDAO.selectById(makh + "");
     }
-    
+
     public ArrayList<KhachHangDTO> searchTatCa(String text) {
         ArrayList<KhachHangDTO> result = new ArrayList<>();
         ArrayList<KhachHangDTO> armt = KhachHangDAO.getInstance().selectAll();
-        for (var nv : armt) {
-            if ((""+nv.getMaKH()).toLowerCase().contains(text.toLowerCase())
-                    || nv.getHoten().toLowerCase().contains(text.toLowerCase()))
-             {
-                result.add(nv);
+        for (var kh : armt) {
+            if (("" + kh.getMaKH()).toLowerCase().contains(text.toLowerCase())
+                    || kh.getHoten().toLowerCase().contains(text.toLowerCase())
+                    || kh.getDiachi().toLowerCase().contains(text.toLowerCase())
+                    || kh.getGioitinh().toLowerCase().contains(text.toLowerCase())
+                    || (kh.getSdt() + "").contains(text)
+                    || (kh.getNgaythamgia() + "").contains(text)) {
+                result.add(kh);
             }
         }
         return result;
     }
-    
+
     public ArrayList<KhachHangDTO> searchSdt(String text) {
         ArrayList<KhachHangDTO> result = new ArrayList<>();
         ArrayList<KhachHangDTO> armt = KhachHangDAO.getInstance().selectAll();
@@ -104,15 +107,13 @@ public class KhachHangBUS {
         }
         return result;
     }
-    
-    public ArrayList<KhachHangDTO> searchEmail(String text) {
-        ArrayList<KhachHangDTO> result = new ArrayList<>();
-        ArrayList<KhachHangDTO> armt = KhachHangDAO.getInstance().selectAll();
-        for (var nv : armt) {
-//            if (nv.getEmail().toLowerCase().contains(text.toLowerCase())) {
-//                result.add(nv);
-//            }
+
+    public boolean isPhoneNumberExists(String phoneNumber) {
+        for (KhachHangDTO kh : this.listKhachHang) {
+            if (kh.getSdt().equals(phoneNumber)) {
+                return true;
+            }
         }
-        return result;
+        return false;
     }
 }

@@ -7,6 +7,9 @@ package GUI.update;
 import BUS.NhaCungCapBUS;
 import DTO.NhaCungCapDTO;
 import GUI.nhacungcap;
+import helper.Validation;
+import java.awt.Color;
+import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -18,6 +21,7 @@ public class updatenhacungcap extends javax.swing.JDialog {
 
     private nhacungcap parent; // Assuming nhacungcap is the type of the parent frame
     NhaCungCapBUS nccBUS = new NhaCungCapBUS();
+    Validation v = new Validation();
 
     public updatenhacungcap(nhacungcap parent, javax.swing.JFrame owner, boolean modal) {
         super(owner, modal);
@@ -25,6 +29,10 @@ public class updatenhacungcap extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         displayInfo();
+        getRootPane().setDefaultButton(btnLuu);
+        btnLuu.setBackground(new Color(51, 204, 0));
+         getRootPane().setDefaultButton(btnHuy);
+        btnHuy.setBackground(new Color(255, 0, 0));
     }
 
     updatenhacungcap() {
@@ -89,6 +97,15 @@ public class updatenhacungcap extends javax.swing.JDialog {
         btnLuu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnLuu.setForeground(new java.awt.Color(255, 255, 255));
         btnLuu.setText("LƯU");
+        btnLuu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLuu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnLuuMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnLuuMouseExited(evt);
+            }
+        });
         btnLuu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLuuActionPerformed(evt);
@@ -99,6 +116,15 @@ public class updatenhacungcap extends javax.swing.JDialog {
         btnHuy.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnHuy.setForeground(new java.awt.Color(255, 255, 255));
         btnHuy.setText("HỦY");
+        btnHuy.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnHuy.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnHuyMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnHuyMouseExited(evt);
+            }
+        });
         btnHuy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHuyActionPerformed(evt);
@@ -123,6 +149,12 @@ public class updatenhacungcap extends javax.swing.JDialog {
         );
 
         jLabel6.setText("Email ");
+
+        txtdiachi.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtdiachiKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -197,48 +229,63 @@ public class updatenhacungcap extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
+        int output = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn hủy thay đổi dữ liệu không?", "Xác nhận hùy thay đổi dữ liệu", JOptionPane.YES_NO_OPTION);
+        if (output == JOptionPane.YES_OPTION) {
+            txtdiachi.setText(parent.getNhaCungCapSelect().getDiachi());
+            txttenncc.setText(parent.getNhaCungCapSelect().getTenncc());
+            txtsodt.setText(parent.getNhaCungCapSelect().getSdt());
+            txtemail.setText(parent.getNhaCungCapSelect().getEmail());
+        }
 
-        this.dispose();
     }//GEN-LAST:event_btnHuyActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
 
         try {
-            if (txttenncc.getText().matches("")) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập tên nhà cung cấp");
-                return;
-            }
-            if (txtsodt.getText().matches("")) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập số điện thoại");
-                return;
-            }
-            if (txtemail.getText().matches("")) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập email");
-                return;
-            }
-            if (txtdiachi.getText().matches("")) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập địa chỉ");
-                return;
-            }
-            if (!txtsodt.getText().matches("^(03|08|09)\\d{8}$")) {
-                JOptionPane.showMessageDialog(this, "Số điện thoại gồm 10 chữ số bắt đầu bằng 03|08|09");
-                return;
-            }
-            if (!txtemail.getText().matches("^[a-zA-Z0-9._%+-]+@gmail\\.com$")) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng ...@gmail.com");
-                return;
-            }
             String tennhacungcap = txttenncc.getText();
             String diachincc = txtdiachi.getText();
             String emailncc = txtemail.getText();
             String sdtncc = txtsodt.getText();
             int manhacungcap = parent.getNhaCungCapSelect().getMancc();
-            NhaCungCapDTO ncc = new NhaCungCapDTO(manhacungcap, tennhacungcap, diachincc, emailncc, sdtncc, 1);
-            nccBUS.update(ncc);
-            this.dispose();
-            JOptionPane.showMessageDialog(this, "Sửa thành công !");
-            this.dispose();
-            parent.loadDataToTable(nccBUS.nccDAO.selectAll());
+            String nameNCCError = v.isValidFullname(txttenncc.getText());
+            String emailError = v.isValidEmail(txtemail.getText());
+            String phoneNumberError = v.isValidPhoneNumber(txtsodt.getText());
+
+            if (nameNCCError != null) {
+                JOptionPane.showMessageDialog(this, nameNCCError, "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                txttenncc.requestFocus();
+            } else {
+                if (emailError != null) {
+                    JOptionPane.showMessageDialog(this, emailError, "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    txtemail.requestFocus();
+                } else if (nccBUS.isEmailExists(emailncc) && !emailncc.equals(parent.getNhaCungCapSelect().getEmail())) {
+                    JOptionPane.showMessageDialog(this, "Email đã tồn tại! Vui lòng nhập email khác.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    txtemail.requestFocus();
+                } else {
+                    if (phoneNumberError != null) {
+                        JOptionPane.showMessageDialog(this, phoneNumberError, "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                        txtsodt.requestFocus();
+                    } else if (nccBUS.isPhoneNumberExists(sdtncc) && !sdtncc.equals(parent.getNhaCungCapSelect().getSdt())) {
+                        JOptionPane.showMessageDialog(this, "Số điện thoại đã tồn tại! Vui lòng nhập số điện thoại khác", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                        txtsodt.requestFocus();
+                    } else {
+                        if (txtdiachi.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(this, "Địa chỉ không được để trống", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                            txtdiachi.requestFocus();
+                        } else {
+                            int output = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn lưu dữ liệu vừa thay đổi không?", "Xác nhận lưu dữ liệu vừa thay đổi", JOptionPane.YES_NO_OPTION);
+                            if (output == JOptionPane.YES_OPTION) {
+                                NhaCungCapDTO ncc = new NhaCungCapDTO(manhacungcap, tennhacungcap, diachincc, emailncc, sdtncc, 1);
+                                nccBUS.update(ncc);
+                                JOptionPane.showMessageDialog(this, "Sửa thành công");
+                                this.dispose();
+                            }
+
+                        }
+                    }
+                }
+            }
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Thất bại !");
         }
@@ -251,6 +298,30 @@ public class updatenhacungcap extends javax.swing.JDialog {
     private void txtsodtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtsodtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtsodtActionPerformed
+
+    private void btnLuuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLuuMouseEntered
+        btnLuu.setBackground(Color.BLUE); // Màu khi di chuột vào
+
+    }//GEN-LAST:event_btnLuuMouseEntered
+
+    private void btnHuyMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHuyMouseEntered
+        btnHuy.setBackground(Color.BLUE); // Màu khi di chuột vào
+
+    }//GEN-LAST:event_btnHuyMouseEntered
+
+    private void btnLuuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLuuMouseExited
+        btnLuu.setBackground(Color.GREEN); // Màu khi di chuột vào
+    }//GEN-LAST:event_btnLuuMouseExited
+
+    private void btnHuyMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHuyMouseExited
+        btnHuy.setBackground(Color.RED); // Màu khi di chuột vào
+    }//GEN-LAST:event_btnHuyMouseExited
+
+    private void txtdiachiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiachiKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) { // Kiểm tra xem phím Enter có được nhấn không
+            btnLuuActionPerformed(null); // Gọi phương thức xử lý của nút
+        }
+    }//GEN-LAST:event_txtdiachiKeyPressed
 
     /**
      * @param args the command line arguments
