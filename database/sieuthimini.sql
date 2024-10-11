@@ -2,17 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
-<<<<<<< HEAD
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th9 18, 2024 lúc 09:20 AM
--- Phiên bản máy phục vụ: 10.4.32-MariaDB
--- Phiên bản PHP: 8.0.30
-=======
 -- Host: 127.0.0.1
 -- Generation Time: Oct 10, 2024 at 03:48 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
->>>>>>> 905b99f02cd765a9edb6bebd937c86eb2284e9a4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -77,24 +70,17 @@ CREATE TABLE `giamgia` (
   `magiamgia` int(11) NOT NULL,
   `tenctgiamgia` varchar(50) NOT NULL,
   `mocgiamgia` int(11) NOT NULL,
-  `sotienduocgiam` int(11) NOT NULL,
-  `trangthai` int(11) NOT NULL
+  `sotienduocgiam` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `giamgia`
 --
 
-<<<<<<< HEAD
-INSERT INTO `giamgia` (`magiamgia`, `tenctgiamgia`, `mocgiamgia`, `sotienduocgiam`, `trangthai`) VALUES
-(1, 'Mừng đại lễ 2/9', 200000, 20000, 1),
-(2, 'Hành trình 10 năm', 150000, 9300, 1);
-=======
 INSERT INTO `giamgia` (`magiamgia`, `tenctgiamgia`, `mocgiamgia`, `sotienduocgiam`) VALUES
 (1, 'Mừng đại lễ 2/9', 200000, 20000),
 (2, 'Hành trình 10 năm', 150000, 9300);
 
->>>>>>> 905b99f02cd765a9edb6bebd937c86eb2284e9a4
 -- --------------------------------------------------------
 
 --
@@ -112,16 +98,8 @@ CREATE TABLE `khachhang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
-<<<<<<< HEAD
--- Đang đổ dữ liệu cho bảng `khachhang`
---
-INSERT INTO `khachhang` (`makh`, `tenkhachhang`, `diachi`, `gioitinh`,`sdt`, `ngaythamgia`, `trangthai`) VALUES
-(1, 'Huỳnh Minh Đại', 'Quận 1', 'Nam', '0368387671', '2024-09-11', 1),
-(2, 'Đỗ Thị Trâm Anh', 'Tiền Giang', 'Nữ', '0365387631', '2024-09-19', 1);
-=======
 -- Dumping data for table `khachhang`
 --
->>>>>>> 905b99f02cd765a9edb6bebd937c86eb2284e9a4
 
 INSERT INTO `khachhang` (`makh`, `tenkhachhang`, `diachi`, `gioitinh`, `sdt`, `ngaythamgia`, `trangthai`) VALUES
 (1, 'Huỳnh Minh Đại', 'Quận 1', 'Nam', '0368387671', '2024-09-11', 1),
@@ -224,11 +202,7 @@ CREATE TABLE `nhanvien` (
 
 INSERT INTO `nhanvien` (`manv`, `hoten`, `gioitinh`, `ngaysinh`, `sdt`, `email`, `trangthai`) VALUES
 (1, 'admin', 'Nam', '2004-01-21', '0387913347', 'admin@gmail.com', 1),
-<<<<<<< HEAD
-(2, 'Nguyễn Bảo', 'Nam', '2004-10-22', '0355374322', 'bao@gmail.com', 1),
-=======
 (2, 'Nguyễn Bảo', 'Nam', '2004-10-22', '0355374321', 'bao@gmail.com', 1),
->>>>>>> 905b99f02cd765a9edb6bebd937c86eb2284e9a4
 (3, 'Nguyễn Tấn Cảnh', 'Nam', '2000-01-11', '0989338281', 'canh@gmail.com', 1),
 (4, 'Nguyễn Trung Trực', 'Nam', '2003-04-03', '0367890283', 'trungtruc@gmail.com', 1),
 (5, 'Nguyễn Quang Dương', 'Nam', '2004-05-06', '0378119329', 'quangduong@gmail.com', 1),
