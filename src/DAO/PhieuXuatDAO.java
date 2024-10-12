@@ -79,7 +79,7 @@ public class PhieuXuatDAO implements DAOinterface<PhieuXuatDTO> {
         }
         return result;
     }
-    
+
     public int updateTongTien(PhieuXuatDTO t) {
         int result = 0;
         try {
@@ -117,7 +117,7 @@ public class PhieuXuatDAO implements DAOinterface<PhieuXuatDTO> {
         ArrayList<PhieuXuatDTO> result = new ArrayList<>();
         try {
             Connection con = (Connection) JDBC.getConnection();
-            String sql = " SELECT phieuxuat.maphieuxuat, khachhang.tenkhachhang, nhanvien.hoten, phieuxuat.thoigian, phieuxuat.tongtien FROM phieuxuat"
+            String sql = " SELECT phieuxuat.maphieuxuat, khachhang.tenkhachhang, nhanvien.hoten, phieuxuat.thoigian, phieuxuat.tongtien,phieuxuat.magiamgia FROM phieuxuat"
                     + "                                   JOIN nhanvien ON phieuxuat.manv = nhanvien.manv"
                     + "                                   JOIN khachhang ON phieuxuat.makh = khachhang.makh"
                     + "                                   WHERE phieuxuat.trangthai = 1";
@@ -153,6 +153,7 @@ public class PhieuXuatDAO implements DAOinterface<PhieuXuatDTO> {
                 int masp = rs.getInt("masp");
                 int sl = rs.getInt("soluong");
                 double dongia = rs.getDouble("dongia");
+               
                 PhieuXuatDTO phieuxuat = new PhieuXuatDTO(maphieu, masp, sl, dongia);
                 result.add(phieuxuat);
             }
@@ -201,6 +202,7 @@ public class PhieuXuatDAO implements DAOinterface<PhieuXuatDTO> {
         return result;
     }
 // bao sua select by id
+
     @Override
     public PhieuXuatDTO selectById(String t) {
         PhieuXuatDTO result = null;

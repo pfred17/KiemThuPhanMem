@@ -45,9 +45,11 @@ public class giamgia extends javax.swing.JDialog {
     public void loadDataToTable(ArrayList<GiamGiaDTO> result) {
         tblModel.setRowCount(0);
         for (GiamGiaDTO gg : result) {
-            tblModel.addRow(new Object[]{
-                gg.getMagiamgia(), gg.getTenctgiamgia(), gg.getMocgiamgia(), gg.getSotienduocgiam()
-            });
+            if (gg.getTrangThai() == 1) {
+                tblModel.addRow(new Object[]{
+                    gg.getMagiamgia(), gg.getTenctgiamgia(), gg.getMocgiamgia(), gg.getSotienduocgiam()
+                });
+            }
         }
     }
 
@@ -247,6 +249,9 @@ public class giamgia extends javax.swing.JDialog {
             if (!"".equals(tenctgiamgia) || !"".equals(mocgiamgia) || !"".equals(sotienduocgiam)) {
                 GiamGiaDTO gg = new GiamGiaDTO(magiamgia, tenctgiamgia, mocgiamgia, sotienduocgiam);
                 ggBUS.add(gg);
+                txtmocgiamgia.setText("");
+                txtsotienduocgiam.setText("");
+                txttenctgiamgia.setText("");
                 JOptionPane.showMessageDialog(this, "Thêm Thành Công !");
                 loadDataToTable(ggBUS.ggDAO.selectAll());
             } else {
@@ -258,7 +263,9 @@ public class giamgia extends javax.swing.JDialog {
     }//GEN-LAST:event_btnThemActionPerformed
     public GiamGiaDTO getGiamGiaSelect() {
         int i_row = tablegg.getSelectedRow();
-        GiamGiaDTO gg = ggBUS.ggDAO.selectAll().get(i_row);
+        int magg = (int) tablegg.getValueAt(i_row, 0);
+        GiamGiaDTO gg = ggBUS.getGiamGiaByID(magg);
+        
         return gg;
     }
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed

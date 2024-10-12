@@ -79,22 +79,26 @@ public class addphieuxuat extends javax.swing.JPanel {
         }
     }
 
-    private void updateTotal() {
+    private double totalPrice() {
         DefaultTableModel model = (DefaultTableModel) tblphieuxuatout.getModel();
         int rowCount = model.getRowCount();
 
         int totalQuantity = 0;
-        double totalPrice = 0;
+        double totalprice = 0;
 
         for (int i = 0; i < rowCount; i++) {
             int quantity = (int) model.getValueAt(i, 2);
             double price = (double) model.getValueAt(i, 3);
             totalQuantity += quantity;
-            totalPrice += quantity * price;
+            totalprice += quantity * price;
         }
+        return totalprice;
+    }
+
+    private void updateTotal() {
 
         // Cập nhật giá trị tổng cộng vào trường văn bản
-        lableTongTien.setText(formatPrice.formatCurrency(totalPrice));
+        lableTongTien.setText(formatPrice.formatCurrency(totalPrice()));
     }
 
     /**
@@ -258,9 +262,11 @@ public class addphieuxuat extends javax.swing.JPanel {
 
         groupGioiTinh.add(rdnam);
         rdnam.setText("Nam");
+        rdnam.setEnabled(false);
 
         groupGioiTinh.add(rdnu);
         rdnu.setText("Nữ");
+        rdnu.setEnabled(false);
 
         combohoten.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -426,7 +432,6 @@ public class addphieuxuat extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng hợp lệ.", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         // Thêm thông tin sản phẩm vào bảng 2
         DefaultTableModel dt2 = (DefaultTableModel) tblphieuxuatout.getModel();
         rowData[2] = soluong; // Cập nhật số lượng
@@ -487,11 +492,12 @@ public class addphieuxuat extends javax.swing.JPanel {
         }
 
         if (gg != null) {
-            if (gg.getMocgiamgia() < tongtien) {
+            if (gg.getMocgiamgia() > tongtien) {
                 tongtien -= 0;
             } else {
                 tongtien = tongtien - gg.getSotienduocgiam();
             }
+         
         }
 
         pxAll = new PhieuXuatDTO(mapx, sqlDate, tongtien, sumsoluong, manv, makh, magg);

@@ -38,10 +38,8 @@ public class SanPhamDTO {
         this.gianhap = gianhap;
         this.giaban = giaban;
     }
-    
-    
 
-    public SanPhamDTO(int masp, int maloai, String tensp, String hinhanh, Date NSX, Date HSD, int maxuatxu, int mathuonghieu, int soluongton, double gianhap,double giaban, int trangthai) {
+    public SanPhamDTO(int masp, int maloai, String tensp, String hinhanh, Date NSX, Date HSD, int maxuatxu, int mathuonghieu, int soluongton, double gianhap, double giaban, int trangthai) {
         this.masp = masp;
         this.maloai = maloai;
         this.tensp = tensp;
@@ -56,7 +54,8 @@ public class SanPhamDTO {
         this.trangthai = trangthai;
 
     }
- public SanPhamDTO(int masp, int maloai, String tensp, String hinhanh, Date NSX, Date HSD, int maxuatxu, int mathuonghieu, int soluongton, double gianhap, int trangthai) {
+
+    public SanPhamDTO(int masp, int maloai, String tensp, String hinhanh, Date NSX, Date HSD, int maxuatxu, int mathuonghieu, int soluongton, double gianhap, int trangthai) {
         this.masp = masp;
         this.maloai = maloai;
         this.tensp = tensp;
@@ -70,6 +69,7 @@ public class SanPhamDTO {
         this.trangthai = trangthai;
 
     }
+
     public int getMasp() {
         return masp;
     }
@@ -189,8 +189,6 @@ public class SanPhamDTO {
     public void setTrangthai(int trangthai) {
         this.trangthai = trangthai;
     }
-
-   
 
     @Override
     public int hashCode() {

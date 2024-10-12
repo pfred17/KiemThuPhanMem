@@ -31,9 +31,11 @@ public class Validation {
         if (fullName.matches(".*[ ]{2,}.*")) {
             return "Giữa họ và tên không được chứa nhiều hơn 1 khoảng trắng!";
         }
+
         if (fullName.startsWith("") || fullName.endsWith("")) {
             return "Họ và tên không được bắt đầu hoặc kết thúc bằng khoảng trắng!";
         }
+
         return null;
     }
 
@@ -52,20 +54,27 @@ public class Validation {
         if (!username.matches("[a-zA-Z0-9_]+")) {
             return "Tên đăng nhập chỉ được chứa chữ cái, số và dấu gạch dưới!";
         }
+
         if (!username.matches(".*[A-Za-z].*")) {
             return "Tên đăng nhập phải chứa ít nhất một chữ cái!";
         }
         if (!username.matches(".*[0-9].*")) {
             return "Tên đăng nhập phải chứa ít nhất một chữ số!";
         }
+
         if (username.startsWith("_") || username.endsWith("_")) {
             return "Tên đăng nhập không được bắt đầu hoặc kết thúc bằng dấu gạch dưới!";
         }
         return null;
     }
 
+
     public String isValidPassword(String password) {
         password = password.trim(); // Loại bỏ khoảng trắng ở đầu và cuối
+
+
+  
+
 
         if (password.isEmpty()) {
             return "Mật khẩu không được để trống!";

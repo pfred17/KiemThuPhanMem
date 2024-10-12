@@ -6,7 +6,7 @@ import BUS.TaiKhoanBUS;
 import DAO.TaiKhoanDAO;
 import DTO.NhanVienDTO;
 import DTO.TaiKhoanDTO;
-import GUI.add.addtaikhoan;
+import GUI.add.addTaiKhoan;
 import GUI.update.updateTaiKhoan;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -323,7 +323,7 @@ public class taikhoan extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSearchKeyReleased
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        addtaikhoan add = new addtaikhoan(null, true);
+        addTaiKhoan add = new addTaiKhoan(null, true);
         add.setVisible(true);
         loadDataToTable(tkbus.tkDAO.selectAll());
     }//GEN-LAST:event_btnThemActionPerformed

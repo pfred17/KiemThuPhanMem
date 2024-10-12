@@ -23,7 +23,6 @@ public class SanPhamBUS {
     }
 
     public ArrayList<SanPhamDTO> getAll() {
-
         return this.listSP;
     }
 
@@ -33,16 +32,13 @@ public class SanPhamBUS {
     
     
     public SanPhamDTO getByMaSP(int masp) {
-        int vitri = -1;
-        int i = 0;
-        while (i <= this.listSP.size() && vitri == -1) {
-            if (this.listSP.get(i).getMasp() == masp) {
-                vitri = i;
-            } else {
-                i++;
+        loadData();
+        for (SanPhamDTO sp : this.listSP) {
+            if (sp.getMasp() == masp) {
+                return sp;
             }
         }
-        return this.listSP.get(vitri);
+        return null;
     }
 
     public int getIndexByMaSP(int masanpham) {
@@ -59,11 +55,10 @@ public class SanPhamBUS {
     }
 
     public Boolean add(SanPhamDTO sp) {
-        boolean check = spDAO.insert(sp) != 0;
-        if (check) {
-            this.listSP.add(sp);
+        if (spDAO.insert(sp) != 0) {
+            return true;
         }
-        return check;
+        return false;
     }
 
     public Boolean delete(SanPhamDTO sp) {

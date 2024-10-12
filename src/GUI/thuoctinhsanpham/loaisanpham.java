@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package GUI.thuoctinhsanpham;
 
 import DTO.LoaiSanPhamDTO;
@@ -218,11 +214,15 @@ public class loaisanpham extends javax.swing.JDialog {
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         try {
             String tenloai = txtloaisp.getText();
+            if (tenloai.length() > 29) {
+                    JOptionPane.showMessageDialog(this, "Tên loại sản phẩm vượt quá giới hạn (nhỏ hơn 29 kí tự)", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
             int maloai = lspBUS.lspDAO.getAutoIncrement();
-            if (!"".equals(tenloai)) {
-
+            if (!"".equals(tenloai)) { 
                 LoaiSanPhamDTO lsp = new LoaiSanPhamDTO(maloai, tenloai, 1);
                 lspBUS.add(lsp);
+                txtloaisp.setText("");
                 JOptionPane.showMessageDialog(this, "Thêm Thành Công !");
                 loadDataToTable(lspBUS.lspDAO.selectAll());
             } else {
@@ -249,6 +249,10 @@ public class loaisanpham extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn loại sản phẩm muốn sửa");
             } else {
                 String tenloai = txtloaisp.getText();
+                if (tenloai.length() > 29) {
+                    JOptionPane.showMessageDialog(this, "Tên loại sản phẩm vượt quá giới hạn (nhỏ hơn 29 kí tự)", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 int maloai = this.getLoaiSanPhamSelect().getMaloai();
                 if (!"".equals(tenloai)) {
                     LoaiSanPhamDTO lsp = new LoaiSanPhamDTO(maloai, tenloai);

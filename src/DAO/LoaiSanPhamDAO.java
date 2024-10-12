@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
 import DTO.LoaiSanPhamDTO;
@@ -156,7 +152,7 @@ public class LoaiSanPhamDAO implements DAOinterface<LoaiSanPhamDTO> {
         int ketQua = 0;
         try {
             java.sql.Connection con = JDBC.getConnection();
-            String sql = "DELETE FROM loaisanpham WHERE maloai=?";
+            String sql = "update loaisanpham set trangthai = 0 WHERE maloai=?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, ""+t.getMaloai());
             ketQua = pst.executeUpdate();

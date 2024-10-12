@@ -10,11 +10,16 @@ import DTO.NhaCungCapDTO;
 import GUI.add.addnhacungcap;
 import GUI.update.updatenhacungcap;
 import GUI.details.dtnhacungcap;
+import java.awt.BorderLayout;
 import java.util.ArrayList;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -28,6 +33,7 @@ public final class nhacungcap extends javax.swing.JPanel {
 
     public nhacungcap() {
         initComponents();
+
         initTable();
         list = nccBUS.nccDAO.selectAll();
         loadDataToTable(list);
@@ -168,6 +174,11 @@ public final class nhacungcap extends javax.swing.JPanel {
             }
         });
 
+        txtSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearchActionPerformed(evt);
+            }
+        });
         txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtSearchKeyReleased(evt);
@@ -175,6 +186,11 @@ public final class nhacungcap extends javax.swing.JPanel {
         });
 
         cbxChoose.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất Cả", "Mã Nhà Cung Cấp", "Tên Nhà Cung Cấp", "Địa Chỉ", "Email", "Số Điện Thoại" }));
+        cbxChoose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxChooseActionPerformed(evt);
+            }
+        });
 
         jToolBar4.setBackground(new java.awt.Color(255, 255, 255));
         jToolBar4.setBorder(null);
@@ -183,6 +199,7 @@ public final class nhacungcap extends javax.swing.JPanel {
         btnThem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/add.png"))); // NOI18N
         btnThem.setText("THÊM");
+        btnThem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnThem.setFocusable(false);
         btnThem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnThem.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -302,6 +319,7 @@ public final class nhacungcap extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
 
         addnhacungcap a = new addnhacungcap((JFrame) SwingUtilities.getWindowAncestor(this), true);
@@ -315,14 +333,78 @@ public final class nhacungcap extends javax.swing.JPanel {
         if (tablencc.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn sản phẩm muốn xoá");
         } else {
-            int output = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá nhà cung cấp", "Xác nhận xoá nhà cung cấp", JOptionPane.YES_NO_OPTION);
-            if (output == JOptionPane.YES_OPTION) {
-                nccBUS.delete(getNhaCungCapSelect());
-                JOptionPane.showMessageDialog(this, "Xóa thành công !");
-                loadDataToTable(nccBUS.nccDAO.selectAll());
-            }
+            showCustomConfirmDialog();
+//            int output = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá nhà cung cấp", "Xác nhận xoá nhà cung cấp", JOptionPane.YES_NO_OPTION);
+//            if (output == JOptionPane.YES_OPTION) {
+//                nccBUS.delete(getNhaCungCapSelect());
+//                JOptionPane.showMessageDialog(this, "Xóa thành công !");
+//                loadDataToTable(nccBUS.nccDAO.selectAll());
+//            }
         }
     }//GEN-LAST:event_btnXoaActionPerformed
+    private void showCustomConfirmDialog() {
+        // Tạo JDialog tùy chỉnh
+      JDialog dialog = new JDialog((java.awt.Frame) null, "Xác nhận xoá nhà cung cấp", true);
+
+        dialog.setSize(400, 200);
+        dialog.setLayout(new BorderLayout());
+
+        // Tạo phần nội dung
+        JLabel message = new JLabel("Bạn có chắc chắn muốn xoá nhà cung cấp?", JLabel.CENTER);
+        dialog.add(message, BorderLayout.CENTER);
+
+        // Tạo panel chứa các nút Yes/No
+        JPanel buttonPanel = new JPanel();
+        JButton btnYes = new JButton("Yes");
+        JButton btnNo = new JButton("No");
+
+        // Thêm sự kiện để thay đổi con trỏ thành bàn tay khi hover
+        btnYes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnYes.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnYes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnYes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+            }
+        });
+
+        btnNo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNo.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnNo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnNo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+            }
+        });
+
+        // Thêm hành động cho nút Yes/No
+        btnYes.addActionListener(e -> {
+            // Hành động khi nhấn Yes
+            nccBUS.delete(getNhaCungCapSelect());
+            JOptionPane.showMessageDialog(this, "Xóa thành công !");
+            loadDataToTable(nccBUS.nccDAO.selectAll());
+            dialog.dispose();
+        });
+
+        btnNo.addActionListener(e -> dialog.dispose());
+
+        // Thêm các nút vào panel
+        buttonPanel.add(btnYes);
+        buttonPanel.add(btnNo);
+
+        dialog.add(buttonPanel, BorderLayout.SOUTH);
+        dialog.setLocationRelativeTo(this); // Đặt vị trí ở giữa màn hình
+        dialog.setVisible(true);
+    }
+
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
 
@@ -352,7 +434,7 @@ public final class nhacungcap extends javax.swing.JPanel {
         // TODO add your handling code here:
 
         if (tablencc.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn nhà cung cấp muốn sửa");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn nhà cung cấp muốn xem chi tiết");
         } else {
             dtnhacungcap a = new dtnhacungcap(this, (JFrame) SwingUtilities.getWindowAncestor(this), true);
             a.setVisible(true);
@@ -361,7 +443,18 @@ public final class nhacungcap extends javax.swing.JPanel {
     }//GEN-LAST:event_btnViewActionPerformed
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
+        SearchTable();
 
+    }//GEN-LAST:event_txtSearchKeyReleased
+
+    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchActionPerformed
+
+    private void cbxChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxChooseActionPerformed
+        SearchTable();
+    }//GEN-LAST:event_cbxChooseActionPerformed
+    private void SearchTable() {
         // TODO add your handling code here:
         String luachon = (String) cbxChoose.getSelectedItem();
         String searchContent = txtSearch.getText();
@@ -369,24 +462,29 @@ public final class nhacungcap extends javax.swing.JPanel {
         switch (luachon) {
             case "Tất cả":
                 result = SearchNhaCungCap.getInstance().searchTatCa(searchContent);
+                loadDataToTable(result);
                 break;
             case "Mã Nhà Cung Cấp":
                 result = SearchNhaCungCap.getInstance().searchMaNCC(searchContent);
+                loadDataToTable(result);
                 break;
             case "Tên Nhà Cung Cấp":
                 result = SearchNhaCungCap.getInstance().searchTenNCC(searchContent);
+                loadDataToTable(result);
                 break;
             case "Địa Chỉ":
                 result = SearchNhaCungCap.getInstance().searchDiaChi(searchContent);
+                loadDataToTable(result);
                 break;
             case "Số Điện Thoại":
                 result = SearchNhaCungCap.getInstance().searchSdt(searchContent);
+                loadDataToTable(result);
                 break;
+            case "Email":
+                result = SearchNhaCungCap.getInstance().searchEmail(searchContent);
         }
         loadDataToTable(result);
-
-    }//GEN-LAST:event_txtSearchKeyReleased
-
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnReset;

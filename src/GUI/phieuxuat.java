@@ -100,7 +100,7 @@ public final class phieuxuat extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel5 = new javax.swing.JPanel();
-        jButton24 = new javax.swing.JButton();
+        resetBtn = new javax.swing.JButton();
         txttimkiem = new javax.swing.JTextField();
         cbxAll = new javax.swing.JComboBox<>();
         jToolBar4 = new javax.swing.JToolBar();
@@ -119,11 +119,12 @@ public final class phieuxuat extends javax.swing.JPanel {
         jPanel5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel5.setPreferredSize(new java.awt.Dimension(1110, 90));
 
-        jButton24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/refresh.png"))); // NOI18N
-        jButton24.setText("Làm mới");
-        jButton24.addActionListener(new java.awt.event.ActionListener() {
+        resetBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/refresh.png"))); // NOI18N
+        resetBtn.setText("Làm mới");
+        resetBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        resetBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton24ActionPerformed(evt);
+                resetBtnActionPerformed(evt);
             }
         });
 
@@ -146,6 +147,7 @@ public final class phieuxuat extends javax.swing.JPanel {
         btnThem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/add.png"))); // NOI18N
         btnThem.setText("THÊM");
+        btnThem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnThem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnThem.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnThem.addActionListener(new java.awt.event.ActionListener() {
@@ -158,6 +160,7 @@ public final class phieuxuat extends javax.swing.JPanel {
         btnchitiet.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnchitiet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/detail.png"))); // NOI18N
         btnchitiet.setText("XEM CHI TIẾT");
+        btnchitiet.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnchitiet.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnchitiet.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnchitiet.addActionListener(new java.awt.event.ActionListener() {
@@ -180,7 +183,7 @@ public final class phieuxuat extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(txttimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton24)
+                .addComponent(resetBtn)
                 .addGap(22, 22, 22))
         );
         jPanel5Layout.setVerticalGroup(
@@ -190,7 +193,7 @@ public final class phieuxuat extends javax.swing.JPanel {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbxAll, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txttimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(resetBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
@@ -348,13 +351,14 @@ public final class phieuxuat extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnchitietActionPerformed
 
-    private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
+    private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnActionPerformed
         // TODO add your handling code here:
         cbxAll.setSelectedIndex(0);
         txttimkiem.setText("");
         cbkhachhang.setSelectedIndex(0);
         cbnhanvien.setSelectedIndex(0);
-    }//GEN-LAST:event_jButton24ActionPerformed
+        displaytoTable(list);
+    }//GEN-LAST:event_resetBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -363,7 +367,6 @@ public final class phieuxuat extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cbkhachhang;
     private javax.swing.JComboBox<String> cbnhanvien;
     private javax.swing.JComboBox<String> cbxAll;
-    private javax.swing.JButton jButton24;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel3;
@@ -371,6 +374,7 @@ public final class phieuxuat extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar jToolBar4;
+    private javax.swing.JButton resetBtn;
     private javax.swing.JTable tblphieuxuat;
     private javax.swing.JTextField txttimkiem;
     // End of variables declaration//GEN-END:variables

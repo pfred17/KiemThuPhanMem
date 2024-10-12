@@ -30,9 +30,9 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
         int ketQua = 0;
         try {
             java.sql.Connection con = JDBC.getConnection();
-            String sql = "insert into sanpham (masp, maloai, tensp, hinhanh, xuatxu, NSX, HSD, thuonghieu, gianhap,giaban, soluongton, trangthai) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?)";
+            String sql = "insert into `sanpham` (`masp`, `maloai`, `tensp`, `hinhanh`, `xuatxu`, `NSX`, `HSD`, `thuonghieu`, `gianhap`, `giaban`, `soluongton`, `trangthai`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, 1)";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setInt(1, t.getMasp()); // Nếu 'masp' là một số nguyên
+            pst.setInt(1, t.getMasp());
             pst.setInt(2, t.getMaloai());
             pst.setString(3, t.getTensp());
             pst.setString(4, t.getHinhanh());
@@ -43,7 +43,6 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
             pst.setDouble(9, 0);
             pst.setDouble(10, 0);
             pst.setInt(11, t.getSoluongton());
-            pst.setInt(12, t.getTrangthai());
             ketQua = pst.executeUpdate();
             JDBC.closeConnection(con);
         } catch (SQLException e) {
